@@ -1,0 +1,156 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction to Pydantic}{4}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.1}What is Pydantic?}{4}{subsection.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.2}Why Pydantic Matters}{4}{subsection.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {1.3}Where Pydantic is Used}{4}{subsection.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Understanding the Problems Pydantic Solves}{5}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Problem Setup: Patient Management System}{5}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.1.1}The Basic Function}{5}{subsubsection.2.1.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {1}Initial Patient Insertion Function}{5}{lstlisting.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Problem 1: No Type Validation}{5}{subsection.2.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.1}What Can Go Wrong}{5}{subsubsection.2.2.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {2}Problematic Usage}{5}{lstlisting.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.2}Attempt 1: Type Hints}{6}{subsubsection.2.2.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3}Adding Type Hints}{6}{lstlisting.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4}Type Hints Don't Stop This}{6}{lstlisting.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.3}Attempt 2: Manual Validation}{6}{subsubsection.2.2.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {5}Manual Type Checking}{6}{lstlisting.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.2.4}The Scalability Problem}{7}{subsubsection.2.2.4}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {6}Multiple Functions Need Same Validation}{7}{lstlisting.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Problem 2: Data Validation}{8}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.1}Business Rules}{8}{subsubsection.2.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.2}Manual Data Validation}{8}{subsubsection.2.3.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {7}Adding Data Validation}{8}{lstlisting.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {2.3.3}The Complexity Explosion}{8}{subsubsection.2.3.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {8}Complexity Grows Quickly}{8}{lstlisting.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Summary: The Two Core Problems}{9}{subsection.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}The Pydantic Solution}{10}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}How Pydantic Works: 3-Step Process}{10}{subsection.3.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.1}Step 1: Build a Pydantic Model}{10}{subsubsection.3.1.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.2}Step 2: Instantiate the Model}{10}{subsubsection.3.1.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.1.3}Step 3: Use the Validated Object}{11}{subsubsection.3.1.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Practical Implementation}{12}{subsection.3.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.1}Installation}{12}{subsubsection.3.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.2}Step 1: Import and Create Model}{12}{subsubsection.3.2.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {9}Creating Your First Pydantic Model}{12}{lstlisting.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.3}Step 2: Create Validated Object}{12}{subsubsection.3.2.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {10}Instantiating the Model}{12}{lstlisting.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.2.4}Step 3: Use in Functions}{13}{subsubsection.3.2.4}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {11}Using Validated Objects in Functions}{13}{lstlisting.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Complete Working Example}{13}{subsection.3.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {12}Full Pydantic Example}{13}{lstlisting.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Automatic Validation in Action}{14}{subsection.3.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.4.1}What Happens with Wrong Type}{14}{subsubsection.3.4.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {13}Invalid Data Example}{14}{lstlisting.13}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Benefits Achieved}{14}{subsection.3.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.6}Type Coercion: Pydantic's Smart Feature}{15}{subsection.3.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.1}Automatic Type Conversion}{15}{subsubsection.3.6.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {14}Pydantic Type Coercion}{15}{lstlisting.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.6.2}When Coercion Works}{15}{subsubsection.3.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.7}Multiple Functions: The Real Benefit}{15}{subsection.3.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.1}Before Pydantic}{15}{subsubsection.3.7.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {15}Without Pydantic - Repeated Code}{15}{lstlisting.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {3.7.2}With Pydantic}{16}{subsubsection.3.7.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {16}With Pydantic - Clean Code}{16}{lstlisting.16}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Building Complex Pydantic Models}{17}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Working with Multiple Data Types}{17}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.1.1}Extended Patient Model}{17}{subsubsection.4.1.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {17}Complex Patient Model}{17}{lstlisting.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Why Import from typing Module}{17}{subsection.4.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}The Question}{17}{subsubsection.4.2.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {18}Understanding the Difference}{17}{lstlisting.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.2}Two-Level Validation}{18}{subsubsection.4.2.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {19}List Validation Example}{18}{lstlisting.19}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.3}Dictionary Validation}{18}{subsubsection.4.2.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {20}Dictionary Validation}{18}{lstlisting.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Complete Complex Model Example}{19}{subsection.4.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {21}Full Complex Patient Model with Data}{19}{lstlisting.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}Required and Optional Fields}{20}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Default Behavior: All Fields Required}{20}{subsection.5.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {22}All Fields Required by Default}{20}{lstlisting.22}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Making Fields Optional}{20}{subsection.5.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.1}Using Optional}{20}{subsubsection.5.2.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {23}Optional Fields}{20}{lstlisting.23}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.2.2}Optional Field Behavior}{20}{subsubsection.5.2.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {24}Optional Field Examples}{20}{lstlisting.24}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Default Values}{21}{subsection.5.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.1}Setting Defaults}{21}{subsubsection.5.3.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {25}Fields with Default Values}{21}{lstlisting.25}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {5.3.2}Default Values in Action}{21}{subsubsection.5.3.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {26}Using Default Values}{21}{lstlisting.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Required vs Optional vs Default: Summary}{22}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Data Validation Techniques}{23}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Method 1: Custom Data Types}{23}{subsection.6.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.1}EmailStr - Email Validation}{23}{subsubsection.6.1.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {27}Email Validation}{23}{lstlisting.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.1.2}AnyUrl - URL Validation}{23}{subsubsection.6.1.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {28}URL Validation}{23}{lstlisting.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Method 2: Field Function}{24}{subsection.6.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.1}Importing Field}{24}{subsubsection.6.2.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {29}Importing Field and Annotated}{24}{lstlisting.29}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.2}Numeric Constraints}{24}{subsubsection.6.2.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {30}Validating Numeric Ranges}{24}{lstlisting.30}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {31}Testing Numeric Validation}{24}{lstlisting.31}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.3}String Constraints}{25}{subsubsection.6.2.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {32}Validating String Length}{25}{lstlisting.32}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {33}Testing String Validation}{25}{lstlisting.33}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.2.4}List Constraints}{25}{subsubsection.6.2.4}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {34}Validating List Length}{25}{lstlisting.34}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}Field Function: Multiple Purposes}{25}{subsection.6.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.1}Adding Metadata}{26}{subsubsection.6.3.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {35}Field with Metadata}{26}{lstlisting.35}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {6.3.2}Controlling Type Coercion with Strict Mode}{26}{subsubsection.6.3.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {36}Strict Mode Example}{26}{lstlisting.36}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Field Validators: Custom Validation Logic}{28}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.1}When to Use Field Validators}{28}{subsection.7.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.2}Creating Field Validators}{28}{subsection.7.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {37}Email Domain Validation}{28}{lstlisting.37}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.3}Field Validator Components}{28}{subsection.7.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.4}Mode: Before vs After}{28}{subsection.7.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {7.5}Transformation with Validators}{28}{subsection.7.5}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {38}Transform Name to Title Case}{29}{lstlisting.38}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {8}Model Validators: Cross-Field Validation}{30}{section.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}The Need for Model Validators}{30}{subsection.8.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}Creating Model Validators}{30}{subsection.8.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {39}Multi-Field Validation}{30}{lstlisting.39}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.3}Key Differences}{30}{subsection.8.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.4}Model Validator Modes}{30}{subsection.8.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.4.1}Before Mode}{30}{subsubsection.8.4.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {40}Before Mode Validator}{30}{lstlisting.40}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.4.2}After Mode}{31}{subsubsection.8.4.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {41}After Mode Validator}{31}{lstlisting.41}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {8.4.3}Wrap Mode: Advanced Control}{31}{subsubsection.8.4.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {42}Wrap Mode for Logging}{31}{lstlisting.42}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.5}Understanding Wrap Mode Execution Flow}{32}{subsection.8.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.6}Important Limitation: Core Type Parsing}{32}{subsection.8.6}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {43}Wrap Validator Behavior}{32}{lstlisting.43}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {9}Computed Fields}{35}{section.9}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.1}What are Computed Fields?}{35}{subsection.9.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.2}Implementation}{35}{subsection.9.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {44}Computed BMI Field}{35}{lstlisting.44}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {9.3}Usage}{35}{subsection.9.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {45}Using Computed Field}{35}{lstlisting.45}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10}Nested Models}{36}{section.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.1}Why Nested Models?}{36}{subsection.10.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.2}Creating Nested Models}{36}{subsection.10.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {46}Address as Nested Model}{36}{lstlisting.46}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.3}Using Nested Models}{36}{subsection.10.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {47}Creating Nested Objects}{36}{lstlisting.47}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {10.4}Benefits}{36}{subsection.10.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11}Exporting Pydantic Models}{37}{section.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.1}Model to Dictionary}{37}{subsection.11.1}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {48}Export as Dictionary}{37}{lstlisting.48}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.2}Model to JSON}{37}{subsection.11.2}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {49}Export as JSON}{37}{lstlisting.49}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {11.3}Selective Export}{37}{subsection.11.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {50}Include/Exclude Fields}{37}{lstlisting.50}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {12}Summary and Best Practices}{38}{section.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {12.1}Key Concepts Covered}{38}{subsection.12.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {12.2}Validation Hierarchy}{38}{subsection.12.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {12.3}Best Practices}{38}{subsection.12.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {12.4}Common Use Cases}{39}{subsection.12.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {12.5}Further Learning}{39}{subsection.12.5}\protected@file@percent }
+\gdef \@abspage@last{40}

@@ -1,0 +1,142 @@
+\contentsline {section}{\numberline {1}Introduction and Session Overview}{5}{section.1}%
+\contentsline {subsection}{\numberline {1.1}What We'll Learn Today}{5}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Recap: Where We Left Off}{5}{subsection.1.2}%
+\contentsline {section}{\numberline {2}Understanding Path Parameters}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}What Are Path Parameters?}{6}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Simple Explanation with Example}{6}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Current Situation}{6}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}The New Requirement}{6}{subsubsection.2.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.3}The Solution: Dynamic URL}{6}{subsubsection.2.2.3}%
+\contentsline {subsection}{\numberline {2.3}The Dynamic Portion}{7}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Purpose of Path Parameters}{7}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Common Use Cases for Path Parameters}{7}{subsection.2.5}%
+\contentsline {subsubsection}{\numberline {2.5.1}1. Retrieve Operations}{7}{subsubsection.2.5.1}%
+\contentsline {subsubsection}{\numberline {2.5.2}2. Update Operations}{7}{subsubsection.2.5.2}%
+\contentsline {subsubsection}{\numberline {2.5.3}3. Delete Operations}{8}{subsubsection.2.5.3}%
+\contentsline {section}{\numberline {3}Implementing Path Parameters in FastAPI}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Building the Endpoint}{9}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Step 1: Define the Route}{9}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Step 2: Create Handler Function}{9}{subsubsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.3}Step 3: Implement Function Logic}{9}{subsubsection.3.1.3}%
+\contentsline {subsection}{\numberline {3.2}Understanding the Flow}{10}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Testing the Endpoint}{10}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Method 1: Browser}{10}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Method 2: Interactive Documentation}{10}{subsubsection.3.3.2}%
+\contentsline {section}{\numberline {4}Improving Code with the Path() Function}{12}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Current Problem with Documentation}{12}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}The Path() Function}{12}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Capabilities of Path()}{12}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Implementing Path() Function}{12}{subsection.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.1}Step 1: Import Path}{12}{subsubsection.4.4.1}%
+\contentsline {subsubsection}{\numberline {4.4.2}Step 2: Use Path() in Function}{13}{subsubsection.4.4.2}%
+\contentsline {subsection}{\numberline {4.5}Understanding the Path() Parameters}{13}{subsection.4.5}%
+\contentsline {subsubsection}{\numberline {4.5.1}The Ellipsis (...)}{13}{subsubsection.4.5.1}%
+\contentsline {subsubsection}{\numberline {4.5.2}Description}{13}{subsubsection.4.5.2}%
+\contentsline {subsubsection}{\numberline {4.5.3}Example}{13}{subsubsection.4.5.3}%
+\contentsline {subsection}{\numberline {4.6}Additional Validation Options}{13}{subsection.4.6}%
+\contentsline {subsection}{\numberline {4.7}Benefits After Adding Path()}{14}{subsection.4.7}%
+\contentsline {subsubsection}{\numberline {4.7.1}Improved Documentation}{14}{subsubsection.4.7.1}%
+\contentsline {section}{\numberline {5}HTTP Status Codes: A Critical Concept}{15}{section.5}%
+\contentsline {subsection}{\numberline {5.1}What Are HTTP Status Codes?}{15}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Understanding the Request-Response Flow}{15}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Purpose of Status Codes}{15}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Categories of Status Codes}{16}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Common HTTP Status Codes}{16}{subsection.5.5}%
+\contentsline {subsubsection}{\numberline {5.5.1}2xx - Success Codes}{16}{subsubsection.5.5.1}%
+\contentsline {subsubsection}{\numberline {5.5.2}4xx - Client Error Codes}{17}{subsubsection.5.5.2}%
+\contentsline {subsubsection}{\numberline {5.5.3}5xx - Server Error Codes}{17}{subsubsection.5.5.3}%
+\contentsline {subsection}{\numberline {5.6}Seeing Status Codes in Action}{18}{subsection.5.6}%
+\contentsline {section}{\numberline {6}Identifying the Problem: Incorrect Status Codes}{19}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Testing with Non-Existent Patient}{19}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}The Problem Revealed}{19}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Why Status Codes Matter}{19}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}The Solution: HTTPException}{20}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Implementing HTTPException}{20}{subsection.6.5}%
+\contentsline {subsubsection}{\numberline {6.5.1}Step 1: Import HTTPException}{20}{subsubsection.6.5.1}%
+\contentsline {subsubsection}{\numberline {6.5.2}Step 2: Raise Exception Instead of Returning Error}{20}{subsubsection.6.5.2}%
+\contentsline {subsection}{\numberline {6.6}Understanding the Parameters}{21}{subsection.6.6}%
+\contentsline {subsection}{\numberline {6.7}Testing the Improved Code}{21}{subsection.6.7}%
+\contentsline {subsubsection}{\numberline {6.7.1}Test 1: Valid Patient}{21}{subsubsection.6.7.1}%
+\contentsline {subsubsection}{\numberline {6.7.2}Test 2: Invalid Patient}{21}{subsubsection.6.7.2}%
+\contentsline {subsection}{\numberline {6.8}Complete Updated Code}{21}{subsection.6.8}%
+\contentsline {section}{\numberline {7}Understanding Query Parameters}{23}{section.7}%
+\contentsline {subsection}{\numberline {7.1}The New Requirement}{23}{subsection.7.1}%
+\contentsline {subsubsection}{\numberline {7.1.1}Current Situation}{23}{subsubsection.7.1.1}%
+\contentsline {subsubsection}{\numberline {7.1.2}New Feature Request}{23}{subsubsection.7.1.2}%
+\contentsline {subsection}{\numberline {7.2}Why Not Path Parameters?}{23}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}What Are Query Parameters?}{24}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Query Parameter Syntax}{24}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}Query Parameters vs Path Parameters}{24}{subsection.7.5}%
+\contentsline {subsection}{\numberline {7.6}Real-World Examples}{24}{subsection.7.6}%
+\contentsline {subsubsection}{\numberline {7.6.1}Example 1: E-commerce Search}{25}{subsubsection.7.6.1}%
+\contentsline {subsubsection}{\numberline {7.6.2}Example 2: Social Media Feed}{25}{subsubsection.7.6.2}%
+\contentsline {subsection}{\numberline {7.7}Our Use Case: Patient Sorting}{25}{subsection.7.7}%
+\contentsline {section}{\numberline {8}Implementing Query Parameters in FastAPI}{26}{section.8}%
+\contentsline {subsection}{\numberline {8.1}The Query() Function}{26}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Creating the Sort Endpoint}{26}{subsection.8.2}%
+\contentsline {subsubsection}{\numberline {8.2.1}Step 1: Import Query}{26}{subsubsection.8.2.1}%
+\contentsline {subsubsection}{\numberline {8.2.2}Step 2: Define the Endpoint}{26}{subsubsection.8.2.2}%
+\contentsline {subsection}{\numberline {8.3}Understanding the Parameters}{26}{subsection.8.3}%
+\contentsline {subsubsection}{\numberline {8.3.1}Required Query Parameter}{26}{subsubsection.8.3.1}%
+\contentsline {subsubsection}{\numberline {8.3.2}Optional Query Parameter with Default}{27}{subsubsection.8.3.2}%
+\contentsline {subsection}{\numberline {8.4}Implementing the Sorting Logic}{27}{subsection.8.4}%
+\contentsline {subsubsection}{\numberline {8.4.1}Step 1: Define Valid Fields}{27}{subsubsection.8.4.1}%
+\contentsline {subsubsection}{\numberline {8.4.2}Step 2: Validate sort\_by Parameter}{27}{subsubsection.8.4.2}%
+\contentsline {subsubsection}{\numberline {8.4.3}Step 3: Validate order Parameter}{28}{subsubsection.8.4.3}%
+\contentsline {subsubsection}{\numberline {8.4.4}Step 4: Load and Sort Data}{28}{subsubsection.8.4.4}%
+\contentsline {subsection}{\numberline {8.5}Understanding the Sorting Code}{28}{subsection.8.5}%
+\contentsline {subsubsection}{\numberline {8.5.1}Extracting Values}{28}{subsubsection.8.5.1}%
+\contentsline {subsubsection}{\numberline {8.5.2}Lambda Function for Sorting Key}{28}{subsubsection.8.5.2}%
+\contentsline {subsubsection}{\numberline {8.5.3}Reverse Parameter}{29}{subsubsection.8.5.3}%
+\contentsline {subsection}{\numberline {8.6}Complete Sort Function}{29}{subsection.8.6}%
+\contentsline {section}{\numberline {9}Testing the Sort Endpoint}{30}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Method 1: Direct URL Testing}{30}{subsection.9.1}%
+\contentsline {subsubsection}{\numberline {9.1.1}Test 1: Sort by BMI in Descending Order}{30}{subsubsection.9.1.1}%
+\contentsline {subsubsection}{\numberline {9.1.2}Test 2: Sort by Height in Ascending Order}{30}{subsubsection.9.1.2}%
+\contentsline {subsubsection}{\numberline {9.1.3}Test 3: Sort by Weight (Default Ascending)}{30}{subsubsection.9.1.3}%
+\contentsline {subsection}{\numberline {9.2}Method 2: Interactive Documentation}{30}{subsection.9.2}%
+\contentsline {subsubsection}{\numberline {9.2.1}Testing Valid Request}{30}{subsubsection.9.2.1}%
+\contentsline {subsubsection}{\numberline {9.2.2}Testing Validation Errors}{31}{subsubsection.9.2.2}%
+\contentsline {subsection}{\numberline {9.3}Verifying Optional Parameters}{32}{subsection.9.3}%
+\contentsline {section}{\numberline {10}Complete Project Code}{33}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Final main.py}{33}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}API Endpoints Summary}{35}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Project Structure}{35}{subsection.10.3}%
+\contentsline {section}{\numberline {11}Key Concepts Summary}{36}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Path Parameters Recap}{36}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Query Parameters Recap}{36}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Path() vs Query() Functions}{36}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}HTTP Status Codes Reference}{37}{subsection.11.4}%
+\contentsline {subsection}{\numberline {11.5}When to Use Each Parameter Type}{37}{subsection.11.5}%
+\contentsline {section}{\numberline {12}Combining Both Parameter Types}{38}{section.12}%
+\contentsline {section}{\numberline {13}Best Practices and Guidelines}{40}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Parameter Validation}{40}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Documentation Best Practices}{40}{subsection.13.2}%
+\contentsline {subsection}{\numberline {13.3}Error Handling Best Practices}{41}{subsection.13.3}%
+\contentsline {subsection}{\numberline {13.4}Optional vs Required Parameters}{41}{subsection.13.4}%
+\contentsline {subsection}{\numberline {13.5}Naming Conventions}{42}{subsection.13.5}%
+\contentsline {section}{\numberline {14}Common Pitfalls and How to Avoid Them}{43}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Pitfall 1: Parameter Name Mismatch}{43}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Pitfall 2: Forgetting Question Mark in Query Parameters}{43}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Pitfall 3: Returning Wrong Status Codes}{43}{subsection.14.3}%
+\contentsline {subsection}{\numberline {14.4}Pitfall 4: Not Validating User Input}{44}{subsection.14.4}%
+\contentsline {subsection}{\numberline {14.5}Pitfall 5: Confusing Path and Query Parameters}{44}{subsection.14.5}%
+\contentsline {section}{\numberline {15}Troubleshooting Guide}{45}{section.15}%
+\contentsline {subsection}{\numberline {15.1}Issue: 422 Unprocessable Entity}{45}{subsection.15.1}%
+\contentsline {subsection}{\numberline {15.2}Issue: Parameter Not Being Recognized}{45}{subsection.15.2}%
+\contentsline {subsection}{\numberline {15.3}Issue: Validation Not Working}{46}{subsection.15.3}%
+\contentsline {subsection}{\numberline {15.4}Issue: Status Codes Not Changing}{46}{subsection.15.4}%
+\contentsline {section}{\numberline {16}Practice Exercises}{47}{section.16}%
+\contentsline {subsection}{\numberline {16.1}Exercise 1: Add Age Filter}{47}{subsection.16.1}%
+\contentsline {subsection}{\numberline {16.2}Exercise 2: Search by City}{47}{subsection.16.2}%
+\contentsline {subsection}{\numberline {16.3}Exercise 3: Update Patient Weight}{47}{subsection.16.3}%
+\contentsline {subsection}{\numberline {16.4}Exercise 4: Pagination}{48}{subsection.16.4}%
+\contentsline {subsection}{\numberline {16.5}Solutions Approach}{48}{subsection.16.5}%
+\contentsline {section}{\numberline {17}Quick Reference Guide}{49}{section.17}%
+\contentsline {subsection}{\numberline {17.1}Command Reference}{49}{subsection.17.1}%
+\contentsline {subsection}{\numberline {17.2}Code Templates}{49}{subsection.17.2}%
+\contentsline {subsubsection}{\numberline {17.2.1}Path Parameter Template}{49}{subsubsection.17.2.1}%
+\contentsline {subsubsection}{\numberline {17.2.2}Query Parameter Template}{49}{subsubsection.17.2.2}%
+\contentsline {subsection}{\numberline {17.3}Import Statements}{50}{subsection.17.3}%
+\contentsline {subsection}{\numberline {17.4}Status Code Quick Reference}{50}{subsection.17.4}%
+\contentsline {subsection}{\numberline {17.5}URL Format Reference}{51}{subsection.17.5}%
