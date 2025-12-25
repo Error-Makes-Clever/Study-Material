@@ -1,0 +1,127 @@
+\contentsline {section}{\numberline {1}Introduction to Object-Oriented Programming}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}What is OOP?}{4}{subsection.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1}Key Principles of OOP}{4}{subsubsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.2}OOP vs Structured Programming}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Why Use OOP?}{4}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Classes and Objects}{5}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Understanding Classes and Objects}{5}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Creating a Class}{5}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Basic Class Syntax}{5}{subsubsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.3}The Constructor: \_\_init\_\_()}{5}{subsection.2.3}%
+\contentsline {subsubsection}{\numberline {2.3.1}Types of Constructors}{5}{subsubsection.2.3.1}%
+\contentsline {subsection}{\numberline {2.4}The self Parameter}{6}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Attributes and Methods}{7}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Instance Attributes}{7}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Class Attributes (Static Variables)}{7}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Instance Attributes vs Class Attributes}{8}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Creating Attributes from Outside the Class}{8}{subsection.3.4}%
+\contentsline {section}{\numberline {4}Methods in Python}{9}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Types of Methods}{9}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Instance Methods}{9}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Class Methods}{9}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Static Methods}{10}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Method Comparison Table}{10}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}When to Use Each Method Type}{11}{subsection.4.6}%
+\contentsline {section}{\numberline {5}Encapsulation and Access Modifiers}{12}{section.5}%
+\contentsline {subsection}{\numberline {5.1}What is Encapsulation?}{12}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {5.1.1}Benefits of Encapsulation}{12}{subsubsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.2}Access Modifiers in Python}{12}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Public Attributes}{12}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Protected Attributes}{12}{subsection.5.4}%
+\contentsline {subsection}{\numberline {5.5}Private Attributes (Name Mangling)}{13}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}Checking Attributes with dir()}{13}{subsection.5.6}%
+\contentsline {subsection}{\numberline {5.7}Getters and Setters}{13}{subsection.5.7}%
+\contentsline {section}{\numberline {6}Magic Methods (Dunder Methods)}{15}{section.6}%
+\contentsline {subsection}{\numberline {6.1}What are Magic Methods?}{15}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Common Magic Methods}{15}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}\_\_str\_\_() vs \_\_repr\_\_()}{15}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Operator Overloading}{16}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}The Destructor: \_\_del\_\_()}{17}{subsection.6.5}%
+\contentsline {section}{\numberline {7}Inheritance}{18}{section.7}%
+\contentsline {subsection}{\numberline {7.1}What is Inheritance?}{18}{subsection.7.1}%
+\contentsline {subsubsection}{\numberline {7.1.1}Benefits of Inheritance}{18}{subsubsection.7.1.1}%
+\contentsline {subsubsection}{\numberline {7.1.2}Limitations of Inheritance}{18}{subsubsection.7.1.2}%
+\contentsline {subsection}{\numberline {7.2}Basic Inheritance Syntax}{18}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}What Gets Inherited?}{18}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Constructor Inheritance}{19}{subsection.7.4}%
+\contentsline {subsubsection}{\numberline {7.4.1}Case 1: Child Has No Constructor}{19}{subsubsection.7.4.1}%
+\contentsline {subsubsection}{\numberline {7.4.2}Case 2: Child Has Its Own Constructor}{19}{subsubsection.7.4.2}%
+\contentsline {subsection}{\numberline {7.5}The super() Function}{20}{subsection.7.5}%
+\contentsline {subsection}{\numberline {7.6}Method Overriding}{20}{subsection.7.6}%
+\contentsline {section}{\numberline {8}Types of Inheritance}{22}{section.8}%
+\contentsline {subsection}{\numberline {8.1}1. Single Inheritance}{22}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}2. Multilevel Inheritance}{22}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}3. Hierarchical Inheritance}{23}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}4. Multiple Inheritance}{23}{subsection.8.4}%
+\contentsline {subsection}{\numberline {8.5}5. Hybrid Inheritance}{24}{subsection.8.5}%
+\contentsline {section}{\numberline {9}Method Resolution Order (MRO)}{25}{section.9}%
+\contentsline {subsection}{\numberline {9.1}What is MRO?}{25}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}The Diamond Problem}{25}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}How Python Resolves the Diamond Problem}{25}{subsection.9.3}%
+\contentsline {subsection}{\numberline {9.4}Three Cases of super() Chain Behavior}{25}{subsection.9.4}%
+\contentsline {subsubsection}{\numberline {9.4.1}Case 1: C Does NOT Call super() - Chain Breaks at C}{25}{subsubsection.9.4.1}%
+\contentsline {subsubsection}{\numberline {9.4.2}Case 2: Both B and C Call super() - Complete Chain (CORRECT)}{26}{subsubsection.9.4.2}%
+\contentsline {subsubsection}{\numberline {9.4.3}Case 3: Neither B nor C Call super() - Chain Breaks at B}{27}{subsubsection.9.4.3}%
+\contentsline {subsection}{\numberline {9.5}Side-by-Side Comparison}{28}{subsection.9.5}%
+\contentsline {subsection}{\numberline {9.6}Visual Representation}{28}{subsection.9.6}%
+\contentsline {subsection}{\numberline {9.7}Key Takeaways}{28}{subsection.9.7}%
+\contentsline {subsection}{\numberline {9.8}Best Practice Pattern}{29}{subsection.9.8}%
+\contentsline {subsection}{\numberline {9.9}Practical Example: Why This Matters}{29}{subsection.9.9}%
+\contentsline {subsection}{\numberline {9.10}Viewing MRO}{30}{subsection.9.10}%
+\contentsline {section}{\numberline {10}Polymorphism}{31}{section.10}%
+\contentsline {subsection}{\numberline {10.1}What is Polymorphism?}{31}{subsection.10.1}%
+\contentsline {subsubsection}{\numberline {10.1.1}Types of Polymorphism in Python}{31}{subsubsection.10.1.1}%
+\contentsline {subsection}{\numberline {10.2}Method Overriding}{31}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Method Overloading (Simulated)}{31}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}Operator Overloading}{32}{subsection.10.4}%
+\contentsline {section}{\numberline {11}Abstraction}{33}{section.11}%
+\contentsline {subsection}{\numberline {11.1}What is Abstraction?}{33}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Abstract Base Classes (ABC)}{33}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Key Points About Abstraction}{34}{subsection.11.3}%
+\contentsline {section}{\numberline {12}Aggregation (Has-A Relationship)}{35}{section.12}%
+\contentsline {subsection}{\numberline {12.1}What is Aggregation?}{35}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Aggregation vs Inheritance}{36}{subsection.12.2}%
+\contentsline {section}{\numberline {13}Reference Variables and Object Behavior}{37}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Reference Variables}{37}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Pass by Reference}{37}{subsection.13.2}%
+\contentsline {subsection}{\numberline {13.3}Object Mutability}{37}{subsection.13.3}%
+\contentsline {subsection}{\numberline {13.4}Collections of Objects}{38}{subsection.13.4}%
+\contentsline {section}{\numberline {14}Advanced OOP Concepts}{39}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Decorators in OOP}{39}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}isinstance() and issubclass()}{39}{subsection.14.2}%
+\contentsline {subsubsection}{\numberline {14.2.1}isinstance()}{39}{subsubsection.14.2.1}%
+\contentsline {subsubsection}{\numberline {14.2.2}issubclass()}{39}{subsubsection.14.2.2}%
+\contentsline {subsection}{\numberline {14.3}Single vs Double Underscores}{40}{subsection.14.3}%
+\contentsline {subsection}{\numberline {14.4}Hashing and Sets}{40}{subsection.14.4}%
+\contentsline {subsection}{\numberline {14.5}enumerate() Function}{41}{subsection.14.5}%
+\contentsline {section}{\numberline {15}Practical OOP Examples}{42}{section.15}%
+\contentsline {subsection}{\numberline {15.1}ATM System}{42}{subsection.15.1}%
+\contentsline {subsection}{\numberline {15.2}2D Point and Line System}{43}{subsection.15.2}%
+\contentsline {section}{\numberline {16}OOP Best Practices and Design Principles}{45}{section.16}%
+\contentsline {subsection}{\numberline {16.1}SOLID Principles}{45}{subsection.16.1}%
+\contentsline {subsubsection}{\numberline {16.1.1}S - Single Responsibility Principle}{45}{subsubsection.16.1.1}%
+\contentsline {subsubsection}{\numberline {16.1.2}O - Open/Closed Principle}{45}{subsubsection.16.1.2}%
+\contentsline {subsubsection}{\numberline {16.1.3}L - Liskov Substitution Principle}{46}{subsubsection.16.1.3}%
+\contentsline {subsubsection}{\numberline {16.1.4}I - Interface Segregation Principle}{46}{subsubsection.16.1.4}%
+\contentsline {subsubsection}{\numberline {16.1.5}D - Dependency Inversion Principle}{46}{subsubsection.16.1.5}%
+\contentsline {subsection}{\numberline {16.2}General Best Practices}{46}{subsection.16.2}%
+\contentsline {subsection}{\numberline {16.3}Common Mistakes to Avoid}{46}{subsection.16.3}%
+\contentsline {subsection}{\numberline {16.4}Composition vs Inheritance}{47}{subsection.16.4}%
+\contentsline {section}{\numberline {17}Common Interview Questions}{48}{section.17}%
+\contentsline {subsection}{\numberline {17.1}Conceptual Questions}{48}{subsection.17.1}%
+\contentsline {subsubsection}{\numberline {17.1.1}Q1: What are the four pillars of OOP?}{48}{subsubsection.17.1.1}%
+\contentsline {subsubsection}{\numberline {17.1.2}Q2: Explain the difference between \_\_str\_\_ and \_\_repr\_\_}{48}{subsubsection.17.1.2}%
+\contentsline {subsubsection}{\numberline {17.1.3}Q3: What is the diamond problem and how does Python solve it?}{48}{subsubsection.17.1.3}%
+\contentsline {subsubsection}{\numberline {17.1.4}Q4: What's the difference between class method and static method?}{48}{subsubsection.17.1.4}%
+\contentsline {subsection}{\numberline {17.2}Coding Questions}{49}{subsection.17.2}%
+\contentsline {subsubsection}{\numberline {17.2.1}Q5: Implement a class with private attributes}{49}{subsubsection.17.2.1}%
+\contentsline {subsubsection}{\numberline {17.2.2}Q6: Create a class hierarchy with method overriding}{49}{subsubsection.17.2.2}%
+\contentsline {section}{\numberline {18}Quick Reference Guide}{50}{section.18}%
+\contentsline {subsection}{\numberline {18.1}Class Definition Syntax}{50}{subsection.18.1}%
+\contentsline {subsection}{\numberline {18.2}Inheritance Templates}{50}{subsection.18.2}%
+\contentsline {subsection}{\numberline {18.3}Common Magic Methods}{51}{subsection.18.3}%
+\contentsline {subsection}{\numberline {18.4}Access Modifiers Cheat Sheet}{51}{subsection.18.4}%
+\contentsline {section}{\numberline {19}Conclusion}{52}{section.19}%
+\contentsline {subsection}{\numberline {19.1}Key Takeaways}{52}{subsection.19.1}%
+\contentsline {subsection}{\numberline {19.2}Next Steps}{52}{subsection.19.2}%
+\contentsline {subsection}{\numberline {19.3}Additional Resources}{52}{subsection.19.3}%

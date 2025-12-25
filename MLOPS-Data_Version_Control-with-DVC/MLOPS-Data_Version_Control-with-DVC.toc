@@ -1,0 +1,135 @@
+\contentsline {section}{\numberline {1}Introduction to DVC}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}What is DVC?}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Why is DVC Needed in MLOps?}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}The Machine Learning Pipeline}{4}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Real-World Scenario}{4}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Why Not Just Use Git for Data?}{5}{subsection.1.5}%
+\contentsline {section}{\numberline {2}How DVC Works: The Temple Analogy}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Understanding DVC with a Real-World Example}{6}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}The DVC-Git Relationship}{6}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}DVC Working Mechanism}{6}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}What Gets Stored Where}{7}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Visual Representation}{7}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Setting Up DVC}{8}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Prerequisites}{8}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Installation}{8}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Installing DVC}{8}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Verifying Installation}{8}{subsubsection.3.2.2}%
+\contentsline {subsection}{\numberline {3.3}Essential Terminal Commands}{8}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Python Virtual Environment}{8}{subsection.3.4}%
+\contentsline {section}{\numberline {4}Complete DVC Workflow}{9}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Workflow Overview}{9}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Step-by-Step Implementation}{9}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Step 1: Create and Clone Git Repository}{9}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Step 2: Create Python Script}{9}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}Step 3: Configure .gitignore}{10}{subsubsection.4.2.3}%
+\contentsline {subsubsection}{\numberline {4.2.4}Step 4: Initial Git Commit}{10}{subsubsection.4.2.4}%
+\contentsline {subsubsection}{\numberline {4.2.5}Step 5: Initialize DVC}{10}{subsubsection.4.2.5}%
+\contentsline {subsubsection}{\numberline {4.2.6}Step 6: Configure Remote Storage}{10}{subsubsection.4.2.6}%
+\contentsline {subsubsection}{\numberline {4.2.7}Step 7: Verify Remote Configuration}{11}{subsubsection.4.2.7}%
+\contentsline {subsubsection}{\numberline {4.2.8}Step 8: Track Data with DVC}{11}{subsubsection.4.2.8}%
+\contentsline {subsubsection}{\numberline {4.2.9}Step 9: Track .dvc File with Git}{11}{subsubsection.4.2.9}%
+\contentsline {subsubsection}{\numberline {4.2.10}Step 10: Check DVC Status}{12}{subsubsection.4.2.10}%
+\contentsline {subsubsection}{\numberline {4.2.11}Step 11: Push Data to DVC Remote}{12}{subsubsection.4.2.11}%
+\contentsline {subsubsection}{\numberline {4.2.12}Step 12: Push Code to Git}{12}{subsubsection.4.2.12}%
+\contentsline {section}{\numberline {5}Versioning Data Through Iterations}{13}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Creating Version 2}{13}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {5.1.1}Update the Code}{13}{subsubsection.5.1.1}%
+\contentsline {subsubsection}{\numberline {5.1.2}Run the Script}{13}{subsubsection.5.1.2}%
+\contentsline {subsubsection}{\numberline {5.1.3}Check DVC Status}{13}{subsubsection.5.1.3}%
+\contentsline {subsubsection}{\numberline {5.1.4}Commit and Push Version 2}{14}{subsubsection.5.1.4}%
+\contentsline {subsection}{\numberline {5.2}Creating Version 3}{14}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}Update Code Again}{14}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Version and Commit}{15}{subsubsection.5.2.2}%
+\contentsline {subsection}{\numberline {5.3}Understanding the Versioning Process}{15}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Corrected Versioning Workflow}{17}{subsection.5.4}%
+\contentsline {subsubsection}{\numberline {5.4.1}Version 2 - Correct Commands}{17}{subsubsection.5.4.1}%
+\contentsline {subsubsection}{\numberline {5.4.2}Version 3 - Correct Commands}{17}{subsubsection.5.4.2}%
+\contentsline {subsection}{\numberline {5.5}Understanding Cache Behavior}{17}{subsection.5.5}%
+\contentsline {subsection}{\numberline {5.6}Viewing Version History}{18}{subsection.5.6}%
+\contentsline {subsubsection}{\numberline {5.6.1}Check Git Log}{18}{subsubsection.5.6.1}%
+\contentsline {section}{\numberline {6}Rolling Back to Previous Versions}{19}{section.6}%
+\contentsline {subsection}{\numberline {6.1}The Need for Rollback}{19}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Rollback Process}{19}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Step-by-Step Rollback}{19}{subsection.6.3}%
+\contentsline {subsubsection}{\numberline {6.3.1}Step 1: View Available Versions}{19}{subsubsection.6.3.1}%
+\contentsline {subsubsection}{\numberline {6.3.2}Step 2: Checkout Specific Version}{19}{subsubsection.6.3.2}%
+\contentsline {subsubsection}{\numberline {6.3.3}Step 3: Check DVC Status}{20}{subsubsection.6.3.3}%
+\contentsline {subsubsection}{\numberline {6.3.4}Step 4: Pull Data from DVC}{20}{subsubsection.6.3.4}%
+\contentsline {subsubsection}{\numberline {6.3.5}Step 5: Verify Rollback}{20}{subsubsection.6.3.5}%
+\contentsline {subsection}{\numberline {6.4}Returning to Latest Version}{20}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Rollback Workflow Diagram}{21}{subsection.6.5}%
+\contentsline {section}{\numberline {7}Complete DVC Commands Reference}{22}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Initialization and Configuration}{22}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Data Tracking}{22}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Status and Information}{22}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Data Synchronization}{22}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}Pipeline Management}{22}{subsection.7.5}%
+\contentsline {subsection}{\numberline {7.6}Other Useful Commands}{23}{subsection.7.6}%
+\contentsline {section}{\numberline {8}Remote Storage Configuration}{24}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Supported Storage Types}{24}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Local Storage Configuration}{24}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Amazon S3 Configuration}{24}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}Google Cloud Storage Configuration}{25}{subsection.8.4}%
+\contentsline {subsection}{\numberline {8.5}Azure Blob Storage Configuration}{25}{subsection.8.5}%
+\contentsline {subsection}{\numberline {8.6}Google Drive Configuration}{25}{subsection.8.6}%
+\contentsline {subsection}{\numberline {8.7}SSH/SFTP Configuration}{25}{subsection.8.7}%
+\contentsline {subsection}{\numberline {8.8}Managing Multiple Remotes}{26}{subsection.8.8}%
+\contentsline {section}{\numberline {9}Collaboration with DVC}{27}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Team Workflow}{27}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Collaborator Setup}{27}{subsection.9.2}%
+\contentsline {subsubsection}{\numberline {9.2.1}Initial Setup for New Team Member}{27}{subsubsection.9.2.1}%
+\contentsline {subsection}{\numberline {9.3}Making Changes and Sharing}{27}{subsection.9.3}%
+\contentsline {subsubsection}{\numberline {9.3.1}Developer Workflow}{27}{subsubsection.9.3.1}%
+\contentsline {subsection}{\numberline {9.4}Reviewing Changes}{28}{subsection.9.4}%
+\contentsline {subsection}{\numberline {9.5}Best Practices for Teams}{28}{subsection.9.5}%
+\contentsline {section}{\numberline {10}Advanced DVC Features}{30}{section.10}%
+\contentsline {subsection}{\numberline {10.1}DVC Pipelines}{30}{subsection.10.1}%
+\contentsline {subsubsection}{\numberline {10.1.1}Creating a Pipeline}{30}{subsubsection.10.1.1}%
+\contentsline {subsubsection}{\numberline {10.1.2}Reproducing Pipelines}{30}{subsubsection.10.1.2}%
+\contentsline {subsection}{\numberline {10.2}Parameters and Metrics}{30}{subsection.10.2}%
+\contentsline {subsubsection}{\numberline {10.2.1}Tracking Parameters}{30}{subsubsection.10.2.1}%
+\contentsline {subsubsection}{\numberline {10.2.2}Tracking Metrics}{31}{subsubsection.10.2.2}%
+\contentsline {subsection}{\numberline {10.3}Experiments}{31}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}Data Registry}{32}{subsection.10.4}%
+\contentsline {subsection}{\numberline {10.5}Cache Management}{32}{subsection.10.5}%
+\contentsline {subsubsection}{\numberline {10.5.1}Cache Location}{32}{subsubsection.10.5.1}%
+\contentsline {subsubsection}{\numberline {10.5.2}Cleaning Cache}{32}{subsubsection.10.5.2}%
+\contentsline {section}{\numberline {11}Troubleshooting and Common Issues}{33}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Common Errors and Solutions}{33}{subsection.11.1}%
+\contentsline {subsubsection}{\numberline {11.1.1}Error: "Failed to push data to remote"}{33}{subsubsection.11.1.1}%
+\contentsline {subsubsection}{\numberline {11.1.2}Error: "Output is already tracked"}{33}{subsubsection.11.1.2}%
+\contentsline {subsubsection}{\numberline {11.1.3}Error: "Failed to pull data"}{33}{subsubsection.11.1.3}%
+\contentsline {subsubsection}{\numberline {11.1.4}Error: "Corrupted cache"}{34}{subsubsection.11.1.4}%
+\contentsline {subsection}{\numberline {11.2}Performance Issues}{34}{subsection.11.2}%
+\contentsline {subsubsection}{\numberline {11.2.1}Slow Push/Pull Operations}{34}{subsubsection.11.2.1}%
+\contentsline {subsubsection}{\numberline {11.2.2}Large Cache Size}{34}{subsubsection.11.2.2}%
+\contentsline {subsection}{\numberline {11.3}Debugging Tips}{34}{subsection.11.3}%
+\contentsline {section}{\numberline {12}DVC Best Practices}{36}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Project Organization}{36}{subsection.12.1}%
+\contentsline {subsubsection}{\numberline {12.1.1}Recommended Directory Structure}{36}{subsubsection.12.1.1}%
+\contentsline {subsection}{\numberline {12.2}What to Track with DVC}{36}{subsection.12.2}%
+\contentsline {subsubsection}{\numberline {12.2.1}DO Track}{36}{subsubsection.12.2.1}%
+\contentsline {subsubsection}{\numberline {12.2.2}DON'T Track}{36}{subsubsection.12.2.2}%
+\contentsline {subsection}{\numberline {12.3}.dvcignore Configuration}{37}{subsection.12.3}%
+\contentsline {subsection}{\numberline {12.4}Commit Message Conventions}{37}{subsection.12.4}%
+\contentsline {subsection}{\numberline {12.5}Data Versioning Strategy}{37}{subsection.12.5}%
+\contentsline {subsection}{\numberline {12.6}Security Considerations}{38}{subsection.12.6}%
+\contentsline {subsection}{\numberline {12.7}Documentation}{38}{subsection.12.7}%
+\contentsline {section}{\numberline {13}Real-World Case Studies}{40}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Case Study 1: Image Classification Project}{40}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Case Study 2: NLP Pipeline}{40}{subsection.13.2}%
+\contentsline {section}{\numberline {14}Quick Reference Guide}{42}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Essential Commands Cheat Sheet}{42}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Common Workflows}{42}{subsection.14.2}%
+\contentsline {subsubsection}{\numberline {14.2.1}Initial Project Setup}{42}{subsubsection.14.2.1}%
+\contentsline {subsubsection}{\numberline {14.2.2}Daily Development}{42}{subsubsection.14.2.2}%
+\contentsline {subsubsection}{\numberline {14.2.3}Experiment Workflow}{43}{subsubsection.14.2.3}%
+\contentsline {subsection}{\numberline {14.3}Troubleshooting Checklist}{43}{subsection.14.3}%
+\contentsline {section}{\numberline {15}Conclusion}{44}{section.15}%
+\contentsline {subsection}{\numberline {15.1}Key Takeaways}{44}{subsection.15.1}%
+\contentsline {subsection}{\numberline {15.2}When to Use DVC}{44}{subsection.15.2}%
+\contentsline {subsection}{\numberline {15.3}The DVC Advantage}{44}{subsection.15.3}%
+\contentsline {subsection}{\numberline {15.4}Next Steps}{45}{subsection.15.4}%
+\contentsline {subsection}{\numberline {15.5}Additional Resources}{45}{subsection.15.5}%
+\contentsline {subsection}{\numberline {15.6}Final Thoughts}{45}{subsection.15.6}%

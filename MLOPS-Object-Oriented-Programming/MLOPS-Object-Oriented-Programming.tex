@@ -1,0 +1,2599 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{graphicx}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Python OOP Complete Guide}
+\lhead{Object-Oriented Programming}
+\cfoot{\thepage}
+
+% Title formatting
+\titleformat{\section}{\Large\bfseries\color{blue!70!black}}{\thesection}{1em}{}[\titlerule]
+\titleformat{\subsection}{\large\bfseries\color{blue!50!black}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{blue!40!black}}{\thesubsubsection}{1em}{}
+
+% Code styling
+\definecolor{codebg}{gray}{0.95}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    backgroundcolor=\color{codebg},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    frame=single,
+    xleftmargin=2em,
+    framexleftmargin=1.5em
+}
+
+\lstset{style=pythonstyle}
+
+% Command box
+\newtcolorbox{cmdbox}{
+    colback=codebg,
+    colframe=black!50,
+    boxrule=0.5pt,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm,
+    breakable
+}
+
+% Example box
+\newtcolorbox{examplebox}[1]{
+    colback=green!5!white,
+    colframe=green!75!black,
+    title=#1,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced jigsaw
+}
+
+% Note box
+\newtcolorbox{notebox}{
+    colback=yellow!10!white,
+    colframe=orange!75!black,
+    title=Important Note,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced jigsaw
+}
+
+% Warning box
+\newtcolorbox{warningbox}{
+    colback=red!5!white,
+    colframe=red!75!black,
+    title=Warning,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced jigsaw
+}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Huge\bfseries Object-Oriented Programming\\[0.5cm] in Python\par}
+    \vspace{1cm}
+    {\Large Complete Reference Guide\par}
+    \vspace{2cm}
+    {\large A Comprehensive Guide to OOP Concepts,\\
+    Classes, Inheritance, and Design Patterns in Python\par}
+    \vspace{3cm}
+    {\Large\bfseries Sujil S\par}
+    \vspace{0.5cm}
+    {\large\texttt{sujil9480@gmail.com}\par}
+    \vfill
+    {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ========================
+% SECTION 1: INTRODUCTION
+% ========================
+\section{Introduction to Object-Oriented Programming}
+
+\subsection{What is OOP?}
+
+\textbf{Object-Oriented Programming (OOP)} is a programming paradigm based on the concept of "objects" that contain both data (attributes) and code (methods). OOP allows developers to create modular, reusable, and organized code.
+
+\subsubsection{Key Principles of OOP}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Encapsulation}: Bundling data and methods that operate on that data within a single unit (class)
+    \item \textbf{Inheritance}: Creating new classes from existing ones, inheriting attributes and methods
+    \item \textbf{Polymorphism}: Ability to present the same interface for different data types
+    \item \textbf{Abstraction}: Hiding complex implementation details and showing only necessary features
+\end{enumerate}
+
+\subsection{OOP vs Structured Programming}
+
+\begin{center}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Object-Oriented Programming} & \textbf{Structural Programming} \\
+\hline
+Based on objects containing data and methods & Based on functions and procedures \\
+\hline
+Bottom-up approach & Top-down approach \\
+\hline
+Provides data hiding through encapsulation & Does not provide data hiding \\
+\hline
+Can solve problems of any complexity & Can solve moderate problems \\
+\hline
+Code reusability through inheritance & Limited code reusability \\
+\hline
+More flexible and maintainable & Less flexible \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Why Use OOP?}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Modularity}: Code is organized into objects, making it easier to understand
+    \item \textbf{Reusability}: Classes can be reused across programs
+    \item \textbf{Maintainability}: Changes in one part don't affect other parts
+    \item \textbf{Security}: Data hiding protects internal state
+    \item \textbf{Scalability}: Easy to add new features without breaking existing code
+\end{itemize}
+
+\newpage
+
+% ========================
+% SECTION 2: CLASSES AND OBJECTS
+% ========================
+\section{Classes and Objects}
+
+\subsection{Understanding Classes and Objects}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Class}: A blueprint or template for creating objects. It defines attributes and methods.
+    \item \textbf{Object}: An instance of a class. It's a concrete entity based on the class blueprint.
+\end{itemize}
+
+\begin{notebox}
+Think of a class as a cookie cutter and objects as the cookies made from it. The class defines the shape and structure, while each object is a unique instance.
+\end{notebox}
+
+\subsection{Creating a Class}
+
+\subsubsection{Basic Class Syntax}
+
+\begin{lstlisting}[language=Python]
+class ClassName:
+    # class body
+    pass
+\end{lstlisting}
+
+\textbf{Naming Convention}: Use PascalCase (each word capitalized) for class names.
+
+\begin{examplebox}{Simple Class Example}
+\begin{lstlisting}[language=Python]
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def greet(self):
+        print(f"Hello, my name is {self.name}")
+
+# Creating objects
+person1 = Person("John", 30)
+person2 = Person("Alice", 25)
+
+person1.greet()  # Output: Hello, my name is John
+person2.greet()  # Output: Hello, my name is Alice
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{The Constructor: \_\_init\_\_()}
+
+The \texttt{\_\_init\_\_()} method is a special method called a \textbf{constructor}. It's automatically called when an object is created.
+
+\subsubsection{Types of Constructors}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Default Constructor}: No parameters (except self)
+    \begin{lstlisting}[language=Python]
+class Example:
+    def __init__(self):
+        self.value = 0
+    \end{lstlisting}
+    
+    \item \textbf{Parameterized Constructor}: Accepts parameters
+    \begin{lstlisting}[language=Python]
+class Example:
+    def __init__(self, value):
+        self.value = value
+    \end{lstlisting}
+\end{enumerate}
+
+\subsection{The self Parameter}
+
+\textbf{self} represents the instance of the class. It's used to access variables and methods of the class.
+
+\begin{notebox}
+\begin{itemize}[leftmargin=*]
+    \item \texttt{self} is NOT a keyword; it's a convention (you can use any name, but don't!)
+    \item \texttt{self} must be the first parameter in instance methods
+    \item When calling methods, Python automatically passes the instance as \texttt{self}
+\end{itemize}
+\end{notebox}
+
+\begin{examplebox}{Understanding self}
+\begin{lstlisting}[language=Python]
+class Atm:
+    def __init__(self):
+        print(f"Object created at: {id(self)}")
+        self.pin = ''
+        self.balance = 0
+
+obj1 = Atm()  # Object created at: 140289660099024
+print(id(obj1))  # 140289660099024 (same as self)
+
+obj2 = Atm()  # Object created at: 140289660586384
+print(id(obj2))  # 140289660586384 (different object)
+\end{lstlisting}
+\end{examplebox}
+
+\newpage
+
+% ========================
+% SECTION 3: ATTRIBUTES
+% ========================
+\section{Attributes and Methods}
+
+\subsection{Instance Attributes}
+
+\textbf{Instance attributes} are variables that belong to a specific object. Each object has its own copy.
+
+\begin{lstlisting}[language=Python]
+class Person:
+    def __init__(self, name, country):
+        self.name = name        # instance attribute
+        self.country = country  # instance attribute
+
+p1 = Person('Nitish', 'India')
+p2 = Person('Steve', 'Australia')
+
+print(p1.name)     # Nitish
+print(p2.name)     # Steve
+print(p1.country)  # India
+print(p2.country)  # Australia
+\end{lstlisting}
+
+\subsection{Class Attributes (Static Variables)}
+
+\textbf{Class attributes} are shared by all instances of the class. They're defined directly in the class body.
+
+\begin{examplebox}{Class Attributes Example}
+\begin{lstlisting}[language=Python]
+class Atm:
+    # Class attribute (shared by all instances)
+    __counter = 1
+    
+    def __init__(self):
+        self.pin = ''
+        self.balance = 0
+        # Use class attribute to assign unique ID
+        self.cid = Atm.__counter
+        Atm.__counter += 1
+    
+    @staticmethod
+    def get_counter():
+        return Atm.__counter
+
+c1 = Atm()
+print(c1.cid)  # 1
+
+c2 = Atm()
+print(c2.cid)  # 2
+
+c3 = Atm()
+print(c3.cid)  # 3
+
+print(Atm.get_counter())  # 4
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Instance Attributes vs Class Attributes}
+
+\begin{center}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Instance Attributes} & \textbf{Class Attributes} \\
+\hline
+Unique to each object & Shared by all objects \\
+\hline
+Defined in \_\_init\_\_() method & Defined in class body \\
+\hline
+Accessed via self.attribute & Accessed via ClassName.attribute \\
+\hline
+Different values for each instance & Same value for all instances \\
+\hline
+Use for object-specific data & Use for shared data \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Creating Attributes from Outside the Class}
+
+Python allows dynamic attribute creation (though not recommended for production code).
+
+\begin{lstlisting}[language=Python]
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+p = Person("John")
+print(p.name)  # John
+
+# Creating new attribute from outside
+p.gender = 'male'
+print(p.gender)  # male
+
+# This attribute exists only for this instance
+p2 = Person("Alice")
+# print(p2.gender)  # AttributeError!
+\end{lstlisting}
+
+\newpage
+
+% ========================
+% SECTION 4: METHODS
+% ========================
+\section{Methods in Python}
+
+\subsection{Types of Methods}
+
+Python has three types of methods:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Instance Methods}: Operate on instance data (require \texttt{self})
+    \item \textbf{Class Methods}: Operate on class data (use \texttt{@classmethod} decorator)
+    \item \textbf{Static Methods}: Don't operate on instance or class data (use \texttt{@staticmethod})
+\end{enumerate}
+
+\subsection{Instance Methods}
+
+Instance methods are the most common type. They can access and modify instance and class attributes.
+
+\begin{lstlisting}[language=Python]
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    # Instance method
+    def greet(self):
+        print(f"Hello, I'm {self.name}")
+    
+    # Instance method with parameters
+    def birthday(self):
+        self.age += 1
+        print(f"Happy birthday! Now {self.age} years old")
+
+p = Person("John", 30)
+p.greet()      # Hello, I'm John
+p.birthday()   # Happy birthday! Now 31 years old
+\end{lstlisting}
+
+\subsection{Class Methods}
+
+Class methods receive the class as the first argument (conventionally named \texttt{cls}).
+
+\begin{examplebox}{Class Method Example}
+\begin{lstlisting}[language=Python]
+class Person:
+    count = 0  # Class attribute
+    
+    def __init__(self, name):
+        self.name = name
+        Person.count += 1
+    
+    @classmethod
+    def get_count(cls):
+        """Class method - receives class as first argument"""
+        return cls.count
+    
+    @classmethod
+    def create_anonymous(cls):
+        """Factory method - creates instance"""
+        return cls("Anonymous")
+
+p1 = Person("John")
+p2 = Person("Alice")
+print(Person.get_count())  # 2
+
+# Using factory method
+p3 = Person.create_anonymous()
+print(p3.name)  # Anonymous
+print(Person.get_count())  # 3
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Static Methods}
+
+Static methods don't receive \texttt{self} or \texttt{cls}. They're utility functions that belong to the class namespace.
+
+\begin{examplebox}{Static Method Example}
+\begin{lstlisting}[language=Python]
+class Atm:
+    __water_source = "well in the circus"
+    
+    def __init__(self, name):
+        self.name = name
+    
+    @staticmethod
+    def get_water_source():
+        """Static method - no self or cls parameter"""
+        return Atm.__water_source
+    
+    @staticmethod
+    def is_valid_pin(pin):
+        """Utility function"""
+        return len(str(pin)) == 4
+
+# Can call without creating instance
+print(Atm.get_water_source())  # well in the circus
+print(Atm.is_valid_pin(1234))  # True
+print(Atm.is_valid_pin(123))   # False
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Method Comparison Table}
+
+\begin{center}
+\begin{tabular}{|p{0.25\textwidth}|p{0.2\textwidth}|p{0.2\textwidth}|p{0.2\textwidth}|}
+\hline
+\textbf{Feature} & \textbf{Instance} & \textbf{Class} & \textbf{Static} \\
+\hline
+First parameter & self & cls & None \\
+\hline
+Decorator & None & @classmethod & @staticmethod \\
+\hline
+Access instance data & Yes & No & No \\
+\hline
+Access class data & Yes & Yes & Yes (via ClassName) \\
+\hline
+Modify instance & Yes & No & No \\
+\hline
+Modify class & Yes & Yes & No \\
+\hline
+Call from class & No & Yes & Yes \\
+\hline
+Call from instance & Yes & Yes & Yes \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{When to Use Each Method Type}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Instance Methods}: When you need to access/modify instance-specific data
+    \item \textbf{Class Methods}: When you need to access/modify class-level data, or create factory methods
+    \item \textbf{Static Methods}: When you need utility functions that don't need access to instance or class data
+\end{itemize}
+
+\newpage
+
+% ========================
+% SECTION 5: ENCAPSULATION
+% ========================
+\section{Encapsulation and Access Modifiers}
+
+\subsection{What is Encapsulation?}
+
+\textbf{Encapsulation} is the bundling of data and methods that operate on that data within a single unit (class), and restricting direct access to some components.
+
+\subsubsection{Benefits of Encapsulation}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Data Protection}: Prevents accidental modification of data
+    \item \textbf{Flexibility}: Internal implementation can change without affecting external code
+    \item \textbf{Maintainability}: Clear interface between object and outside world
+    \item \textbf{Control}: Validation can be added when setting values
+\end{itemize}
+
+\subsection{Access Modifiers in Python}
+
+Python uses naming conventions to indicate access levels:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Public}: \texttt{attribute} (no underscore)
+    \item \textbf{Protected}: \texttt{\_attribute} (single underscore)
+    \item \textbf{Private}: \texttt{\_\_attribute} (double underscore)
+\end{enumerate}
+
+\subsection{Public Attributes}
+
+Public attributes can be accessed from anywhere.
+
+\begin{lstlisting}[language=Python]
+class Person:
+    def __init__(self, name):
+        self.name = name  # Public attribute
+
+p = Person("John")
+print(p.name)  # Accessible
+p.name = "Alice"  # Can be modified
+\end{lstlisting}
+
+\subsection{Protected Attributes}
+
+Protected attributes (single underscore) are a convention indicating "use with caution." Python doesn't enforce this.
+
+\begin{lstlisting}[language=Python]
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self._age = age  # Protected (by convention)
+    
+    def get_age(self):
+        return self._age
+
+p = Person("John", 30)
+print(p.name)      # OK
+print(p._age)      # Works, but shouldn't be used directly
+print(p.get_age()) # Preferred way
+\end{lstlisting}
+
+\subsection{Private Attributes (Name Mangling)}
+
+Private attributes (double underscore) undergo name mangling. Python changes the name internally.
+
+\begin{examplebox}{Private Attributes with Name Mangling}
+\begin{lstlisting}[language=Python]
+class Atm:
+    def __init__(self):
+        self.pin = ''
+        self.__balance = 0  # Private attribute
+    
+    def get_balance(self):
+        """Getter method for private attribute"""
+        return self.__balance
+    
+    def set_balance(self, new_value):
+        """Setter method with validation"""
+        if type(new_value) == int and new_value >= 0:
+            self.__balance = new_value
+        else:
+            print('Invalid balance amount')
+
+obj = Atm()
+# print(obj.__balance)  # AttributeError!
+
+# Access through getter/setter
+obj.set_balance(1000)
+print(obj.get_balance())  # 1000
+
+# Name mangling: __balance becomes _Atm__balance
+print(obj._Atm__balance)  # 1000 (not recommended!)
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Checking Attributes with dir()}
+
+The \texttt{dir()} function lists all attributes and methods of an object.
+
+\begin{lstlisting}[language=Python]
+class Test:
+    def __init__(self):
+        self.foo = 11       # Public
+        self._bar = 23      # Protected
+        self.__baz = 42     # Private
+
+t = Test()
+print(dir(t))
+
+# Output includes:
+# 'foo'           <- Public attribute (unchanged)
+# '_bar'          <- Protected attribute (unchanged)
+# '_Test__baz'    <- Private attribute (name mangled!)
+\end{lstlisting}
+
+\subsection{Getters and Setters}
+
+Use getter and setter methods to control access to private attributes.
+
+\begin{examplebox}{Complete Encapsulation Example}
+\begin{lstlisting}[language=Python]
+class BankAccount:
+    def __init__(self, account_number, balance=0):
+        self.__account_number = account_number
+        self.__balance = balance
+    
+    # Getter methods
+    def get_account_number(self):
+        return self.__account_number
+    
+    def get_balance(self):
+        return self.__balance
+    
+    # Setter with validation
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+            print(f"Deposited: ${amount}")
+        else:
+            print("Invalid amount")
+    
+    def withdraw(self, amount):
+        if 0 < amount <= self.__balance:
+            self.__balance -= amount
+            print(f"Withdrawn: ${amount}")
+        else:
+            print("Insufficient funds or invalid amount")
+
+account = BankAccount("123456", 1000)
+print(account.get_balance())  # 1000
+account.deposit(500)          # Deposited: $500
+print(account.get_balance())  # 1500
+account.withdraw(200)         # Withdrawn: $200
+print(account.get_balance())  # 1300
+\end{lstlisting}
+\end{examplebox}
+
+\newpage
+
+% ========================
+% SECTION 6: SPECIAL METHODS
+% ========================
+\section{Magic Methods (Dunder Methods)}
+
+\subsection{What are Magic Methods?}
+
+\textbf{Magic methods} (also called \textbf{dunder methods} - double underscore) are special methods with double underscores before and after their names. They enable operator overloading and provide special functionality.
+
+\subsection{Common Magic Methods}
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Method} & \textbf{Purpose} & \textbf{Example Usage} \\
+\hline
+\_\_init\_\_ & Constructor & Called when object created \\
+\_\_str\_\_ & String representation & print(obj) \\
+\_\_repr\_\_ & Developer representation & repr(obj) \\
+\_\_len\_\_ & Length & len(obj) \\
+\_\_add\_\_ & Addition & obj1 + obj2 \\
+\_\_sub\_\_ & Subtraction & obj1 - obj2 \\
+\_\_mul\_\_ & Multiplication & obj1 * obj2 \\
+\_\_truediv\_\_ & Division & obj1 / obj2 \\
+\_\_eq\_\_ & Equality & obj1 == obj2 \\
+\_\_lt\_\_ & Less than & obj1 $<$ obj2 \\
+\_\_gt\_\_ & Greater than & obj1 $>$ obj2 \\
+\_\_call\_\_ & Make callable & obj() \\
+\_\_getitem\_\_ & Indexing & obj[key] \\
+\_\_setitem\_\_ & Assignment & obj[key] = value \\
+\_\_del\_\_ & Destructor & del obj \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{\_\_str\_\_() vs \_\_repr\_\_()}
+
+Both methods return string representations, but serve different purposes.
+
+\begin{examplebox}{\_\_str\_\_ vs \_\_repr\_\_}
+\begin{lstlisting}[language=Python]
+import datetime
+
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def __str__(self):
+        """User-friendly representation"""
+        return f"{self.name} ({self.age} years old)"
+    
+    def __repr__(self):
+        """Developer-friendly representation"""
+        return f"Person(name='{self.name}', age={self.age})"
+
+p = Person("John", 30)
+print(str(p))   # John (30 years old)
+print(repr(p))  # Person(name='John', age=30)
+
+# Built-in example
+now = datetime.datetime.now()
+print(str(now))   # 2024-12-16 15:46:52.007475
+print(repr(now))  # datetime.datetime(2024, 12, 16, 15, 46, 52, 7475)
+\end{lstlisting}
+\end{examplebox}
+
+\begin{notebox}
+\textbf{str vs repr in summary:}
+\begin{itemize}[leftmargin=*]
+    \item \texttt{\_\_str\_\_()}: For end users - meant to be readable
+    \item \texttt{\_\_repr\_\_()}: For developers - meant to be unambiguous and reproducible
+    \item If only one is defined, Python uses it for both
+    \item repr() should ideally return valid Python code to recreate the object
+\end{itemize}
+\end{notebox}
+
+\subsection{Operator Overloading}
+
+Operator overloading allows custom classes to use standard Python operators.
+
+\begin{examplebox}{Fraction Class with Operator Overloading}
+\begin{lstlisting}[language=Python]
+class Fraction:
+    def __init__(self, numerator, denominator):
+        self.num = numerator
+        self.den = denominator
+    
+    def __str__(self):
+        return f'{self.num}/{self.den}'
+    
+    def __add__(self, other):
+        """Overload + operator"""
+        new_num = self.num * other.den + other.num * self.den
+        new_den = self.den * other.den
+        return f'{new_num}/{new_den}'
+    
+    def __sub__(self, other):
+        """Overload - operator"""
+        new_num = self.num * other.den - other.num * self.den
+        new_den = self.den * other.den
+        return f'{new_num}/{new_den}'
+    
+    def __mul__(self, other):
+        """Overload * operator"""
+        new_num = self.num * other.num
+        new_den = self.den * other.den
+        return f'{new_num}/{new_den}'
+    
+    def __truediv__(self, other):
+        """Overload / operator"""
+        new_num = self.num * other.den
+        new_den = self.den * other.num
+        return f'{new_num}/{new_den}'
+    
+    def convert_to_decimal(self):
+        """Convert fraction to decimal"""
+        return self.num / self.den
+
+# Usage
+fr1 = Fraction(3, 4)
+fr2 = Fraction(1, 2)
+
+print(fr1 + fr2)  # 10/8
+print(fr1 - fr2)  # 2/8
+print(fr1 * fr2)  # 3/8
+print(fr1 / fr2)  # 6/4
+print(fr1.convert_to_decimal())  # 0.75
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{The Destructor: \_\_del\_\_()}
+
+The destructor is called when an object is about to be destroyed.
+
+\begin{lstlisting}[language=Python]
+class Example:
+    def __init__(self, name):
+        self.name = name
+        print(f'Constructor called for {self.name}')
+    
+    def __del__(self):
+        print(f'Destructor called for {self.name}')
+
+obj1 = Example("Object1")  # Constructor called
+obj2 = obj1  # Reference copy (no new object)
+
+del obj1  # Doesn't call destructor (obj2 still references it)
+del obj2  # Now destructor is called
+\end{lstlisting}
+
+\begin{notebox}
+The destructor is called when:
+\begin{itemize}[leftmargin=*]
+    \item The last reference to an object is deleted
+    \item The program terminates
+    \item The object goes out of scope
+\end{itemize}
+Python uses garbage collection, so you rarely need to define \_\_del\_\_().
+\end{notebox}
+
+\newpage
+
+% ========================
+% SECTION 7: INHERITANCE
+% ========================
+\section{Inheritance}
+
+\subsection{What is Inheritance?}
+
+\textbf{Inheritance} allows a class (child/derived class) to inherit attributes and methods from another class (parent/base class). This promotes code reusability and establishes a relationship between classes.
+
+\subsubsection{Benefits of Inheritance}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Code Reusability}: Don't repeat code from parent class
+    \item \textbf{Extensibility}: Add new features while keeping existing ones
+    \item \textbf{Maintainability}: Changes in parent affect all children
+    \item \textbf{Hierarchy}: Models real-world relationships
+\end{itemize}
+
+\subsubsection{Limitations of Inheritance}
+\begin{itemize}[leftmargin=*]
+    \item Increases execution time (jumping between classes)
+    \item Creates tight coupling between parent and child
+    \item Modifications require changes in both parent and child
+    \item Needs careful implementation to avoid errors
+\end{itemize}
+
+\subsection{Basic Inheritance Syntax}
+
+\begin{lstlisting}[language=Python]
+# Parent class
+class Parent:
+    def __init__(self):
+        self.attribute = "value"
+    
+    def method(self):
+        print("Parent method")
+
+# Child class inherits from Parent
+class Child(Parent):
+    pass  # Inherits everything from Parent
+
+# Usage
+c = Child()
+c.method()  # Inherited from Parent
+\end{lstlisting}
+
+\subsection{What Gets Inherited?}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Constructor}: If child doesn't define \_\_init\_\_(), parent's constructor is used
+    \item \textbf{Public Methods}: All public methods are inherited
+    \item \textbf{Public Attributes}: All public attributes are inherited
+    \item \textbf{Protected Members}: Single underscore members (\_attribute) are inherited
+\end{enumerate}
+
+\begin{warningbox}
+\textbf{Private members (\_\_attribute) are NOT directly accessible in child classes!} They undergo name mangling and become \_ParentClassName\_\_attribute.
+\end{warningbox}
+
+\begin{examplebox}{Inheritance Example}
+\begin{lstlisting}[language=Python]
+class Phone:
+    def __init__(self, price, brand, camera):
+        print("Inside Phone constructor")
+        self.__price = price  # Private
+        self.brand = brand    # Public
+        self.camera = camera  # Public
+    
+    def buy(self):
+        print("Buying a phone")
+    
+    def get_price(self):
+        return self.__price
+
+class SmartPhone(Phone):
+    pass
+
+# Create SmartPhone instance
+s = SmartPhone(20000, "Apple", 13)
+# Output: Inside Phone constructor
+
+s.buy()  # Inherited method works
+print(s.brand)  # Inherited public attribute
+# print(s.__price)  # AttributeError! Private attribute
+print(s.get_price())  # Works! Accessing through method
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Constructor Inheritance}
+
+\subsubsection{Case 1: Child Has No Constructor}
+If child class doesn't define \_\_init\_\_(), parent's constructor is automatically used.
+
+\begin{lstlisting}[language=Python]
+class Phone:
+    def __init__(self, price, brand):
+        self.price = price
+        self.brand = brand
+
+class SmartPhone(Phone):
+    pass  # No constructor
+
+s = SmartPhone(20000, "Apple")
+print(s.price)  # 20000 (from parent constructor)
+\end{lstlisting}
+
+\subsubsection{Case 2: Child Has Its Own Constructor}
+If child defines \_\_init\_\_(), parent's constructor is NOT automatically called.
+
+\begin{lstlisting}[language=Python]
+class Phone:
+    def __init__(self, price, brand):
+        self.price = price
+        self.brand = brand
+
+class SmartPhone(Phone):
+    def __init__(self, os, ram):
+        self.os = os
+        self.ram = ram
+
+s = SmartPhone("Android", 4)
+print(s.os)     # Android
+# print(s.price)  # AttributeError! Parent constructor not called
+\end{lstlisting}
+
+\subsection{The super() Function}
+
+\texttt{super()} allows calling parent class methods, especially the constructor.
+
+\begin{examplebox}{Using super() with Constructor}
+\begin{lstlisting}[language=Python]
+class Phone:
+    def __init__(self, price, brand, camera):
+        print("Inside Phone constructor")
+        self.__price = price
+        self.brand = brand
+        self.camera = camera
+
+class SmartPhone(Phone):
+    def __init__(self, price, brand, camera, os, ram):
+        print("Inside SmartPhone constructor")
+        # Call parent constructor
+        super().__init__(price, brand, camera)
+        # Add child-specific attributes
+        self.os = os
+        self.ram = ram
+
+s = SmartPhone(20000, "Samsung", 12, "Android", 4)
+# Output:
+# Inside SmartPhone constructor
+# Inside Phone constructor
+
+print(s.brand)  # Samsung
+print(s.os)     # Android
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Method Overriding}
+
+Child classes can override parent methods to provide specific implementations.
+
+\begin{examplebox}{Method Overriding}
+\begin{lstlisting}[language=Python]
+class Phone:
+    def __init__(self, price, brand):
+        self.price = price
+        self.brand = brand
+    
+    def buy(self):
+        print("Buying a phone")
+
+class SmartPhone(Phone):
+    # Override the buy method
+    def buy(self):
+        print("Buying a smartphone")
+        # Optionally call parent method
+        super().buy()
+
+s = SmartPhone(20000, "Apple")
+s.buy()
+# Output:
+# Buying a smartphone
+# Buying a phone
+\end{lstlisting}
+\end{examplebox}
+
+\begin{notebox}
+\textbf{Key Points about super():}
+\begin{itemize}[leftmargin=*]
+    \item Can only be used inside a class method
+    \item Commonly used in \_\_init\_\_() to call parent constructor
+    \item Can call any parent method, not just \_\_init\_\_()
+    \item Returns a proxy object that delegates calls to parent class
+\end{itemize}
+\end{notebox}
+
+\newpage
+
+% ========================
+% SECTION 8: TYPES OF INHERITANCE
+% ========================
+\section{Types of Inheritance}
+
+\subsection{1. Single Inheritance}
+
+One child class inherits from one parent class (simple linear inheritance).
+
+\textbf{Structure}: Parent $\rightarrow$ Child
+
+\begin{examplebox}{Single Inheritance Example}
+\begin{lstlisting}[language=Python]
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    
+    def eat(self):
+        print(f"{self.name} is eating")
+
+class Dog(Animal):
+    def bark(self):
+        print(f"{self.name} is barking")
+
+# Dog inherits from Animal
+dog = Dog("Buddy")
+dog.eat()   # Inherited from Animal
+dog.bark()  # Dog's own method
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{2. Multilevel Inheritance}
+
+Classes inherit in a chain: Grandparent $\rightarrow$ Parent $\rightarrow$ Child
+
+\begin{examplebox}{Multilevel Inheritance Example}
+\begin{lstlisting}[language=Python]
+class Product:
+    def review(self):
+        print("Product customer review")
+
+class Phone(Product):
+    def __init__(self, price, brand):
+        self.price = price
+        self.brand = brand
+    
+    def buy(self):
+        print("Buying a phone")
+
+class SmartPhone(Phone):
+    def apps(self):
+        print("Installing apps")
+
+# SmartPhone inherits from Phone, which inherits from Product
+s = SmartPhone(20000, "Apple")
+s.review()  # From Product (2 levels up)
+s.buy()     # From Phone (1 level up)
+s.apps()    # From SmartPhone (own method)
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{3. Hierarchical Inheritance}
+
+Multiple child classes inherit from one parent class.
+
+\textbf{Structure}: 
+\begin{verbatim}
+          Parent
+         /      \
+    Child1    Child2
+\end{verbatim}
+
+\begin{examplebox}{Hierarchical Inheritance Example}
+\begin{lstlisting}[language=Python]
+class Phone:
+    def __init__(self, price, brand):
+        self.price = price
+        self.brand = brand
+    
+    def buy(self):
+        print("Buying a phone")
+
+# Multiple children from same parent
+class SmartPhone(Phone):
+    def apps(self):
+        print("Smartphone apps")
+
+class FeaturePhone(Phone):
+    def basic_features(self):
+        print("Basic phone features")
+
+# Both inherit from Phone independently
+s = SmartPhone(20000, "Apple")
+f = FeaturePhone(1000, "Nokia")
+
+s.buy()  # Inherited
+f.buy()  # Inherited
+s.apps()  # SmartPhone specific
+f.basic_features()  # FeaturePhone specific
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{4. Multiple Inheritance}
+
+A child class inherits from multiple parent classes.
+
+\textbf{Structure}: Child(Parent1, Parent2)
+
+\begin{examplebox}{Multiple Inheritance Example}
+\begin{lstlisting}[language=Python]
+class Phone:
+    def __init__(self, price, brand):
+        self.price = price
+        self.brand = brand
+    
+    def buy(self):
+        print("Buying a phone")
+
+class Product:
+    def review(self):
+        print("Customer review")
+
+# SmartPhone inherits from both Phone and Product
+class SmartPhone(Phone, Product):
+    pass
+
+s = SmartPhone(20000, "Apple")
+s.buy()     # From Phone
+s.review()  # From Product
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{5. Hybrid Inheritance}
+
+Combination of multiple inheritance types.
+
+\begin{examplebox}{Hybrid Inheritance Example}
+\begin{lstlisting}[language=Python]
+class Animal:
+    def __init__(self, name):
+        self.name = name
+        print(f"Animal.__init__ called for {name}")
+    
+    def sound(self):
+        print(f"{self.name} makes a sound")
+
+class Mammal(Animal):
+    def __init__(self, name):
+        super().__init__(name)
+        print(f"Mammal.__init__ called for {name}")
+    
+    def feed_milk(self):
+        print(f"{self.name} feeds milk")
+
+class Bird(Animal):
+    def __init__(self, name):
+        super().__init__(name)
+        print(f"Bird.__init__ called for {name}")
+    
+    def fly(self):
+        print(f"{self.name} is flying")
+
+# Bat inherits from both Mammal and Bird
+class Bat(Mammal, Bird):
+    def __init__(self, name):
+        super().__init__(name)
+        print(f"Bat.__init__ called for {name}")
+    
+    def nocturnal(self):
+        print(f"{self.name} is nocturnal")
+
+bat = Bat("Bruce")
+# Initialization follows MRO: Bat -> Mammal -> Bird -> Animal
+
+bat.sound()       # From Animal
+bat.feed_milk()   # From Mammal
+bat.fly()         # From Bird
+bat.nocturnal()   # From Bat
+\end{lstlisting}
+\end{examplebox}
+
+\newpage
+
+% ========================
+% SECTION 9: MRO AND DIAMOND PROBLEM
+% ========================
+\section{Method Resolution Order (MRO)}
+
+\subsection{What is MRO?}
+
+\textbf{Method Resolution Order (MRO)} is the order in which Python searches for methods and attributes in a class hierarchy, especially in multiple inheritance.
+
+\subsection{The Diamond Problem}
+
+The diamond problem occurs when a class inherits from two classes that share a common ancestor.
+
+\textbf{Structure}:
+\begin{verbatim}
+        A
+       / \
+      B   C
+       \ /
+        D
+\end{verbatim}
+
+Problem: If D inherits from B and C, and both B and C inherit from A, which path should Python follow?
+
+\subsection{How Python Resolves the Diamond Problem}
+
+Python uses \textbf{C3 Linearization Algorithm} to determine MRO:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Depth-first}: Go deep before going wide
+    \item \textbf{Left-to-right}: Check parents from left to right
+    \item \textbf{No duplicates}: Each class appears only once
+    \item \textbf{Monotonicity}: Subclass always comes before superclass
+\end{enumerate}
+
+For class D(B, C), the MRO is: \textbf{D $\rightarrow$ B $\rightarrow$ C $\rightarrow$ A $\rightarrow$ object}
+
+\subsection{Three Cases of super() Chain Behavior}
+
+\subsubsection{Case 1: C Does NOT Call super() - Chain Breaks at C}
+
+\begin{examplebox}{Case 1: Broken Chain at C}
+\begin{lstlisting}[language=Python]
+class A:
+    def __init__(self, name):
+        self.name = name
+    
+    def greet(self):
+        print(f"Hello from A, {self.name}.")
+
+class B(A):
+    def greet(self):
+        print(f"Hello from B, {self.name}.")
+        super().greet()  # Continues to next in MRO (C)
+
+class C(A):
+    def greet(self):
+        print(f"Hello from C, {self.name}.")
+        # NO super() call - CHAIN BREAKS HERE!
+
+class D(B, C):
+    def greet(self):
+        print(f"Hello from D, {self.name}.")
+        super().greet()  # Starts MRO chain (calls B)
+
+d = D("Frank")
+print("MRO:", [cls.__name__ for cls in D.__mro__])
+# MRO: ['D', 'B', 'C', 'A', 'object']
+
+d.greet()
+# Output:
+# Hello from D, Frank.
+# Hello from B, Frank.
+# Hello from C, Frank.
+# (A is NEVER called - chain broken at C!)
+
+# Execution Flow:
+# D -> B -> C -> X (stops, A never executes)
+\end{lstlisting}
+\end{examplebox}
+
+\begin{warningbox}
+In Case 1, even though A is next in the MRO after C, it never executes because C doesn't call \texttt{super()}. The chain stops at C.
+\end{warningbox}
+
+\subsubsection{Case 2: Both B and C Call super() - Complete Chain (CORRECT)}
+
+\begin{examplebox}{Case 2: Complete Chain - Best Practice}
+\begin{lstlisting}[language=Python]
+class A:
+    def __init__(self, name):
+        self.name = name
+    
+    def greet(self):
+        print(f"Hello from A, {self.name}.")
+
+class B(A):
+    def greet(self):
+        print(f"Hello from B, {self.name}.")
+        super().greet()  # Continues to next in MRO (C)
+
+class C(A):
+    def greet(self):
+        print(f"Hello from C, {self.name}.")
+        super().greet()  # Continues to next in MRO (A)
+
+class D(B, C):
+    def greet(self):
+        print(f"Hello from D, {self.name}.")
+        super().greet()  # Starts MRO chain (calls B)
+
+d = D("Frank")
+print("MRO:", [cls.__name__ for cls in D.__mro__])
+# MRO: ['D', 'B', 'C', 'A', 'object']
+
+d.greet()
+# Output:
+# Hello from D, Frank.
+# Hello from B, Frank.
+# Hello from C, Frank.
+# Hello from A, Frank.
+
+# Execution Flow:
+# D -> B -> C -> A (complete chain!)
+\end{lstlisting}
+\end{examplebox}
+
+\begin{notebox}
+\textbf{Case 2 is the CORRECT implementation!} All classes in the MRO chain execute because every intermediate class calls \texttt{super()}.
+\end{notebox}
+
+\subsubsection{Case 3: Neither B nor C Call super() - Chain Breaks at B}
+
+\begin{examplebox}{Case 3: Broken Chain at B}
+\begin{lstlisting}[language=Python]
+class A:
+    def __init__(self, name):
+        self.name = name
+    
+    def greet(self):
+        print(f"Hello from A, {self.name}.")
+
+class B(A):
+    def greet(self):
+        print(f"Hello from B, {self.name}.")
+        # NO super() call - CHAIN BREAKS HERE!
+
+class C(A):
+    def greet(self):
+        print(f"Hello from C, {self.name}.")
+        # NO super() call (won't be reached anyway)
+
+class D(B, C):
+    def greet(self):
+        print(f"Hello from D, {self.name}.")
+        super().greet()  # Starts MRO chain (calls B)
+
+d = D("Frank")
+print("MRO:", [cls.__name__ for cls in D.__mro__])
+# MRO: ['D', 'B', 'C', 'A', 'object']
+
+d.greet()
+# Output:
+# Hello from D, Frank.
+# Hello from B, Frank.
+# (Both C and A are NEVER called - chain broken at B!)
+
+# Execution Flow:
+# D -> B -> X (stops, C and A never execute)
+\end{lstlisting}
+\end{examplebox}
+
+\begin{warningbox}
+In Case 3, the chain breaks immediately at B. Since B doesn't call \texttt{super()}, neither C nor A ever execute, even though they're both in the MRO.
+\end{warningbox}
+
+\subsection{Side-by-Side Comparison}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Aspect} & \textbf{Case 1} & \textbf{Case 2} & \textbf{Case 3} \\
+\hline
+D calls super()? & YES & YES & YES \\
+\hline
+B calls super()? & YES & YES & NO \\
+\hline
+C calls super()? & NO & YES & NO \\
+\hline
+A executes? & NO & YES & NO \\
+\hline
+Output & D, B, C & D, B, C, A & D, B \\
+\hline
+Chain Status & Broken at C & Complete & Broken at B \\
+\hline
+\end{tabular}
+\caption{Comparison of super() chain behaviors}
+\end{table}
+
+\subsection{Visual Representation}
+
+\begin{verbatim}
+MRO for all cases: D -> B -> C -> A
+
+Case 1 (C breaks chain):
+    D [OK] -> B [OK] -> C [OK] -> A [NO]
+                           ^
+                     Chain breaks here
+                     (C doesn't call super)
+
+Case 2 (Complete chain - CORRECT):
+    D [OK] -> B [OK] -> C [OK] -> A [OK]
+                                      ^
+                                All execute!
+                           (Everyone calls super)
+
+Case 3 (B breaks chain):
+    D [OK] -> B [OK] -> C [NO] -> A [NO]
+                 ^
+           Chain breaks here
+           (B doesn't call super)
+\end{verbatim}
+
+\subsection{Key Takeaways}
+
+\begin{notebox}
+\textbf{Critical Points About Cooperative super():}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Cooperative Inheritance}: For the full MRO chain to execute, EVERY intermediate class must call \texttt{super()}.
+    \item \textbf{Breaking the Chain}: If ANY class doesn't call \texttt{super()}, the chain stops there, and all subsequent classes in the MRO won't execute.
+    \item \textbf{Correct Implementation}: Case 2 is the only correct implementation. In multiple inheritance, all intermediate classes should call \texttt{super()}.
+    \item \textbf{Diamond Problem Solution}: \texttt{super()} ensures the base class (A) is called only ONCE, even though it's reachable through multiple paths.
+    \item \textbf{Exception}: Only the final base class should NOT call \texttt{super()}, because there's nothing after it in the MRO.
+\end{itemize}
+\end{notebox}
+
+\subsection{Best Practice Pattern}
+
+\begin{lstlisting}[language=Python]
+# GOOD - Always call super()
+def method(self):
+    # Do your work first
+    print("Doing work in this class")
+    # Then call super() to continue the chain
+    super().method()
+
+# BAD - Missing super() call
+def method(self):
+    # Do your work
+    print("Doing work in this class")
+    # No super() call - breaks the chain!
+\end{lstlisting}
+
+\subsection{Practical Example: Why This Matters}
+
+\begin{examplebox}{Real-World Mixin Example}
+\begin{lstlisting}[language=Python]
+class DatabaseMixin:
+    def save(self):
+        print("Saving to database...")
+        super().save()  # Must call super()!
+
+class CacheMixin:
+    def save(self):
+        print("Updating cache...")
+        super().save()  # Must call super()!
+
+class Model:
+    def save(self):
+        print("Validating data...")
+
+class User(DatabaseMixin, CacheMixin, Model):
+    def save(self):
+        print("Saving user...")
+        super().save()
+
+# MRO: User -> DatabaseMixin -> CacheMixin -> Model
+
+user = User()
+user.save()
+# Output:
+# Saving user...
+# Saving to database...
+# Updating cache...
+# Validating data...
+
+# If any mixin forgets super().save(), the chain breaks!
+# You might save to database but forget to update cache,
+# causing hard-to-track bugs.
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Viewing MRO}
+
+\begin{lstlisting}[language=Python]
+# Three ways to view MRO:
+
+# 1. Using __mro__ attribute (tuple)
+print(D.__mro__)
+
+# 2. Using mro() method (list)
+print(D.mro())
+
+# 3. Human-readable format
+print([cls.__name__ for cls in D.__mro__])
+# Output: ['D', 'B', 'C', 'A', 'object']
+\end{lstlisting}
+
+\begin{warningbox}
+\textbf{Common Mistake}: Forgetting to call \texttt{super()} in mixin classes or intermediate classes in a diamond inheritance hierarchy. This breaks the cooperative nature of multiple inheritance and can lead to subtle bugs where parts of your code silently fail to execute.
+\end{warningbox}
+
+\newpage
+
+% ========================
+% SECTION 10: POLYMORPHISM
+% ========================
+\section{Polymorphism}
+
+\subsection{What is Polymorphism?}
+
+\textbf{Polymorphism} means "many forms." It's the ability of different objects to respond to the same method call in different ways.
+
+\subsubsection{Types of Polymorphism in Python}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Method Overriding}: Child class provides different implementation
+    \item \textbf{Method Overloading}: Same method name, different parameters (limited in Python)
+    \item \textbf{Operator Overloading}: Custom behavior for operators
+\end{enumerate}
+
+\subsection{Method Overriding}
+
+Method overriding allows a child class to provide a specific implementation of a method already defined in parent class.
+
+\begin{examplebox}{Method Overriding Example}
+\begin{lstlisting}[language=Python]
+class Animal:
+    def sound(self):
+        print("Animal makes a sound")
+
+class Dog(Animal):
+    def sound(self):
+        print("Dog barks")
+
+class Cat(Animal):
+    def sound(self):
+        print("Cat meows")
+
+# Polymorphic behavior
+animals = [Animal(), Dog(), Cat()]
+
+for animal in animals:
+    animal.sound()
+
+# Output:
+# Animal makes a sound
+# Dog barks
+# Cat meows
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Method Overloading (Simulated)}
+
+Python doesn't support traditional method overloading. The last defined method overrides previous ones. However, we can simulate it using default parameters.
+
+\begin{examplebox}{Simulating Method Overloading}
+\begin{lstlisting}[language=Python]
+class Shape:
+    def area(self, length, width=None):
+        """
+        Calculate area
+        - If only length: treat as square (length * length)
+        - If length and width: treat as rectangle
+        """
+        if width is None:
+            # Square: area = length^2
+            return length * length
+        else:
+            # Rectangle: area = length * width
+            return length * width
+
+s = Shape()
+print(s.area(5))       # Square: 25
+print(s.area(5, 10))   # Rectangle: 50
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Operator Overloading}
+
+Already covered in Magic Methods section. Here's a summary:
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Operator} & \textbf{Magic Method} & \textbf{Expression} \\
+\hline
++ & \_\_add\_\_ & obj1 + obj2 \\
+- & \_\_sub\_\_ & obj1 - obj2 \\
+* & \_\_mul\_\_ & obj1 * obj2 \\
+/ & \_\_truediv\_\_ & obj1 / obj2 \\
+== & \_\_eq\_\_ & obj1 == obj2 \\
+$<$ & \_\_lt\_\_ & obj1 $<$ obj2 \\
+$>$ & \_\_gt\_\_ & obj1 $>$ obj2 \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+% ========================
+% SECTION 11: ABSTRACTION
+% ========================
+\section{Abstraction}
+
+\subsection{What is Abstraction?}
+
+\textbf{Abstraction} means hiding complex implementation details and showing only essential features. It's achieved through abstract classes and interfaces.
+
+\subsection{Abstract Base Classes (ABC)}
+
+Python's \texttt{abc} module provides infrastructure for defining abstract base classes.
+
+\begin{examplebox}{Abstract Class Example}
+\begin{lstlisting}[language=Python]
+from abc import ABC, abstractmethod
+
+class BankApp(ABC):
+    """Abstract base class"""
+    
+    def database(self):
+        """Concrete method - implemented"""
+        print("Connected to database")
+    
+    @abstractmethod
+    def security(self):
+        """Abstract method - must be implemented by subclass"""
+        pass
+    
+    @abstractmethod
+    def display(self):
+        """Abstract method - must be implemented by subclass"""
+        pass
+
+# This will cause error - cannot instantiate abstract class
+# obj = BankApp()  # TypeError!
+
+class MobileApp(BankApp):
+    """Concrete class implementing abstract methods"""
+    
+    def security(self):
+        print("Mobile security layer")
+    
+    def display(self):
+        print("Mobile display interface")
+    
+    def mobile_login(self):
+        print("Mobile login")
+
+# Now we can create instance
+app = MobileApp()
+app.database()       # Inherited concrete method
+app.security()       # Implemented abstract method
+app.display()        # Implemented abstract method
+app.mobile_login()   # Own method
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Key Points About Abstraction}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Abstract class}: Class with one or more abstract methods
+    \item \textbf{Cannot instantiate}: Cannot create objects of abstract class
+    \item \textbf{Must implement}: Subclasses must implement all abstract methods
+    \item \textbf{Can have concrete methods}: Abstract classes can have regular methods too
+    \item \textbf{Purpose}: Define contract that subclasses must follow
+\end{itemize}
+
+\begin{warningbox}
+If a subclass doesn't implement all abstract methods, it also becomes abstract and cannot be instantiated!
+\end{warningbox}
+
+\newpage
+
+% ========================
+% SECTION 12: AGGREGATION
+% ========================
+\section{Aggregation (Has-A Relationship)}
+
+\subsection{What is Aggregation?}
+
+\textbf{Aggregation} is a "has-a" relationship where one class contains references to objects of another class. Unlike inheritance ("is-a"), aggregation represents composition.
+
+\begin{examplebox}{Aggregation Example}
+\begin{lstlisting}[language=Python]
+class Address:
+    def __init__(self, city, pin, state):
+        self.__city = city
+        self.pin = pin
+        self.state = state
+    
+    def get_city(self):
+        return self.__city
+    
+    def edit_address(self, new_city, new_pin, new_state):
+        self.__city = new_city
+        self.pin = new_pin
+        self.state = new_state
+
+class Customer:
+    def __init__(self, name, gender, address):
+        self.name = name
+        self.gender = gender
+        self.address = address  # Has-A relationship
+    
+    def print_address(self):
+        print(f"{self.address.get_city()}, "
+              f"{self.address.pin}, "
+              f"{self.address.state}")
+    
+    def edit_profile(self, new_name, new_city, new_pin, new_state):
+        self.name = new_name
+        self.address.edit_address(new_city, new_pin, new_state)
+
+# Create Address object
+add1 = Address('Gurgaon', 122011, 'Haryana')
+
+# Create Customer with Address
+cust = Customer('Nitish', 'male', add1)
+cust.print_address()  # Gurgaon, 122011, Haryana
+
+# Edit through Customer
+cust.edit_profile('Ankit', 'Mumbai', 111111, 'Maharashtra')
+cust.print_address()  # Mumbai, 111111, Maharashtra
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Aggregation vs Inheritance}
+
+\begin{center}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Aggregation (Has-A)} & \textbf{Inheritance (Is-A)} \\
+\hline
+Composition relationship & Parent-child relationship \\
+\hline
+Contains objects of another class & Extends another class \\
+\hline
+Example: Car has Engine & Example: Car is Vehicle \\
+\hline
+More flexible (can change at runtime) & More rigid (fixed at compile time) \\
+\hline
+Looser coupling & Tighter coupling \\
+\hline
+Preferred for "has-a" relationships & Preferred for "is-a" relationships \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+% ========================
+% SECTION 13: REFERENCE VARIABLES
+% ========================
+\section{Reference Variables and Object Behavior}
+
+\subsection{Reference Variables}
+
+In Python, variables are references to objects, not the objects themselves.
+
+\begin{examplebox}{Reference Variables Example}
+\begin{lstlisting}[language=Python]
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+# Create object
+p1 = Person("John")
+print(id(p1))  # 140655538334992
+
+# Create another reference to same object
+p2 = p1
+print(id(p2))  # 140655538334992 (same ID!)
+
+# Modifying through p2 affects p1
+p2.name = "Alice"
+print(p1.name)  # Alice (both point to same object)
+print(p2.name)  # Alice
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Pass by Reference}
+
+Python passes references to objects, not copies.
+
+\begin{examplebox}{Pass by Reference Example}
+\begin{lstlisting}[language=Python]
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+def modify_person(person):
+    """Function receives reference to object"""
+    print(f"Inside function, ID: {id(person)}")
+    person.name = "Modified"
+    return person
+
+p = Person("Original")
+print(f"Before: {p.name}")  # Original
+print(f"Outside function, ID: {id(p)}")
+
+modified_p = modify_person(p)
+
+print(f"After: {p.name}")  # Modified
+print(f"Returned object, ID: {id(modified_p)}")
+
+# All IDs are the same!
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Object Mutability}
+
+Objects in Python are mutable - their state can be changed after creation.
+
+\begin{lstlisting}[language=Python]
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+p = Person("John")
+print(id(p))  # 12345
+
+# Modify object (same ID)
+p.name = "Alice"
+print(id(p))  # 12345 (same object, modified state)
+
+# Reassign variable (different ID)
+p = Person("Bob")
+print(id(p))  # 67890 (new object!)
+\end{lstlisting}
+
+\subsection{Collections of Objects}
+
+Objects can be stored in collections (lists, dictionaries, sets).
+
+\begin{examplebox}{List of Objects}
+\begin{lstlisting}[language=Python]
+class Person:
+    def __init__(self, name, gender):
+        self.name = name
+        self.gender = gender
+
+# Create multiple objects
+p1 = Person('Nitish', 'male')
+p2 = Person('Ankit', 'male')
+p3 = Person('Ankita', 'female')
+
+# Store in list
+people = [p1, p2, p3]
+
+# Iterate through objects
+for person in people:
+    print(f"{person.name}: {person.gender}")
+\end{lstlisting}
+\end{examplebox}
+
+\begin{examplebox}{Dictionary of Objects}
+\begin{lstlisting}[language=Python]
+# Store objects in dictionary
+people_dict = {
+    'person1': p1,
+    'person2': p2,
+    'person3': p3
+}
+
+# Access through dictionary
+for key in people_dict:
+    person = people_dict[key]
+    print(f"{key}: {person.name}")
+\end{lstlisting}
+\end{examplebox}
+
+\newpage
+
+% ========================
+% SECTION 14: ADVANCED CONCEPTS
+% ========================
+\section{Advanced OOP Concepts}
+
+\subsection{Decorators in OOP}
+
+Decorators are functions that modify the behavior of other functions or methods.
+
+\begin{examplebox}{Method Decorator Example}
+\begin{lstlisting}[language=Python]
+def swipe_decorator(func):
+    """Decorator to swap arguments if needed"""
+    def wrapper(first, second):
+        if first < second:
+            first, second = second, first
+        return func(first, second)
+    return wrapper
+
+@swipe_decorator
+def divide(first, second):
+    print(f"The result is: {first/second}")
+
+divide(4, 16)   # Swaps to: 16/4 = 4.0
+divide(16, 4)   # No swap needed: 16/4 = 4.0
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{isinstance() and issubclass()}
+
+\subsubsection{isinstance()}
+Checks if an object is an instance of a class.
+
+\begin{lstlisting}[language=Python]
+class Animal:
+    pass
+
+class Dog(Animal):
+    pass
+
+dog = Dog()
+print(isinstance(dog, Dog))     # True
+print(isinstance(dog, Animal))  # True (inheritance)
+print(isinstance(dog, str))     # False
+\end{lstlisting}
+
+\subsubsection{issubclass()}
+Checks if a class is a subclass of another.
+
+\begin{lstlisting}[language=Python]
+class Animal:
+    pass
+
+class Dog(Animal):
+    pass
+
+print(issubclass(Dog, Animal))    # True
+print(issubclass(Animal, Dog))    # False
+print(issubclass(Dog, Dog))       # True
+\end{lstlisting}
+
+\subsection{Single vs Double Underscores}
+
+\begin{center}
+\begin{tabular}{|l|p{0.7\textwidth}|}
+\hline
+\textbf{Pattern} & \textbf{Meaning} \\
+\hline
+\_var & Protected (convention only) - internal use \\
+\hline
+var\_ & Avoid naming conflict with keywords \\
+\hline
+\_\_var & Private (name mangling) - becomes \_ClassName\_\_var \\
+\hline
+\_\_var\_\_ & Magic/dunder methods - special Python methods \\
+\hline
+\_ & Temporary variable or last result in REPL \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{examplebox}{Underscore Examples}
+\begin{lstlisting}[language=Python]
+class Example:
+    def __init__(self):
+        self.public = "Public"
+        self._protected = "Protected"
+        self.__private = "Private"
+
+e = Example()
+print(e.public)       # Works
+print(e._protected)   # Works (but shouldn't use)
+# print(e.__private)  # AttributeError!
+print(e._Example__private)  # Works (name mangling)
+
+# Using for keyword conflict
+def make_object(name, class_):  # class_ avoids conflict
+    pass
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Hashing and Sets}
+
+Objects can be stored in sets if they define \_\_hash\_\_() and \_\_eq\_\_().
+
+\begin{examplebox}{Custom Object in Set}
+\begin{lstlisting}[language=Python]
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def __hash__(self):
+        """Make object hashable"""
+        return hash((self.name, self.age))
+    
+    def __eq__(self, other):
+        """Define equality"""
+        return self.name == other.name and self.age == other.age
+
+# Can now use in sets
+p1 = Person("John", 30)
+p2 = Person("Alice", 25)
+p3 = Person("John", 30)  # Same as p1
+
+people_set = {p1, p2, p3}
+print(len(people_set))  # 2 (p1 and p3 are considered equal)
+\end{lstlisting}
+\end{examplebox}
+
+\begin{notebox}
+By default, custom objects are hashable (using id()), but if you override \_\_eq\_\_(), you must also override \_\_hash\_\_() to maintain the hash/equality contract.
+\end{notebox}
+
+\subsection{enumerate() Function}
+
+The \texttt{enumerate()} function adds a counter to an iterable.
+
+\begin{lstlisting}[language=Python]
+names = ['Alice', 'Bob', 'Charlie']
+
+# Without enumerate
+for i in range(len(names)):
+    print(f"{i}: {names[i]}")
+
+# With enumerate (better)
+for index, name in enumerate(names):
+    print(f"{index}: {name}")
+
+# Start counting from 1
+for index, name in enumerate(names, start=1):
+    print(f"{index}: {name}")
+\end{lstlisting}
+
+\newpage
+
+% ========================
+% SECTION 15: PRACTICAL EXAMPLES
+% ========================
+\section{Practical OOP Examples}
+
+\subsection{ATM System}
+
+\begin{examplebox}{Complete ATM System}
+\begin{lstlisting}[language=Python]
+class Atm:
+    """ATM system with encapsulation"""
+    __counter = 1
+    
+    def __init__(self):
+        self.pin = ''
+        self.__balance = 0
+        self.cid = Atm.__counter
+        Atm.__counter += 1
+    
+    def get_balance(self):
+        """Getter for private balance"""
+        return self.__balance
+    
+    def set_balance(self, new_value):
+        """Setter with validation"""
+        if isinstance(new_value, int) and new_value >= 0:
+            self.__balance = new_value
+        else:
+            print('Invalid balance amount')
+    
+    def create_pin(self, user_pin, initial_balance):
+        """Create PIN and set initial balance"""
+        self.pin = user_pin
+        self.__balance = initial_balance
+        print('PIN created successfully')
+    
+    def change_pin(self, old_pin, new_pin):
+        """Change PIN with validation"""
+        if old_pin == self.pin:
+            self.pin = new_pin
+            print('PIN changed successfully')
+        else:
+            print('Incorrect old PIN')
+    
+    def check_balance(self, user_pin):
+        """Check balance with PIN verification"""
+        if user_pin == self.pin:
+            print(f'Your balance is: ${self.__balance}')
+        else:
+            print('Incorrect PIN')
+    
+    def withdraw(self, user_pin, amount):
+        """Withdraw with PIN and balance verification"""
+        if user_pin != self.pin:
+            print('Incorrect PIN')
+            return
+        
+        if amount <= 0:
+            print('Invalid amount')
+            return
+        
+        if amount <= self.__balance:
+            self.__balance -= amount
+            print(f'Withdrawal successful. Balance: ${self.__balance}')
+        else:
+            print('Insufficient funds')
+    
+    @staticmethod
+    def get_counter():
+        return Atm.__counter
+
+# Usage
+atm1 = Atm()
+atm1.create_pin('1234', 1000)
+atm1.check_balance('1234')  # Your balance is: $1000
+atm1.withdraw('1234', 200)  # Withdrawal successful
+atm1.check_balance('1234')  # Your balance is: $800
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{2D Point and Line System}
+
+\begin{examplebox}{Geometric Classes}
+\begin{lstlisting}[language=Python]
+class Point:
+    """Represents a 2D point"""
+    def __init__(self, x, y):
+        self.x_cod = x
+        self.y_cod = y
+    
+    def __str__(self):
+        return f'<{self.x_cod}, {self.y_cod}>'
+    
+    def euclidean_distance(self, other):
+        """Calculate distance between two points"""
+        dx = self.x_cod - other.x_cod
+        dy = self.y_cod - other.y_cod
+        return (dx**2 + dy**2)**0.5
+    
+    def distance_from_origin(self):
+        """Calculate distance from origin"""
+        return (self.x_cod**2 + self.y_cod**2)**0.5
+
+class Line:
+    """Represents a line: Ax + By + C = 0"""
+    def __init__(self, A, B, C):
+        self.A = A
+        self.B = B
+        self.C = C
+    
+    def __str__(self):
+        return f'{self.A}x + {self.B}y + {self.C} = 0'
+    
+    def point_on_line(self, point):
+        """Check if point lies on line"""
+        result = self.A * point.x_cod + self.B * point.y_cod + self.C
+        return result == 0
+    
+    def shortest_distance(self, point):
+        """Calculate shortest distance from point to line"""
+        numerator = abs(self.A * point.x_cod + 
+                       self.B * point.y_cod + self.C)
+        denominator = (self.A**2 + self.B**2)**0.5
+        return numerator / denominator
+
+# Usage
+p1 = Point(1, 2)
+p2 = Point(4, 6)
+print(f"Point 1: {p1}")
+print(f"Point 2: {p2}")
+print(f"Distance: {p1.euclidean_distance(p2):.2f}")
+
+line = Line(1, 1, -3)  # x + y - 3 = 0
+print(f"Line: {line}")
+print(f"Point on line: {line.point_on_line(p1)}")
+print(f"Distance to line: {line.shortest_distance(p1):.2f}")
+\end{lstlisting}
+\end{examplebox}
+
+\newpage
+
+% ========================
+% SECTION 16: BEST PRACTICES
+% ========================
+\section{OOP Best Practices and Design Principles}
+
+\subsection{SOLID Principles}
+
+\subsubsection{S - Single Responsibility Principle}
+A class should have only one reason to change (one responsibility).
+
+\begin{examplebox}{Single Responsibility}
+\begin{lstlisting}[language=Python]
+# Bad: Multiple responsibilities
+class User:
+    def __init__(self, name):
+        self.name = name
+    
+    def save_to_database(self):
+        # Database logic
+        pass
+    
+    def send_email(self):
+        # Email logic
+        pass
+
+# Good: Separate responsibilities
+class User:
+    def __init__(self, name):
+        self.name = name
+
+class UserRepository:
+    def save(self, user):
+        # Database logic
+        pass
+
+class EmailService:
+    def send(self, user, message):
+        # Email logic
+        pass
+\end{lstlisting}
+\end{examplebox}
+
+\subsubsection{O - Open/Closed Principle}
+Classes should be open for extension but closed for modification.
+
+\begin{examplebox}{Open/Closed Principle}
+\begin{lstlisting}[language=Python]
+# Good: Extend through inheritance
+class Shape:
+    def area(self):
+        pass
+
+class Rectangle(Shape):
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+    
+    def area(self):
+        return self.width * self.height
+
+class Circle(Shape):
+    def __init__(self, radius):
+        self.radius = radius
+    
+    def area(self):
+        return 3.14 * self.radius ** 2
+\end{lstlisting}
+\end{examplebox}
+
+\subsubsection{L - Liskov Substitution Principle}
+Subclasses should be substitutable for their base classes.
+
+\subsubsection{I - Interface Segregation Principle}
+Clients shouldn't be forced to depend on interfaces they don't use.
+
+\subsubsection{D - Dependency Inversion Principle}
+Depend on abstractions, not concretions.
+
+\subsection{General Best Practices}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Use descriptive names}: Class and method names should clearly indicate purpose
+    \item \textbf{Keep classes small}: Each class should do one thing well
+    \item \textbf{Encapsulate data}: Use private attributes with getters/setters
+    \item \textbf{Favor composition over inheritance}: Use "has-a" when appropriate
+    \item \textbf{Use abstract classes}: Define contracts for subclasses
+    \item \textbf{Document your code}: Use docstrings for classes and methods
+    \item \textbf{Follow PEP 8}: Python's style guide for consistency
+    \item \textbf{Write testable code}: Design for unit testing
+\end{enumerate}
+
+\subsection{Common Mistakes to Avoid}
+
+\begin{warningbox}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Deep inheritance hierarchies}: Keep inheritance tree shallow
+    \item \textbf{God classes}: Avoid classes that do everything
+    \item \textbf{Tight coupling}: Reduce dependencies between classes
+    \item \textbf{Forgetting super()}: Always use super() in multiple inheritance
+    \item \textbf{Mutable default arguments}: Don't use mutable objects as defaults
+    \item \textbf{Not using \_\_repr\_\_}: Always implement for debugging
+    \item \textbf{Breaking encapsulation}: Don't access private members from outside
+\end{itemize}
+\end{warningbox}
+
+\subsection{Composition vs Inheritance}
+
+\begin{center}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Use Inheritance When:} & \textbf{Use Composition When:} \\
+\hline
+True "is-a" relationship exists & "has-a" relationship exists \\
+\hline
+Need to reuse implementation & Need to reuse functionality \\
+\hline
+Subclass extends parent behavior & Want flexibility to change behavior \\
+\hline
+Relationship is stable & Relationship may change \\
+\hline
+Example: Dog is an Animal & Example: Car has an Engine \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+% ========================
+% SECTION 17: INTERVIEW QUESTIONS
+% ========================
+\section{Common Interview Questions}
+
+\subsection{Conceptual Questions}
+
+\subsubsection{Q1: What are the four pillars of OOP?}
+\textbf{Answer:}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Encapsulation}: Bundling data and methods, hiding internal details
+    \item \textbf{Inheritance}: Creating new classes from existing ones
+    \item \textbf{Polymorphism}: Same interface, different implementations
+    \item \textbf{Abstraction}: Hiding complexity, showing only essentials
+\end{enumerate}
+
+\subsubsection{Q2: Explain the difference between \_\_str\_\_ and \_\_repr\_\_}
+\textbf{Answer:}
+\begin{itemize}[leftmargin=*]
+    \item \texttt{\_\_str\_\_()}: User-friendly string representation, for end users
+    \item \texttt{\_\_repr\_\_()}: Developer-friendly representation, for debugging
+    \item \texttt{str()} is meant to be readable, \texttt{repr()} to be unambiguous
+    \item If only one is defined, Python uses it for both
+\end{itemize}
+
+\subsubsection{Q3: What is the diamond problem and how does Python solve it?}
+\textbf{Answer:}
+\begin{itemize}[leftmargin=*]
+    \item Diamond problem occurs in multiple inheritance when a class inherits from two classes that share a common ancestor
+    \item Python solves it using MRO (Method Resolution Order) with C3 Linearization
+    \item MRO ensures each class is called only once, in a consistent order
+    \item Use \texttt{super()} to maintain proper MRO chain
+    \item Check MRO with \texttt{ClassName.\_\_mro\_\_}
+\end{itemize}
+
+\subsubsection{Q4: What's the difference between class method and static method?}
+\textbf{Answer:}
+
+\begin{tabular}{|p{0.3\textwidth}|p{0.3\textwidth}|p{0.3\textwidth}|}
+\hline
+\textbf{Feature} & \textbf{Class Method} & \textbf{Static Method} \\
+\hline
+Decorator & @classmethod & @staticmethod \\
+\hline
+First parameter & cls (class) & None \\
+\hline
+Access class data & Yes & No \\
+\hline
+Modify class state & Yes & No \\
+\hline
+Use case & Factory methods & Utility functions \\
+\hline
+\end{tabular}
+
+\subsection{Coding Questions}
+
+\subsubsection{Q5: Implement a class with private attributes}
+
+\begin{lstlisting}[language=Python]
+class BankAccount:
+    def __init__(self, account_number, balance=0):
+        self.__account_number = account_number
+        self.__balance = balance
+    
+    def deposit(self, amount):
+        if amount > 0:
+            self.__balance += amount
+    
+    def withdraw(self, amount):
+        if 0 < amount <= self.__balance:
+            self.__balance -= amount
+            return True
+        return False
+    
+    def get_balance(self):
+        return self.__balance
+\end{lstlisting}
+
+\subsubsection{Q6: Create a class hierarchy with method overriding}
+
+\begin{lstlisting}[language=Python]
+class Animal:
+    def sound(self):
+        print("Some sound")
+
+class Dog(Animal):
+    def sound(self):
+        print("Bark")
+
+class Cat(Animal):
+    def sound(self):
+        print("Meow")
+
+# Polymorphism in action
+animals = [Dog(), Cat(), Animal()]
+for animal in animals:
+    animal.sound()
+\end{lstlisting}
+
+\newpage
+
+% ========================
+% SECTION 18: QUICK REFERENCE
+% ========================
+\section{Quick Reference Guide}
+
+\subsection{Class Definition Syntax}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Basic Class Template]
+\begin{lstlisting}[language=Python]
+class ClassName:
+    """Class docstring"""
+    
+    # Class attribute
+    class_var = "shared"
+    
+    def __init__(self, param1, param2):
+        """Constructor"""
+        self.param1 = param1
+        self.param2 = param2
+    
+    def instance_method(self):
+        """Instance method"""
+        pass
+    
+    @classmethod
+    def class_method(cls):
+        """Class method"""
+        pass
+    
+    @staticmethod
+    def static_method():
+        """Static method"""
+        pass
+    
+    def __str__(self):
+        """String representation"""
+        return f"ClassName({self.param1}, {self.param2})"
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Inheritance Templates}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title=Single Inheritance]
+\begin{lstlisting}[language=Python]
+class Parent:
+    def __init__(self, value):
+        self.value = value
+
+class Child(Parent):
+    def __init__(self, value, extra):
+        super().__init__(value)
+        self.extra = extra
+\end{lstlisting}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title=Multiple Inheritance]
+\begin{lstlisting}[language=Python]
+class Parent1:
+    def method1(self):
+        super().method1()
+
+class Parent2:
+    def method1(self):
+        pass
+
+class Child(Parent1, Parent2):
+    def method1(self):
+        super().method1()
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Common Magic Methods}
+
+\begin{lstlisting}[language=Python]
+class MyClass:
+    def __init__(self):           # Constructor
+        pass
+    
+    def __str__(self):            # str(obj)
+        return "string"
+    
+    def __repr__(self):           # repr(obj)
+        return "representation"
+    
+    def __len__(self):            # len(obj)
+        return 0
+    
+    def __add__(self, other):     # obj1 + obj2
+        pass
+    
+    def __eq__(self, other):      # obj1 == obj2
+        pass
+    
+    def __lt__(self, other):      # obj1 < obj2
+        pass
+    
+    def __getitem__(self, key):   # obj[key]
+        pass
+    
+    def __call__(self):           # obj()
+        pass
+    
+    def __del__(self):            # Destructor
+        pass
+\end{lstlisting}
+
+\subsection{Access Modifiers Cheat Sheet}
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Syntax} & \textbf{Type} & \textbf{Accessibility} \\
+\hline
+self.var & Public & Everywhere \\
+\hline
+self.\_var & Protected & Convention only \\
+\hline
+self.\_\_var & Private & Name mangled \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+% ========================
+% CONCLUSION
+% ========================
+\section{Conclusion}
+
+Object-Oriented Programming is a powerful paradigm that enables:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Modular code}: Organized into reusable classes
+    \item \textbf{Data protection}: Through encapsulation
+    \item \textbf{Code reuse}: Through inheritance
+    \item \textbf{Flexibility}: Through polymorphism
+    \item \textbf{Maintainability}: Through abstraction
+\end{itemize}
+
+\subsection{Key Takeaways}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Classes and Objects}: Classes are blueprints, objects are instances
+    \item \textbf{Encapsulation}: Hide internal details, expose interfaces
+    \item \textbf{Inheritance}: Reuse code through parent-child relationships
+    \item \textbf{Polymorphism}: Same interface, different implementations
+    \item \textbf{Abstraction}: Hide complexity, show essentials
+    \item \textbf{MRO}: Python's method resolution order solves diamond problem
+    \item \textbf{Magic Methods}: Customize object behavior with dunder methods
+    \item \textbf{super()}: Essential for proper multiple inheritance
+\end{enumerate}
+
+\subsection{Next Steps}
+
+\begin{itemize}[leftmargin=*]
+    \item Practice implementing classes for real-world problems
+    \item Study design patterns (Factory, Singleton, Observer, etc.)
+    \item Learn about metaclasses for advanced metaprogramming
+    \item Explore dataclasses for simplified class creation
+    \item Study type hints for better code documentation
+    \item Practice with OOP coding challenges
+\end{itemize}
+
+\subsection{Additional Resources}
+
+\begin{itemize}[leftmargin=*]
+    \item Python Official Documentation: \url{https://docs.python.org/3/tutorial/classes.html}
+    \item Real Python OOP Tutorials: \url{https://realpython.com/python3-object-oriented-programming/}
+    \item Design Patterns in Python: \url{https://refactoring.guru/design-patterns/python}
+    \item Clean Code by Robert C. Martin
+    \item Fluent Python by Luciano Ramalho
+\end{itemize}
+
+\vspace{2em}
+\hrule
+\vspace{0.5em}
+\begin{center}
+\textit{End of Python OOP Complete Reference Guide}
+\end{center}
+
+\end{document}

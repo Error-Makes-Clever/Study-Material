@@ -1,0 +1,206 @@
+\contentsline {section}{\numberline {1}Introduction to MLOps with DagShub}{6}{section.1}%
+\contentsline {subsection}{\numberline {1.1}What is This Project About?}{6}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}The MLOps Stack}{6}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}What Makes This Different?}{6}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Key Differences from Previous Workflow}{7}{subsection.1.4}%
+\contentsline {section}{\numberline {2}Initial Project Setup}{8}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Step 1: Create Python Environment}{8}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Step 2: Activate Environment}{8}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Step 3: Create Source Directory}{8}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Step 4: Create Requirements File}{8}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Step 5: Install Requirements}{8}{subsection.2.5}%
+\contentsline {section}{\numberline {3}Building Pipeline Components}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Component Overview}{9}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Data Ingestion Module}{9}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Data Pre-Processing Module}{11}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Feature Engineering Module}{14}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Model Building Module}{17}{subsection.3.5}%
+\contentsline {section}{\numberline {4}MLflow Integration with DagShub}{20}{section.4}%
+\contentsline {subsection}{\numberline {4.1}What is DagShub?}{20}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Connecting to DagShub}{20}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}Step 1: Create DagShub Account}{20}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}Step 2: Obtain Tracking URI}{20}{subsubsection.4.2.2}%
+\contentsline {subsection}{\numberline {4.3}Model Evaluation with MLflow}{20}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Understanding the MLflow Integration}{24}{subsection.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.1}Key Components}{24}{subsubsection.4.4.1}%
+\contentsline {section}{\numberline {5}Configuration Files}{25}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Step 7: Create .gitignore}{25}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Step 8: Initialize DVC and Git}{25}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Step 9: Create DVC Pipeline}{26}{subsection.5.3}%
+\contentsline {subsection}{\numberline {5.4}Step 10: Create Parameters File}{27}{subsection.5.4}%
+\contentsline {section}{\numberline {6}Initial Git Commit and DVC Setup}{28}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Step 11: Check Git Status}{28}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Step 12: Check DVC Status}{28}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Step 13: Make Initial Git Commit}{29}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Step 14: Configure DVC Remote Storage}{29}{subsection.6.4}%
+\contentsline {subsubsection}{\numberline {6.4.1}Create Local Storage Directory}{29}{subsubsection.6.4.1}%
+\contentsline {subsubsection}{\numberline {6.4.2}Add as DVC Remote}{29}{subsubsection.6.4.2}%
+\contentsline {subsubsection}{\numberline {6.4.3}Check DVC Configuration}{30}{subsubsection.6.4.3}%
+\contentsline {subsubsection}{\numberline {6.4.4}Add S3 to .gitignore}{30}{subsubsection.6.4.4}%
+\contentsline {section}{\numberline {7}Running the Pipeline and First Experiment}{31}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Step 15: Execute the Pipeline}{31}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Pipeline Execution Output}{31}{subsection.7.2}%
+\contentsline {subsection}{\numberline {7.3}Understanding the Output}{32}{subsection.7.3}%
+\contentsline {subsection}{\numberline {7.4}Step 16: Understanding DVC Cache}{33}{subsection.7.4}%
+\contentsline {section}{\numberline {8}Running Multiple Experiments}{34}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Step 17: Experimentation Phase}{34}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Experiment Workflow}{34}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Running Experiment Variations}{34}{subsection.8.3}%
+\contentsline {subsubsection}{\numberline {8.3.1}Experiment 1: Initial Configuration}{34}{subsubsection.8.3.1}%
+\contentsline {subsubsection}{\numberline {8.3.2}Experiment 2: Fewer Trees}{34}{subsubsection.8.3.2}%
+\contentsline {subsubsection}{\numberline {8.3.3}Experiment 3: More Features}{35}{subsubsection.8.3.3}%
+\contentsline {subsubsection}{\numberline {8.3.4}Experiment 4: Different Split}{35}{subsubsection.8.3.4}%
+\contentsline {subsubsection}{\numberline {8.3.5}Experiment 5: Balanced Configuration}{35}{subsubsection.8.3.5}%
+\contentsline {section}{\numberline {9}Step 18: Analyzing Experiments in MLflow}{37}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Accessing the MLflow UI}{37}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}Experiment Results Summary}{37}{subsection.9.2}%
+\contentsline {subsection}{\numberline {9.3}Detailed Run Analysis}{37}{subsection.9.3}%
+\contentsline {subsubsection}{\numberline {9.3.1}Run 1: able-ray-853}{37}{subsubsection.9.3.1}%
+\contentsline {subsubsection}{\numberline {9.3.2}Run 2: handsome-asp-382}{37}{subsubsection.9.3.2}%
+\contentsline {subsubsection}{\numberline {9.3.3}Run 5: receptive-crow-130}{38}{subsubsection.9.3.3}%
+\contentsline {section}{\numberline {10}Step 19: Deciding What "Best" Means}{39}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Defining Success Criteria}{39}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Analysis for Spam Classification}{39}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Ranking the Runs}{39}{subsection.10.3}%
+\contentsline {section}{\numberline {11}Step 20: Re-creating the Winning Run}{40}{section.11}%
+\contentsline {subsection}{\numberline {11.1}Why Re-create?}{40}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}Obtaining Winning Parameters}{40}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}Step 21: Update params.yaml}{40}{subsection.11.3}%
+\contentsline {subsection}{\numberline {11.4}Step 22: Run Pipeline with Winning Parameters}{40}{subsection.11.4}%
+\contentsline {subsection}{\numberline {11.5}Step 23: Verify Metrics (Sanity Check)}{41}{subsection.11.5}%
+\contentsline {section}{\numberline {12}Step 24: The Critical Commit}{43}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Why This Commit Matters}{43}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Check Git Status}{43}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Stage and Commit}{44}{subsection.12.3}%
+\contentsline {subsection}{\numberline {12.4}What This Commit Means}{44}{subsection.12.4}%
+\contentsline {section}{\numberline {13}Step 25: Push Data and Model to DVC Remote}{45}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Why Push to DVC Remote?}{45}{subsection.13.1}%
+\contentsline {subsection}{\numberline {13.2}Execute DVC Push}{45}{subsection.13.2}%
+\contentsline {subsection}{\numberline {13.3}What Gets Pushed}{45}{subsection.13.3}%
+\contentsline {subsection}{\numberline {13.4}Verification}{45}{subsection.13.4}%
+\contentsline {section}{\numberline {14}Step 26: Linking Git Commits to MLflow Runs}{47}{section.14}%
+\contentsline {subsection}{\numberline {14.1}Why Tag MLflow Runs?}{47}{subsection.14.1}%
+\contentsline {subsection}{\numberline {14.2}Create Tagging Script}{47}{subsection.14.2}%
+\contentsline {subsection}{\numberline {14.3}Understanding the Script}{48}{subsection.14.3}%
+\contentsline {subsubsection}{\numberline {14.3.1}Key Components}{48}{subsubsection.14.3.1}%
+\contentsline {subsection}{\numberline {14.4}Finding the Run ID}{48}{subsection.14.4}%
+\contentsline {subsection}{\numberline {14.5}Step 27: Execute Tagging Script}{48}{subsection.14.5}%
+\contentsline {subsection}{\numberline {14.6}Step 28: Verify Tags in MLflow UI}{49}{subsection.14.6}%
+\contentsline {section}{\numberline {15}Step 29: Multi-Model Experimentation}{50}{section.15}%
+\contentsline {subsection}{\numberline {15.1}Scenario: Team with Multiple Models}{50}{subsection.15.1}%
+\contentsline {subsection}{\numberline {15.2}Using Different Experiment Names}{50}{subsection.15.2}%
+\contentsline {subsubsection}{\numberline {15.2.1}RandomForest Experiments}{50}{subsubsection.15.2.1}%
+\contentsline {subsubsection}{\numberline {15.2.2}XGBoost Experiments}{50}{subsubsection.15.2.2}%
+\contentsline {subsubsection}{\numberline {15.2.3}Neural Network Experiments}{50}{subsubsection.15.2.3}%
+\contentsline {subsection}{\numberline {15.3}Benefits of Separate Experiments}{50}{subsection.15.3}%
+\contentsline {subsection}{\numberline {15.4}Viewing All Experiments}{50}{subsection.15.4}%
+\contentsline {section}{\numberline {16}Reproducing the Project on a New Machine}{52}{section.16}%
+\contentsline {subsection}{\numberline {16.1}The Reproducibility Challenge}{52}{subsection.16.1}%
+\contentsline {subsection}{\numberline {16.2}Important Note About Local DVC Remote}{52}{subsection.16.2}%
+\contentsline {subsection}{\numberline {16.3}Reproduction Workflow}{53}{subsection.16.3}%
+\contentsline {subsection}{\numberline {16.4}Step-by-Step Reproduction}{53}{subsection.16.4}%
+\contentsline {subsubsection}{\numberline {16.4.1}Step 1: Clone Repository}{53}{subsubsection.16.4.1}%
+\contentsline {subsubsection}{\numberline {16.4.2}Step 2: Create and Activate Environment}{54}{subsubsection.16.4.2}%
+\contentsline {subsubsection}{\numberline {16.4.3}Step 3: Install Requirements}{54}{subsubsection.16.4.3}%
+\contentsline {subsubsection}{\numberline {16.4.4}Step 4: Configure DVC Remote Access}{55}{subsubsection.16.4.4}%
+\contentsline {subsubsection}{\numberline {16.4.5}Step 5: Pull Data and Models}{56}{subsubsection.16.4.5}%
+\contentsline {subsubsection}{\numberline {16.4.6}Step 6: Verify Pipeline Status}{56}{subsubsection.16.4.6}%
+\contentsline {subsubsection}{\numberline {16.4.7}Step 7 (Optional): Re-run Pipeline}{57}{subsubsection.16.4.7}%
+\contentsline {subsection}{\numberline {16.5}Verification Checklist}{57}{subsection.16.5}%
+\contentsline {subsection}{\numberline {16.6}Manual Verification}{58}{subsection.16.6}%
+\contentsline {subsubsection}{\numberline {16.6.1}Verify Metrics}{58}{subsubsection.16.6.1}%
+\contentsline {subsubsection}{\numberline {16.6.2}Verify Parameters}{58}{subsubsection.16.6.2}%
+\contentsline {subsubsection}{\numberline {16.6.3}Test Model Loading}{58}{subsubsection.16.6.3}%
+\contentsline {subsection}{\numberline {16.7}Why This Matters in MLOps}{59}{subsection.16.7}%
+\contentsline {subsection}{\numberline {16.8}Troubleshooting Reproduction Issues}{59}{subsection.16.8}%
+\contentsline {subsubsection}{\numberline {16.8.1}Issue 1: "Remote not found"}{59}{subsubsection.16.8.1}%
+\contentsline {subsubsection}{\numberline {16.8.2}Issue 2: "Permission denied"}{60}{subsubsection.16.8.2}%
+\contentsline {subsubsection}{\numberline {16.8.3}Issue 3: "Checksum mismatch"}{60}{subsubsection.16.8.3}%
+\contentsline {subsubsection}{\numberline {16.8.4}Issue 4: "Python package conflicts"}{60}{subsubsection.16.8.4}%
+\contentsline {section}{\numberline {17}Complete Mental Model}{61}{section.17}%
+\contentsline {subsection}{\numberline {17.1}The Three-System Architecture}{61}{subsection.17.1}%
+\contentsline {subsection}{\numberline {17.2}Understanding Each Component}{61}{subsection.17.2}%
+\contentsline {subsubsection}{\numberline {17.2.1}Git: Code and Metadata}{61}{subsubsection.17.2.1}%
+\contentsline {subsubsection}{\numberline {17.2.2}DVC: Data and Models}{62}{subsubsection.17.2.2}%
+\contentsline {subsubsection}{\numberline {17.2.3}MLflow: Experiment Tracking}{62}{subsubsection.17.2.3}%
+\contentsline {subsection}{\numberline {17.3}Data Flow Summary}{63}{subsection.17.3}%
+\contentsline {subsection}{\numberline {17.4}Complete Workflow Visualization}{63}{subsection.17.4}%
+\contentsline {subsection}{\numberline {17.5}Key Concepts Review}{64}{subsection.17.5}%
+\contentsline {section}{\numberline {18}MLOps Best Practices}{65}{section.18}%
+\contentsline {subsection}{\numberline {18.1}Experiment Management}{65}{subsection.18.1}%
+\contentsline {subsubsection}{\numberline {18.1.1}Naming Conventions}{65}{subsubsection.18.1.1}%
+\contentsline {subsubsection}{\numberline {18.1.2}Commit Message Best Practices}{65}{subsubsection.18.1.2}%
+\contentsline {subsubsection}{\numberline {18.1.3}Parameter Documentation}{65}{subsubsection.18.1.3}%
+\contentsline {subsection}{\numberline {18.2}DVC Remote Management}{65}{subsection.18.2}%
+\contentsline {subsubsection}{\numberline {18.2.1}Production Setup Recommendations}{66}{subsubsection.18.2.1}%
+\contentsline {subsubsection}{\numberline {18.2.2}Migrating to AWS S3}{66}{subsubsection.18.2.2}%
+\contentsline {subsection}{\numberline {18.3}MLflow Best Practices}{67}{subsection.18.3}%
+\contentsline {subsubsection}{\numberline {18.3.1}What to Log}{67}{subsubsection.18.3.1}%
+\contentsline {subsubsection}{\numberline {18.3.2}Comprehensive Tagging Strategy}{67}{subsubsection.18.3.2}%
+\contentsline {subsection}{\numberline {18.4}Workflow Best Practices}{68}{subsection.18.4}%
+\contentsline {subsubsection}{\numberline {18.4.1}Before Starting Experiments}{68}{subsubsection.18.4.1}%
+\contentsline {subsubsection}{\numberline {18.4.2}During Experimentation}{68}{subsubsection.18.4.2}%
+\contentsline {subsubsection}{\numberline {18.4.3}After Choosing Best Model}{69}{subsubsection.18.4.3}%
+\contentsline {subsection}{\numberline {18.5}Team Collaboration Guidelines}{69}{subsection.18.5}%
+\contentsline {subsubsection}{\numberline {18.5.1}Communication Best Practices}{69}{subsubsection.18.5.1}%
+\contentsline {subsubsection}{\numberline {18.5.2}Avoiding Conflicts}{70}{subsubsection.18.5.2}%
+\contentsline {subsection}{\numberline {18.6}Code Quality Best Practices}{70}{subsection.18.6}%
+\contentsline {subsubsection}{\numberline {18.6.1}Logging Standards}{70}{subsubsection.18.6.1}%
+\contentsline {subsubsection}{\numberline {18.6.2}Error Handling}{70}{subsubsection.18.6.2}%
+\contentsline {subsubsection}{\numberline {18.6.3}Type Hints and Documentation}{71}{subsubsection.18.6.3}%
+\contentsline {section}{\numberline {19}Comprehensive Troubleshooting Guide}{72}{section.19}%
+\contentsline {subsection}{\numberline {19.1}DVC Issues}{72}{subsection.19.1}%
+\contentsline {subsubsection}{\numberline {19.1.1}Issue 1: Failed to Push Data}{72}{subsubsection.19.1.1}%
+\contentsline {subsubsection}{\numberline {19.1.2}Issue 2: DVC Pull Fails}{72}{subsubsection.19.1.2}%
+\contentsline {subsubsection}{\numberline {19.1.3}Issue 3: Pipeline Won't Re-run}{73}{subsubsection.19.1.3}%
+\contentsline {subsubsection}{\numberline {19.1.4}Issue 4: Checksum Mismatch}{73}{subsubsection.19.1.4}%
+\contentsline {subsection}{\numberline {19.2}MLflow Issues}{74}{subsection.19.2}%
+\contentsline {subsubsection}{\numberline {19.2.1}Issue 5: MLflow Not Logging Runs}{74}{subsubsection.19.2.1}%
+\contentsline {subsubsection}{\numberline {19.2.2}Issue 6: Cannot Find Run ID}{75}{subsubsection.19.2.2}%
+\contentsline {subsection}{\numberline {19.3}Git Issues}{75}{subsection.19.3}%
+\contentsline {subsubsection}{\numberline {19.3.1}Issue 7: dvc.lock Merge Conflicts}{75}{subsubsection.19.3.1}%
+\contentsline {subsubsection}{\numberline {19.3.2}Issue 8: Large Files Committed to Git}{76}{subsubsection.19.3.2}%
+\contentsline {subsection}{\numberline {19.4}Environment Issues}{76}{subsection.19.4}%
+\contentsline {subsubsection}{\numberline {19.4.1}Issue 9: Import Errors}{76}{subsubsection.19.4.1}%
+\contentsline {subsubsection}{\numberline {19.4.2}Issue 10: NLTK Data Not Found}{77}{subsubsection.19.4.2}%
+\contentsline {subsection}{\numberline {19.5}Performance Issues}{77}{subsection.19.5}%
+\contentsline {subsubsection}{\numberline {19.5.1}Issue 11: Slow DVC Operations}{77}{subsubsection.19.5.1}%
+\contentsline {subsubsection}{\numberline {19.5.2}Issue 12: Large Cache Size}{77}{subsubsection.19.5.2}%
+\contentsline {section}{\numberline {20}Quick Reference Guide}{79}{section.20}%
+\contentsline {subsection}{\numberline {20.1}Essential Commands}{79}{subsection.20.1}%
+\contentsline {subsection}{\numberline {20.2}Complete Workflow Summary}{80}{subsection.20.2}%
+\contentsline {subsection}{\numberline {20.3}Project Structure Reference}{81}{subsection.20.3}%
+\contentsline {subsection}{\numberline {20.4}Key Files Explained}{82}{subsection.20.4}%
+\contentsline {subsection}{\numberline {20.5}Common Command Combinations}{83}{subsection.20.5}%
+\contentsline {section}{\numberline {21}Comparison: DVC-Only vs DVC+MLflow+Git Workflow}{84}{section.21}%
+\contentsline {subsection}{\numberline {21.1}Architecture Comparison}{84}{subsection.21.1}%
+\contentsline {subsection}{\numberline {21.2}Feature-by-Feature Comparison}{84}{subsection.21.2}%
+\contentsline {subsection}{\numberline {21.3}Workflow Process Comparison}{84}{subsection.21.3}%
+\contentsline {subsubsection}{\numberline {21.3.1}Experimentation Phase}{84}{subsubsection.21.3.1}%
+\contentsline {subsubsection}{\numberline {21.3.2}Model Freezing Phase}{85}{subsubsection.21.3.2}%
+\contentsline {subsection}{\numberline {21.4}Team Collaboration Comparison}{85}{subsection.21.4}%
+\contentsline {subsection}{\numberline {21.5}Use Case Recommendations}{85}{subsection.21.5}%
+\contentsline {subsubsection}{\numberline {21.5.1}When to Use DVC-Only}{85}{subsubsection.21.5.1}%
+\contentsline {subsubsection}{\numberline {21.5.2}When to Use DVC + MLflow + Git}{85}{subsubsection.21.5.2}%
+\contentsline {subsection}{\numberline {21.6}Real-World Scenario Comparison}{86}{subsection.21.6}%
+\contentsline {subsubsection}{\numberline {21.6.1}Scenario: Finding Best Model from 20+ Experiments}{86}{subsubsection.21.6.1}%
+\contentsline {subsubsection}{\numberline {21.6.2}Scenario: Reproducing 6-Month-Old Model}{87}{subsubsection.21.6.2}%
+\contentsline {subsection}{\numberline {21.7}Cost-Benefit Analysis}{87}{subsection.21.7}%
+\contentsline {subsection}{\numberline {21.8}Migration Path}{87}{subsection.21.8}%
+\contentsline {subsubsection}{\numberline {21.8.1}Upgrading from DVC-Only to DVC+MLflow}{88}{subsubsection.21.8.1}%
+\contentsline {section}{\numberline {22}Conclusion and Next Steps}{89}{section.22}%
+\contentsline {subsection}{\numberline {22.1}What You've Accomplished}{89}{subsection.22.1}%
+\contentsline {subsection}{\numberline {22.2}Key Takeaways}{89}{subsection.22.2}%
+\contentsline {subsubsection}{\numberline {22.2.1}The Three-System Architecture}{89}{subsubsection.22.2.1}%
+\contentsline {subsubsection}{\numberline {22.2.2}Critical Best Practices}{90}{subsubsection.22.2.2}%
+\contentsline {subsection}{\numberline {22.3}Common Pitfalls to Avoid}{90}{subsection.22.3}%
+\contentsline {subsection}{\numberline {22.4}Next Steps and Extensions}{91}{subsection.22.4}%
+\contentsline {subsubsection}{\numberline {22.4.1}Immediate Next Steps}{91}{subsubsection.22.4.1}%
+\contentsline {subsubsection}{\numberline {22.4.2}Advanced Extensions}{92}{subsubsection.22.4.2}%
+\contentsline {subsection}{\numberline {22.5}Learning Resources}{93}{subsection.22.5}%
+\contentsline {subsubsection}{\numberline {22.5.1}Official Documentation}{93}{subsubsection.22.5.1}%
+\contentsline {subsubsection}{\numberline {22.5.2}Community and Support}{93}{subsubsection.22.5.2}%
+\contentsline {subsubsection}{\numberline {22.5.3}Advanced Topics to Explore}{93}{subsubsection.22.5.3}%
+\contentsline {subsection}{\numberline {22.6}Final Thoughts}{93}{subsection.22.6}%
+\contentsline {subsection}{\numberline {22.7}Project Checklist}{95}{subsection.22.7}%
+\contentsline {subsection}{\numberline {22.8}Get In Touch}{95}{subsection.22.8}%

@@ -1,0 +1,111 @@
+\contentsline {section}{\numberline {1}Introduction to DVC}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}What is DVC?}{4}{subsection.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1}Core Features}{4}{subsubsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.2}Why Use DVC?}{4}{subsection.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.1}Traditional Git Limitations}{4}{subsubsection.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.2}DVC Solutions}{4}{subsubsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.3}DVC Architecture}{5}{subsection.1.3}%
+\contentsline {subsubsection}{\numberline {1.3.1}Core Components}{5}{subsubsection.1.3.1}%
+\contentsline {subsubsection}{\numberline {1.3.2}Workflow Comparison}{5}{subsubsection.1.3.2}%
+\contentsline {subsection}{\numberline {1.4}Getting Started}{5}{subsection.1.4}%
+\contentsline {subsubsection}{\numberline {1.4.1}Installation}{5}{subsubsection.1.4.1}%
+\contentsline {subsubsection}{\numberline {1.4.2}Project Initialization}{5}{subsubsection.1.4.2}%
+\contentsline {section}{\numberline {2}Understanding dvc.yaml}{7}{section.2}%
+\contentsline {subsection}{\numberline {2.1}What is dvc.yaml?}{7}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Basic Structure}{7}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Minimal Pipeline}{7}{subsubsection.2.2.1}%
+\contentsline {subsubsection}{\numberline {2.2.2}Complete Stage Definition}{7}{subsubsection.2.2.2}%
+\contentsline {subsection}{\numberline {2.3}Key Benefits}{8}{subsection.2.3}%
+\contentsline {section}{\numberline {3}Core Components}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Stages}{9}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Stage Characteristics}{9}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Simple Stage Example}{9}{subsubsection.3.1.2}%
+\contentsline {subsection}{\numberline {3.2}Commands (cmd)}{9}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Command Variations}{9}{subsubsection.3.2.1}%
+\contentsline {subsection}{\numberline {3.3}Dependencies (deps)}{10}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Dependency Types}{10}{subsubsection.3.3.1}%
+\contentsline {subsection}{\numberline {3.4}Outputs (outs)}{10}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Output Configuration}{10}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Output Options}{11}{subsubsection.3.4.2}%
+\contentsline {subsection}{\numberline {3.5}Parameters (params)}{11}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Parameter Usage}{11}{subsubsection.3.5.1}%
+\contentsline {subsubsection}{\numberline {3.5.2}Multiple Parameter Files}{12}{subsubsection.3.5.2}%
+\contentsline {subsection}{\numberline {3.6}Metrics}{12}{subsection.3.6}%
+\contentsline {subsubsection}{\numberline {3.6.1}Metric Definition}{12}{subsubsection.3.6.1}%
+\contentsline {subsubsection}{\numberline {3.6.2}Metric File Format}{12}{subsubsection.3.6.2}%
+\contentsline {subsubsection}{\numberline {3.6.3}Viewing Metrics}{13}{subsubsection.3.6.3}%
+\contentsline {subsection}{\numberline {3.7}Plots}{13}{subsection.3.7}%
+\contentsline {subsubsection}{\numberline {3.7.1}Plot Configuration}{13}{subsubsection.3.7.1}%
+\contentsline {subsubsection}{\numberline {3.7.2}Plot Data Format}{13}{subsubsection.3.7.2}%
+\contentsline {section}{\numberline {4}Advanced Pipeline Features}{14}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Working Directory (wdir)}{14}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Frozen Stages}{14}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Always Changed Stages}{14}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Foreach Loops}{14}{subsection.4.4}%
+\contentsline {subsubsection}{\numberline {4.4.1}Simple Foreach}{15}{subsubsection.4.4.1}%
+\contentsline {subsubsection}{\numberline {4.4.2}Dictionary Foreach}{15}{subsubsection.4.4.2}%
+\contentsline {subsubsection}{\numberline {4.4.3}Matrix Foreach (Hyperparameter Grid)}{15}{subsubsection.4.4.3}%
+\contentsline {subsection}{\numberline {4.5}Variables and Templating}{16}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Stage Dependencies}{16}{subsection.4.6}%
+\contentsline {section}{\numberline {5}Complete ML Pipeline Example}{18}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Project Structure}{18}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Complete dvc.yaml}{18}{subsection.5.2}%
+\contentsline {subsection}{\numberline {5.3}Complete params.yaml}{21}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Essential DVC Commands}{23}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Initialization and Setup}{23}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Pipeline Operations}{23}{subsection.6.2}%
+\contentsline {subsection}{\numberline {6.3}Data Management}{23}{subsection.6.3}%
+\contentsline {subsection}{\numberline {6.4}Metrics and Plots}{24}{subsection.6.4}%
+\contentsline {subsection}{\numberline {6.5}Experiments}{24}{subsection.6.5}%
+\contentsline {section}{\numberline {7}Best Practices}{26}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Pipeline Design}{26}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Version Control Integration}{26}{subsection.7.2}%
+\contentsline {subsubsection}{\numberline {7.2.1}Track with Git}{26}{subsubsection.7.2.1}%
+\contentsline {subsubsection}{\numberline {7.2.2}Track with DVC}{26}{subsubsection.7.2.2}%
+\contentsline {subsection}{\numberline {7.3}Parameter Management}{27}{subsection.7.3}%
+\contentsline {section}{\numberline {8}Troubleshooting}{28}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Pipeline Won't Run}{28}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Stage Always Re-runs}{28}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Missing Data Files}{29}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}Push/Pull Failures}{29}{subsection.8.4}%
+\contentsline {subsection}{\numberline {8.5}Cache Corruption}{30}{subsection.8.5}%
+\contentsline {subsection}{\numberline {8.6}Disk Space Issues}{31}{subsection.8.6}%
+\contentsline {subsection}{\numberline {8.7}Lock File Conflicts}{31}{subsection.8.7}%
+\contentsline {subsection}{\numberline {8.8}Permission Issues}{32}{subsection.8.8}%
+\contentsline {subsection}{\numberline {8.9}Performance Issues}{32}{subsection.8.9}%
+\contentsline {subsubsection}{\numberline {8.9.1}Slow Pipeline Execution}{32}{subsubsection.8.9.1}%
+\contentsline {subsubsection}{\numberline {8.9.2}Slow Push/Pull Operations}{33}{subsubsection.8.9.2}%
+\contentsline {subsection}{\numberline {8.10}Import/Module Errors}{33}{subsection.8.10}%
+\contentsline {section}{\numberline {9}Advanced Topics}{34}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Remote Storage Configuration}{34}{subsection.9.1}%
+\contentsline {subsubsection}{\numberline {9.1.1}AWS S3}{34}{subsubsection.9.1.1}%
+\contentsline {subsubsection}{\numberline {9.1.2}Google Cloud Storage}{34}{subsubsection.9.1.2}%
+\contentsline {subsubsection}{\numberline {9.1.3}Azure Blob Storage}{34}{subsubsection.9.1.3}%
+\contentsline {subsubsection}{\numberline {9.1.4}SSH Remote}{35}{subsubsection.9.1.4}%
+\contentsline {subsection}{\numberline {9.2}CI/CD Integration}{35}{subsection.9.2}%
+\contentsline {subsubsection}{\numberline {9.2.1}GitHub Actions}{35}{subsubsection.9.2.1}%
+\contentsline {subsubsection}{\numberline {9.2.2}GitLab CI}{36}{subsubsection.9.2.2}%
+\contentsline {subsection}{\numberline {9.3}Custom Metrics and Plots}{37}{subsection.9.3}%
+\contentsline {subsubsection}{\numberline {9.3.1}Custom Metrics Structure}{37}{subsubsection.9.3.1}%
+\contentsline {subsubsection}{\numberline {9.3.2}Custom Plot Templates}{37}{subsubsection.9.3.2}%
+\contentsline {subsection}{\numberline {9.4}Pipeline Modularization}{38}{subsection.9.4}%
+\contentsline {subsubsection}{\numberline {9.4.1}Splitting Large Pipelines}{38}{subsubsection.9.4.1}%
+\contentsline {subsection}{\numberline {9.5}Experiment Management}{39}{subsection.9.5}%
+\contentsline {subsubsection}{\numberline {9.5.1}Running Multiple Experiments}{39}{subsubsection.9.5.1}%
+\contentsline {subsubsection}{\numberline {9.5.2}Comparing Experiments}{39}{subsubsection.9.5.2}%
+\contentsline {subsubsection}{\numberline {9.5.3}Managing Experiments}{40}{subsubsection.9.5.3}%
+\contentsline {section}{\numberline {10}Quick Reference Guide}{41}{section.10}%
+\contentsline {subsection}{\numberline {10.1}dvc.yaml Components Summary}{41}{subsection.10.1}%
+\contentsline {subsection}{\numberline {10.2}Command Cheat Sheet}{41}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Common Workflows}{42}{subsection.10.3}%
+\contentsline {subsubsection}{\numberline {10.3.1}Start New DVC Project}{42}{subsubsection.10.3.1}%
+\contentsline {subsubsection}{\numberline {10.3.2}Clone DVC Project}{42}{subsubsection.10.3.2}%
+\contentsline {subsubsection}{\numberline {10.3.3}Run Experiment with Different Parameters}{43}{subsubsection.10.3.3}%
+\contentsline {subsubsection}{\numberline {10.3.4}Hyperparameter Tuning}{43}{subsubsection.10.3.4}%
+\contentsline {section}{\numberline {11}Glossary}{44}{section.11}%
+\contentsline {section}{\numberline {12}Conclusion}{45}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Key Takeaways}{45}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Getting Started Checklist}{45}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Best Practices Recap}{45}{subsection.12.3}%
+\contentsline {subsection}{\numberline {12.4}Next Steps}{46}{subsection.12.4}%
+\contentsline {subsection}{\numberline {12.5}Additional Resources}{46}{subsection.12.5}%

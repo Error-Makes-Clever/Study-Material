@@ -1,0 +1,3090 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{hyperref}
+
+\usepackage{url}  % Add this for better URL breaking
+
+% Configure hyperref
+\hypersetup{
+    breaklinks=true,
+    colorlinks=true,
+    linkcolor=blue,
+    urlcolor=blue
+}
+
+\usepackage{graphicx}
+
+% Fix header height
+\setlength{\headheight}{14pt}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Python Logging Complete Guide}
+\lhead{MLOps Reference}
+\cfoot{\thepage}
+
+% Title formatting
+\titleformat{\section}{\Large\bfseries\color{blue!70!black}}{\thesection}{1em}{}[\titlerule]
+\titleformat{\subsection}{\large\bfseries\color{blue!50!black}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{blue!40!black}}{\thesubsubsection}{1em}{}
+
+% Code styling
+\definecolor{codebg}{gray}{0.95}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    backgroundcolor=\color{codebg},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    frame=single,
+    xleftmargin=2em,
+    framexleftmargin=1.5em
+}
+
+\lstset{style=pythonstyle}
+
+% Command box
+\newtcolorbox{cmdbox}{
+    colback=codebg,
+    colframe=black!50,
+    boxrule=0.5pt,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm,
+    breakable
+}
+
+% Example box
+\newtcolorbox{examplebox}[1]{
+    colback=green!5!white,
+    colframe=green!75!black,
+    title=#1,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced jigsaw
+}
+
+% Note box
+\newtcolorbox{notebox}{
+    colback=yellow!10!white,
+    colframe=orange!75!black,
+    title=Important Note,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced jigsaw
+}
+
+% Warning box
+\newtcolorbox{warningbox}{
+    colback=red!5!white,
+    colframe=red!75!black,
+    title=Warning,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced jigsaw
+}
+
+% Info box - FIXED: Added missing comma
+\newtcolorbox{infobox}[1]{
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    title=#1,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced jigsaw
+}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Huge\bfseries Python Logging Module\\[0.5cm] Complete Reference Guide\par}
+    \vspace{1cm}
+    {\Large For MLOps and Production Systems\par}
+    \vspace{2cm}
+    {\large A Comprehensive Guide to Logging,\\
+    Best Practices, and Real-World Implementation\par}
+    \vspace{3cm}
+    {\Large\bfseries Sujil S\par}
+    \vspace{0.5cm}
+    {\large\texttt{sujil9480@gmail.com}\par}
+    \vfill
+    {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ========================
+% SECTION 1: INTRODUCTION
+% ========================
+\section{Introduction to Python Logging}
+
+\subsection{What is Logging?}
+
+\textbf{Logging} is the process of recording events, messages, and information during program execution. It provides a way to track what happens when software runs, which is essential for understanding application behavior, debugging issues, and monitoring systems in production.
+
+\subsubsection{Why Logging Matters}
+
+Logging is critical for:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Debugging and Troubleshooting}: Identify and fix bugs efficiently
+    \item \textbf{Monitoring}: Track application behavior in production
+    \item \textbf{Auditing}: Maintain records for compliance and security
+    \item \textbf{Performance Analysis}: Identify bottlenecks and optimization opportunities
+    \item \textbf{Understanding Flow}: Trace execution path through complex systems
+\end{itemize}
+
+\subsection{Why Use Logging in MLOps?}
+
+In Machine Learning Operations (MLOps), logging becomes even more critical:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Model Training Monitoring}:
+    \begin{itemize}
+        \item Track training epochs and iterations
+        \item Record loss values and metrics
+        \item Monitor convergence and performance
+        \item Log hyperparameters for reproducibility
+    \end{itemize}
+    
+    \item \textbf{Data Pipeline Tracking}:
+    \begin{itemize}
+        \item Monitor data ingestion processes
+        \item Log preprocessing steps
+        \item Track data quality issues
+        \item Record transformation operations
+    \end{itemize}
+    
+    \item \textbf{Model Serving}:
+    \begin{itemize}
+        \item Log prediction requests and responses
+        \item Track API performance
+        \item Monitor model confidence scores
+        \item Record error rates
+    \end{itemize}
+    
+    \item \textbf{Error Tracking}:
+    \begin{itemize}
+        \item Identify failures quickly
+        \item Debug production issues
+        \item Track error patterns
+        \item Generate alerts for critical errors
+    \end{itemize}
+    
+    \item \textbf{Performance Monitoring}:
+    \begin{itemize}
+        \item Track inference times
+        \item Monitor resource usage (CPU, GPU, memory)
+        \item Identify performance degradation
+        \item Optimize system bottlenecks
+    \end{itemize}
+    
+    \item \textbf{Reproducibility}:
+    \begin{itemize}
+        \item Maintain audit trails for experiments
+        \item Document model versions and configurations
+        \item Track data versions used
+        \item Enable experiment reproduction
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Logging vs Print Statements}
+
+Many beginners use \texttt{print()} statements for debugging. However, in production code, the logging module is vastly superior:
+
+\begin{center}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{print() Statements} & \textbf{logging Module} \\
+\hline
+Always outputs to console & Flexible output destinations (file, console, remote) \\
+\hline
+No severity levels & Five severity levels (DEBUG to CRITICAL) \\
+\hline
+Difficult to filter messages & Easy filtering by level \\
+\hline
+No automatic timestamps & Automatic timestamps available \\
+\hline
+Cannot be disabled easily & Can be enabled/disabled by configuration \\
+\hline
+Not suitable for production & Production-ready and battle-tested \\
+\hline
+No structured format & Consistent, structured format \\
+\hline
+Limited context information & Rich context (filename, line number, function) \\
+\hline
+Performance impact on I/O & Optimized performance with lazy evaluation \\
+\hline
+No rotation capabilities & Automatic log file rotation \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{warningbox}
+\textbf{Production Code Rule}: Never use \texttt{print()} statements in production code. Always use the logging module for better control, flexibility, and maintainability.
+\end{warningbox}
+
+\newpage
+
+% ========================
+% SECTION 2: CORE CONCEPTS
+% ========================
+\section{Core Logging Components}
+
+\subsection{The Logging Architecture}
+
+The Python logging module follows a hierarchical architecture with four main components that work together to provide flexible and powerful logging capabilities.
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Loggers}: Entry point for logging messages in your application
+    \item \textbf{Handlers}: Determine where log records are sent (console, file, network)
+    \item \textbf{Formatters}: Define the layout and content of log messages
+    \item \textbf{Filters}: Provide fine-grained control over which log records are processed
+\end{enumerate}
+
+\subsection{Logger Objects}
+
+The \textbf{Logger} is the primary interface that applications use to write log messages.
+
+\subsubsection{Creating a Logger}
+
+\begin{lstlisting}
+import logging
+
+# Create a logger with module name (recommended best practice)
+logger = logging.getLogger(__name__)
+
+# Create a logger with custom name
+logger = logging.getLogger('my_application')
+
+# Get the root logger
+root_logger = logging.getLogger()
+\end{lstlisting}
+
+\begin{notebox}
+\textbf{Best Practice}: Always use \texttt{\_\_name\_\_} when creating loggers. This creates a hierarchical naming structure based on your module organization, making it easier to manage logging across large applications.
+\end{notebox}
+
+\subsubsection{Logger Methods}
+
+Loggers provide methods for different severity levels:
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{logger.debug(msg)} - Detailed diagnostic information for debugging
+    \item \texttt{logger.info(msg)} - General informational messages about normal operation
+    \item \texttt{logger.warning(msg)} - Warning messages indicating potential issues
+    \item \texttt{logger.error(msg)} - Error messages for serious problems
+    \item \texttt{logger.critical(msg)} - Critical error messages for severe failures
+    \item \texttt{logger.exception(msg)} - Error with full traceback (use in except blocks)
+\end{itemize}
+
+\subsection{Handler Objects}
+
+\textbf{Handlers} determine where log messages are sent. Multiple handlers can be attached to a single logger.
+
+\subsubsection{Common Handler Types}
+
+\begin{description}[leftmargin=4cm,style=nextline]
+    \item[StreamHandler] Sends logs to console (stdout/stderr) - useful for development
+    \item[FileHandler] Writes logs to a file - basic file logging
+    \item[RotatingFileHandler] Rotates log files based on size - prevents files from growing too large
+    \item[TimedRotatingFileHandler] Rotates log files based on time intervals - daily, weekly, etc.
+    \item[HTTPHandler] Sends logs to HTTP server - for centralized logging
+    \item[SMTPHandler] Sends logs via email - for critical alerts
+    \item[SysLogHandler] Sends logs to Unix syslog daemon
+    \item[SocketHandler] Sends logs over network socket
+    \item[QueueHandler] Sends logs to queue for async processing
+\end{description}
+
+\subsection{Formatter Objects}
+
+\textbf{Formatters} specify the layout and content of log messages, allowing you to customize how information is displayed.
+
+\subsubsection{Common Format Attributes}
+
+The following placeholders can be used in format strings:
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{\%(asctime)s} - Human-readable timestamp of log record
+    \item \texttt{\%(name)s} - Name of the logger
+    \item \texttt{\%(levelname)s} - Logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+    \item \texttt{\%(message)s} - The actual log message
+    \item \texttt{\%(filename)s} - Source filename where log was called
+    \item \texttt{\%(lineno)d} - Line number in source code
+    \item \texttt{\%(funcName)s} - Function name where log was called
+    \item \texttt{\%(process)d} - Process ID
+    \item \texttt{\%(thread)d} - Thread ID
+    \item \texttt{\%(pathname)s} - Full pathname of source file
+    \item \texttt{\%(module)s} - Module name (filename without extension)
+    \item \texttt{\%(levelno)s} - Numeric logging level
+\end{itemize}
+
+\subsection{Filter Objects}
+
+\textbf{Filters} provide fine-grained control over which log records are processed. They can be attached to both loggers and handlers.
+
+\vspace{0.5em}
+
+Filters are useful for:
+\begin{itemize}[leftmargin=*]
+    \item Filtering by specific attributes
+    \item Adding contextual information
+    \item Implementing complex filtering logic
+    \item Rate limiting log messages
+\end{itemize}
+
+\newpage
+
+% ========================
+% SECTION 3: LOGGING LEVELS
+% ========================
+\section{Logging Levels}
+
+\subsection{The Five Standard Levels}
+
+Python's logging module defines five severity levels in ascending order of importance. Each level has a numeric value:
+
+\begin{center}
+\begin{tabular}{|c|l|c|}
+\hline
+\textbf{Level Name} & \textbf{Numeric Value} & \textbf{Purpose} \\
+\hline
+DEBUG & 10 & Detailed diagnostic information \\
+\hline
+INFO & 20 & Informational messages \\
+\hline
+WARNING & 30 & Warning messages \\
+\hline
+ERROR & 40 & Error messages \\
+\hline
+CRITICAL & 50 & Critical error messages \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{DEBUG Level (10)}
+
+\textbf{Purpose}: Most detailed information for diagnosing problems during development.
+
+\vspace{0.5em}
+
+\textbf{When to Use}:
+\begin{itemize}[leftmargin=*]
+    \item Development and debugging phases
+    \item Tracking variable values and state
+    \item Understanding detailed program flow
+    \item Loop iterations and function entry/exit
+    \item Detailed API request/response information
+\end{itemize}
+
+\begin{examplebox}{DEBUG Level Examples in MLOps}
+\begin{lstlisting}
+logger.debug(f"Loading dataset from {data_path}")
+logger.debug(f"Feature shape: {X.shape}, Target shape: {y.shape}")
+logger.debug(f"Model parameters: {model.get_params()}")
+logger.debug(f"Batch {batch_num}: input_shape={input_data.shape}")
+logger.debug(f"GPU memory allocated: {torch.cuda.memory_allocated()}")
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{INFO Level (20)}
+
+\textbf{Purpose}: Confirmation that things are working as expected.
+
+\vspace{0.5em}
+
+\textbf{When to Use}:
+\begin{itemize}[leftmargin=*]
+    \item Application startup and shutdown
+    \item Successful completion of operations
+    \item Milestone achievements
+    \item Configuration information
+    \item Normal operational messages
+\end{itemize}
+
+\begin{examplebox}{INFO Level Examples in MLOps}
+\begin{lstlisting}
+logger.info("Model training started")
+logger.info(f"Epoch {epoch}/{total_epochs}: loss={loss:.4f}, accuracy={acc:.4f}")
+logger.info("Model saved successfully to disk")
+logger.info(f"API server started on port {port}")
+logger.info(f"Loaded {len(dataset)} samples from database")
+logger.info("Data preprocessing pipeline completed")
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{WARNING Level (30)}
+
+\textbf{Purpose}: Indication of unexpected events or potential problems that don't prevent the program from working.
+
+\vspace{0.5em}
+
+\textbf{When to Use}:
+\begin{itemize}[leftmargin=*]
+    \item Using deprecated features
+    \item Resource constraints or limitations
+    \item Recoverable errors
+    \item Configuration issues that have fallbacks
+    \item Performance concerns
+\end{itemize}
+
+\begin{examplebox}{WARNING Level Examples in MLOps}
+\begin{lstlisting}
+logger.warning("Missing values detected in dataset")
+logger.warning(f"GPU memory usage at {usage}%, close to limit")
+logger.warning("Model confidence below threshold: 0.6")
+logger.warning("Using default hyperparameters")
+logger.warning("Training data smaller than recommended minimum")
+logger.warning("Deprecated model architecture detected")
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{ERROR Level (40)}
+
+\textbf{Purpose}: Serious problems that prevented a specific function or operation from executing.
+\vspace{0.5em}
+
+\textbf{When to Use}:
+\begin{itemize}[leftmargin=*]
+    \item Failed operations
+    \item Exception handling (non-critical)
+    \item Resource unavailability
+    \item Data validation failures
+    \item API request failures
+\end{itemize}
+
+\begin{examplebox}{ERROR Level Examples in MLOps}
+\begin{lstlisting}
+logger.error(f"Failed to load model from {model_path}")
+logger.error("Database connection failed")
+logger.error(f"Invalid input shape: expected {exp_shape}, got {actual_shape}")
+logger.error("Prediction API returned error 500")
+logger.error("Data quality check failed: too many outliers")
+logger.error(f"Feature extraction failed for {feature_name}")
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{CRITICAL Level (50)}
+
+\textbf{Purpose}: Very serious errors indicating that the program may not be able to continue running.
+
+\vspace{0.45em}
+
+\textbf{When to Use}:
+\begin{itemize}[leftmargin=*]
+    \item System crashes or imminent crashes
+    \item Data corruption
+    \item Security breaches
+    \item Unrecoverable errors
+    \item Service unavailability
+\end{itemize}
+
+\begin{examplebox}{CRITICAL Level Examples in MLOps}
+\begin{lstlisting}
+logger.critical("Out of memory - cannot continue training")
+logger.critical("Model serving endpoint unreachable")
+logger.critical("Critical security vulnerability detected")
+logger.critical("Data pipeline completely failed")
+logger.critical("Unable to connect to required external service")
+logger.critical("System configuration corrupted")
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Setting Logging Levels}
+
+You can set logging levels at both the logger and handler level:
+
+\begin{lstlisting}
+import logging
+
+logger = logging.getLogger(__name__)
+
+# Set logger level (processes messages at this level and above)
+logger.setLevel(logging.DEBUG)
+
+# Set handler level (outputs messages at this level and above)
+handler = logging.StreamHandler()
+handler.setLevel(logging.WARNING)
+
+logger.addHandler(handler)
+
+# These will be processed but not output (handler level is WARNING)
+logger.debug("Debug message")   # Not output
+logger.info("Info message")     # Not output
+
+# These will be both processed and output
+logger.warning("Warning message")  # Output
+logger.error("Error message")      # Output
+\end{lstlisting}
+
+\begin{infobox}{Level Hierarchy}
+\textbf{How Levels Work}:
+\begin{itemize}[leftmargin=*]
+    \item Logger set to INFO will process INFO, WARNING, ERROR, CRITICAL (but not DEBUG)
+    \item Handler set to ERROR will only output ERROR and CRITICAL messages
+    \item Messages below the set level are completely ignored
+    \item Both logger AND handler must allow a level for it to be output
+\end{itemize}
+\end{infobox}
+
+\newpage
+
+% ========================
+% SECTION 4: HANDLERS
+% ========================
+\section{Handlers in Detail}
+
+\subsection{StreamHandler (Console Handler)}
+
+The \textbf{StreamHandler} sends log output to streams like \texttt{sys.stdout} or \texttt{sys.stderr}. This is the most common handler for development.
+
+\subsubsection{Basic Usage}
+
+\begin{lstlisting}
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+# Create console handler
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+
+# Create formatter
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+console_handler.setFormatter(formatter)
+
+# Add handler to logger
+logger.addHandler(console_handler)
+
+# Use the logger
+logger.info("This appears in console")
+logger.debug("This won't appear (below handler level)")
+\end{lstlisting}
+
+\subsubsection{Directing to stderr}
+
+\begin{lstlisting}
+import sys
+import logging
+
+# Direct to stderr instead of stdout
+error_handler = logging.StreamHandler(sys.stderr)
+error_handler.setLevel(logging.ERROR)
+
+logger.addHandler(error_handler)
+\end{lstlisting}
+
+\subsection{FileHandler}
+
+The \textbf{FileHandler} writes log messages to a specified file on disk.
+
+\subsubsection{Basic Usage}
+
+\begin{lstlisting}
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+# Create file handler
+file_handler = logging.FileHandler('application.log')
+file_handler.setLevel(logging.ERROR)
+
+formatter = logging.Formatter(
+    '%(asctime)s - %(levelname)s - %(message)s'
+)
+file_handler.setFormatter(formatter)
+
+logger.addHandler(file_handler)
+
+logger.error("This is written to application.log")
+logger.info("This is not written (below handler level)")
+\end{lstlisting}
+
+\subsubsection{File Modes}
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{'w'} - Write mode: Overwrites existing file
+    \item \texttt{'a'} - Append mode: Appends to existing file (default)
+\end{itemize}
+
+\begin{lstlisting}
+# Overwrite mode - starts fresh each time
+file_handler = logging.FileHandler('app.log', mode='w')
+
+# Append mode - continues adding to existing file
+file_handler = logging.FileHandler('app.log', mode='a')
+\end{lstlisting}
+
+\subsection{RotatingFileHandler}
+
+The \textbf{RotatingFileHandler} automatically rotates log files when they reach a certain size. This is essential for production systems to prevent log files from consuming too much disk space.
+
+\subsubsection{Usage Example}
+
+\begin{lstlisting}
+from logging.handlers import RotatingFileHandler
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+# Rotate after 10MB, keep 5 backup files
+rotating_handler = RotatingFileHandler(
+    'app.log',
+    maxBytes=10*1024*1024,  # 10 MB
+    backupCount=5
+)
+
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+rotating_handler.setFormatter(formatter)
+logger.addHandler(rotating_handler)
+
+logger.info("Logging with rotation enabled")
+\end{lstlisting}
+
+\textbf{How File Rotation Works}:
+\begin{enumerate}[leftmargin=*]
+    \item When \texttt{app.log} reaches 10MB, it's renamed to \texttt{app.log.1}
+    \item A new \texttt{app.log} file is created for current logging
+    \item On next rotation: \texttt{app.log.1} $\rightarrow$ \texttt{app.log.2}, new log $\rightarrow$ \texttt{app.log.1}
+    \item This continues until \texttt{backupCount} is reached
+    \item Oldest file is deleted when new rotation occurs beyond \texttt{backupCount}
+\end{enumerate}
+
+\begin{notebox}
+\textbf{Production Tip}: For production systems handling significant traffic, use RotatingFileHandler with appropriate size limits (10-50 MB) and backup counts (5-10 files) to balance between log retention and disk space.
+\end{notebox}
+
+\subsection{TimedRotatingFileHandler}
+
+The \textbf{TimedRotatingFileHandler} rotates log files at specified time intervals rather than by file size.
+
+\subsubsection{Usage Example}
+
+\begin{lstlisting}
+from logging.handlers import TimedRotatingFileHandler
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+
+# Rotate daily at midnight, keep 30 days of logs
+timed_handler = TimedRotatingFileHandler(
+    'app.log',
+    when='midnight',
+    interval=1,
+    backupCount=30
+)
+
+formatter = logging.Formatter(
+    '%(asctime)s - %(levelname)s - %(message)s'
+)
+timed_handler.setFormatter(formatter)
+logger.addHandler(timed_handler)
+
+logger.info("Logging with time-based rotation")
+\end{lstlisting}
+
+\subsubsection{Common 'when' Values}
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Value} & \textbf{Type} & \textbf{Description} \\
+\hline
+'S' & Seconds & Rotate every N seconds \\
+\hline
+'M' & Minutes & Rotate every N minutes \\
+\hline
+'H' & Hours & Rotate every N hours \\
+\hline
+'D' & Days & Rotate every N days \\
+\hline
+'midnight' & Special & Roll over at midnight \\
+\hline
+'W0'-'W6' & Weekday & Rotate on specific weekday (0=Monday) \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{examplebox}{Time-Based Rotation Examples}
+\begin{lstlisting}
+# Rotate every hour
+handler = TimedRotatingFileHandler('app.log', when='H', interval=1)
+
+# Rotate every 6 hours
+handler = TimedRotatingFileHandler('app.log', when='H', interval=6)
+
+# Rotate daily at midnight
+handler = TimedRotatingFileHandler('app.log', when='midnight')
+
+# Rotate every Monday
+handler = TimedRotatingFileHandler('app.log', when='W0')
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Multiple Handlers}
+
+A single logger can have multiple handlers, each with different levels, formatters, and destinations. This is extremely useful for production systems.
+
+\begin{examplebox}{Complete Multi-Handler Setup}
+\begin{lstlisting}
+import logging
+from logging.handlers import RotatingFileHandler
+
+# Create logger
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)  # Logger processes all levels
+
+# Console handler - INFO and above to console
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+console_formatter = logging.Formatter(
+    '%(levelname)s - %(message)s'
+)
+console_handler.setFormatter(console_formatter)
+
+# File handler - ERROR and above to file
+file_handler = RotatingFileHandler(
+    'errors.log',
+    maxBytes=5*1024*1024,  # 5MB
+    backupCount=3
+)
+file_handler.setLevel(logging.ERROR)
+file_formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - '
+    '[%(filename)s:%(lineno)d] - %(message)s'
+)
+file_handler.setFormatter(file_formatter)
+
+# Debug file handler - all messages
+debug_handler = RotatingFileHandler(
+    'debug.log',
+    maxBytes=10*1024*1024,  # 10MB
+    backupCount=5
+)
+debug_handler.setLevel(logging.DEBUG)
+debug_handler.setFormatter(file_formatter)
+
+# Add all handlers to logger
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
+logger.addHandler(debug_handler)
+
+# Test different levels
+logger.debug("Debug message")      # Only in debug.log
+logger.info("Info message")        # Console + debug.log
+logger.error("Error message")      # Console + errors.log + debug.log
+\end{lstlisting}
+\end{examplebox}
+
+This setup provides:
+\begin{itemize}[leftmargin=*]
+    \item Quick feedback in console (INFO and above)
+    \item Separate error log for critical issues
+    \item Complete debug log for thorough investigation
+\end{itemize}
+
+\newpage
+
+% ========================
+% SECTION 5: FORMATTERS
+% ========================
+\section{Formatters and Message Formatting}
+
+\subsection{Creating Formatters}
+
+Formatters control the final output format of log messages. They can include various pieces of information about the log record.
+
+\subsubsection{Basic Formatter}
+
+\begin{lstlisting}
+import logging
+
+# Simple formatter with common fields
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+
+# Apply to handler
+handler = logging.StreamHandler()
+handler.setFormatter(formatter)
+\end{lstlisting}
+
+\subsubsection{Custom Date Format}
+
+\begin{lstlisting}
+formatter = logging.Formatter(
+    fmt='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'  # Custom date format
+)
+
+# Example output: 2024-12-17 14:30:45 - INFO - Message
+\end{lstlisting}
+
+\subsection{Common Format Patterns}
+
+\subsubsection{Simple Format (Development)}
+
+Best for quick development and debugging:
+
+\begin{lstlisting}
+formatter = logging.Formatter('%(levelname)s - %(message)s')
+\end{lstlisting}
+
+Output example:
+\begin{verbatim}
+INFO - Model training started
+ERROR - Failed to load data
+\end{verbatim}
+
+\subsubsection{Standard Format (General Purpose)}
+
+Balanced format with essential information:
+
+\begin{lstlisting}
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+\end{lstlisting}
+
+Output example:
+\begin{verbatim}
+2024-12-17 14:30:45,123 - ml_model - INFO - Model training started
+\end{verbatim}
+
+\subsubsection{Detailed Format (Production)}
+
+Includes file and line information for debugging:
+
+\begin{lstlisting}
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - '
+    '[%(filename)s:%(lineno)d] - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+\end{lstlisting}
+
+Output example:
+\begin{verbatim}
+2024-12-17 14:30:45 - ml_model - INFO - [train.py:42] - Model training started
+\end{verbatim}
+
+\subsubsection{MLOps Format (Comprehensive)}
+
+Includes process/thread info for distributed systems:
+
+\begin{lstlisting}
+formatter = logging.Formatter(
+    
+    '%(asctime)s - [PID:%(process)d TID:%(thread)d] - '
+    '%(name)s - %(funcName)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+\end{lstlisting}
+
+Output example:
+\begin{verbatim}
+2024-12-17 14:30:45 - [PID:12345 TID:67890] - ml_model - 
+train_model - INFO - Epoch 1 complete
+\end{verbatim}
+
+\subsection{Complete Format Attributes Reference}
+
+\begin{center}
+\begin{tabular}{|p{0.28\textwidth}|p{0.62\textwidth}|}
+\hline
+\textbf{Attribute} & \textbf{Description} \\
+\hline
+\texttt{\%(name)s} & Logger name (typically module name) \\
+\hline
+\texttt{\%(levelname)s} & Text logging level (DEBUG, INFO, etc.) \\
+\hline
+\texttt{\%(levelno)s} & Numeric logging level (10, 20, etc.) \\
+\hline
+\texttt{\%(pathname)s} & Full pathname of source file \\
+\hline
+\texttt{\%(filename)s} & Filename portion of pathname \\
+\hline
+\texttt{\%(module)s} & Module name (filename without .py) \\
+\hline
+\texttt{\%(lineno)d} & Line number where log was called \\
+\hline
+\texttt{\%(funcName)s} & Function name where log was called \\
+\hline
+\texttt{\%(created)f} & Time when LogRecord was created (seconds since epoch) \\
+\hline
+\texttt{\%(asctime)s} & Human-readable time \\
+\hline
+\texttt{\%(msecs)d} & Millisecond portion of time \\
+\hline
+\texttt{\%(relativeCreated)d} & Time in ms since logging module loaded \\
+\hline
+\texttt{\%(thread)d} & Thread ID \\
+\hline
+\texttt{\%(threadName)s} & Thread name \\
+\hline
+\texttt{\%(process)d} & Process ID \\
+\hline
+\texttt{\%(message)s} & The logged message \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+% ========================
+% SECTION 6: CONFIGURATION
+% ========================
+\section{Logging Configuration}
+
+\subsection{Basic Configuration with basicConfig()}
+
+The \texttt{basicConfig()} function provides a quick way to configure logging for simple applications.
+
+\subsubsection{Simple Setup}
+
+\begin{lstlisting}
+import logging
+
+# Basic configuration with default settings
+logging.basicConfig(level=logging.INFO)
+
+# Use root logger
+logging.info("This is an info message")
+logging.error("This is an error message")
+\end{lstlisting}
+
+\subsubsection{Detailed Configuration}
+
+\begin{lstlisting}
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S',
+    filename='app.log',
+    filemode='w'  # 'w' to overwrite, 'a' to append
+)
+
+logging.info("Application started")
+logging.debug("Debug information")
+\end{lstlisting}
+
+\subsubsection{Multiple Handlers with basicConfig()}
+
+\begin{lstlisting}
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('debug.log'),
+        logging.StreamHandler()
+    ]
+)
+
+logging.info("Logs to both file and console")
+\end{lstlisting}
+
+\begin{warningbox}
+\textbf{Important Limitation}: \texttt{basicConfig()} only works the first time it's called. Subsequent calls are ignored unless you use the \texttt{force=True} parameter (Python 3.8+).
+
+\begin{lstlisting}
+# Python 3.8+ only
+logging.basicConfig(level=logging.DEBUG, force=True)
+\end{lstlisting}
+\end{warningbox}
+
+\subsection{Manual Configuration (Recommended)}
+
+For production applications, manual configuration provides more control and flexibility.
+
+\subsubsection{Complete Setup Example}
+
+\begin{lstlisting}
+import logging
+from logging.handlers import RotatingFileHandler
+
+def setup_logger(name, log_file, level=logging.INFO):
+    """
+    Function to setup logger with console and file handlers.
+    
+    Args:
+        name: Logger name
+        log_file: Path to log file
+        level: Logging level
+    
+    Returns:
+        Configured logger object
+    """
+    
+    # Create logger
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    
+    # Prevent duplicate handlers
+    if logger.handlers:
+        return logger
+    
+    # Create formatters
+    console_formatter = logging.Formatter(
+        '%(levelname)s - %(message)s'
+    )
+    file_formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - '
+        '[%(filename)s:%(lineno)d] - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    
+    # Console handler
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+    console_handler.setFormatter(console_formatter)
+    
+    # File handler with rotation
+    file_handler = RotatingFileHandler(
+        log_file,
+        maxBytes=10*1024*1024,  # 10MB
+        backupCount=5
+    )
+    file_handler.setLevel(logging.DEBUG)
+    file_handler.setFormatter(file_formatter)
+    
+    # Add handlers to logger
+    logger.addHandler(console_handler)
+    logger.addHandler(file_handler)
+    
+    return logger
+
+# Usage
+logger = setup_logger('ml_pipeline', 'pipeline.log')
+logger.info("Logger configured successfully")
+logger.debug("This goes to file only")
+\end{lstlisting}
+
+\subsection{Configuration Using Dictionary}
+
+For complex applications, dictionary-based configuration provides a clean, declarative approach.
+
+\begin{lstlisting}
+import logging
+import logging.config
+
+LOGGING_CONFIG = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        },
+        'detailed': {
+            'format': '%(asctime)s - %(name)s - %(levelname)s - '
+                     '[%(filename)s:%(lineno)d] - %(message)s'
+        }
+    },
+    
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'INFO',
+            'formatter': 'standard',
+            'stream': 'ext://sys.stdout'
+        },
+        'file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'level': 'DEBUG',
+            'formatter': 'detailed',
+            'filename': 'app.log',
+            'maxBytes': 10485760,  # 10MB
+            'backupCount': 5
+        },
+        'error_file': {
+            'class': 'logging.FileHandler',
+            'level': 'ERROR',
+            'formatter': 'detailed',
+            'filename': 'errors.log'
+        }
+    },
+    
+    'loggers': {
+        '': {  # Root logger
+            'handlers': ['console', 'file', 'error_file'],
+            'level': 'DEBUG',
+            'propagate': False
+        },
+        'ml_model': {  # Specific logger
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': False
+        }
+    }
+}
+
+# Apply configuration
+logging.config.dictConfig(LOGGING_CONFIG)
+
+# Use loggers
+root_logger = logging.getLogger()
+ml_logger = logging.getLogger('ml_model')
+
+root_logger.info("Root logger message")
+ml_logger.info("ML model logger message")
+\end{lstlisting}
+
+\subsection{Configuration from File}
+
+You can store configuration in external files for easy management.
+
+\subsubsection{YAML Configuration File}
+
+Create \texttt{logging\_config.yaml}:
+
+\begin{lstlisting}
+version: 1
+disable_existing_loggers: False
+
+formatters:
+  standard:
+    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+
+handlers:
+  console:
+    class: logging.StreamHandler
+    level: INFO
+    formatter: standard
+    stream: ext://sys.stdout
+  
+  file:
+    class: logging.handlers.RotatingFileHandler
+    level: DEBUG
+    formatter: standard
+    filename: app.log
+    maxBytes: 10485760
+    backupCount: 5
+
+loggers:
+  '':
+    handlers: [console, file]
+    level: DEBUG
+    propagate: False
+\end{lstlisting}
+
+Load and apply:
+
+\begin{lstlisting}
+import logging.config
+import yaml
+
+with open('logging_config.yaml', 'r') as f:
+    config = yaml.safe_load(f)
+    logging.config.dictConfig(config)
+
+logger = logging.getLogger(__name__)
+logger.info("Configuration loaded from YAML")
+\end{lstlisting}
+
+\newpage
+
+% ========================
+% SECTION 7: BEST PRACTICES
+% ========================
+\section{Best Practices for MLOps}
+
+\subsection{General Logging Best Practices}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Use \_\_name\_\_ for logger names}
+    
+    This creates a hierarchical logger structure based on your module organization:
+    
+    \begin{lstlisting}
+# Good practice
+logger = logging.getLogger(__name__)
+
+# Avoid
+logger = logging.getLogger('my_logger')
+    \end{lstlisting}
+    
+    \item \textbf{Use appropriate logging levels}
+    
+    \begin{itemize}
+        \item DEBUG: Development and debugging only
+        \item INFO: Production tracking and milestones
+        \item WARNING: Recoverable issues and deprecations
+        \item ERROR: Failures that affect functionality
+        \item CRITICAL: System-level failures
+    \end{itemize}
+    
+    \item \textbf{Use lazy formatting for performance}
+    
+    \begin{lstlisting}
+# Good - lazy evaluation (only formats if logged)
+logger.info("Processing batch %d with size %d", batch_id, size)
+
+# Bad - eager evaluation (always formats, even if not logged)
+logger.info(f"Processing batch {batch_id} with size {size}")
+
+# Also bad
+logger.info("Processing batch " + str(batch_id) + " with size " + str(size))
+    \end{lstlisting}
+    
+    \item \textbf{Use logger.exception() in except blocks}
+    
+    \begin{lstlisting}
+try:
+    model.predict(data)
+except Exception as e:
+    logger.exception("Prediction failed")
+    # Automatically includes full traceback
+    raise  # Re-raise after logging
+    \end{lstlisting}
+    
+    \item \textbf{Don't log sensitive information}
+    
+    \begin{lstlisting}
+# Bad - security risk
+logger.info(f"User password: {password}")
+logger.info(f"API key: {api_key}")
+
+# Good - no sensitive data
+logger.info(f"User authentication attempt for: {username}")
+logger.info("API authentication successful")
+    \end{lstlisting}
+    
+    \item \textbf{Configure logging once at startup}
+    
+    Set up logging configuration at application entry point, not in every module.
+    
+    \item \textbf{Use structured logging for complex data}
+    
+    \begin{lstlisting}
+# Use extra parameter for structured data
+logger.info(
+    "Model evaluation complete",
+    extra={
+        'accuracy': 0.95,
+        'precision': 0.93,
+        'recall': 0.97,
+        'f1_score': 0.95
+    }
+)
+    \end{lstlisting}
+    
+    \item \textbf{Avoid excessive logging}
+    
+    \begin{lstlisting}
+# Bad - logs every iteration (too verbose)
+for i in range(10000):
+    logger.debug(f"Processing item {i}")
+
+# Good - log periodically
+for i in range(10000):
+    if i % 1000 == 0:
+        logger.info(f"Processed {i}/10000 items")
+    \end{lstlisting}
+\end{enumerate}
+
+\subsection{MLOps-Specific Best Practices}
+
+\subsubsection{Log Model Training Progress}
+
+\begin{lstlisting}
+import logging
+
+logger = logging.getLogger(__name__)
+
+def train_model(model, train_loader, val_loader, epochs):
+    logger.info("=" * 60)
+    logger.info("STARTING MODEL TRAINING")
+    logger.info("=" * 60)
+    logger.info(f"Training samples: {len(train_loader.dataset)}")
+    logger.info(f"Validation samples: {len(val_loader.dataset)}")
+    logger.info(f"Epochs: {epochs}")
+    
+    for epoch in range(epochs):
+        # Training phase
+        train_loss = train_epoch(model, train_loader)
+        
+        # Validation phase
+        val_loss, val_acc = validate(model, val_loader)
+        
+        # Log progress
+        logger.info(
+            f"Epoch {epoch+1}/{epochs}: "
+            f"train_loss={train_loss:.4f}, "
+            f"val_loss={val_loss:.4f}, "
+            f"val_acc={val_acc:.4f}"
+        )
+        
+        # Log warnings if needed
+        if val_loss > train_loss * 1.5:
+            logger.warning("Possible overfitting detected")
+    
+    logger.info("Training completed successfully")
+    logger.info(f"Final validation accuracy: {val_acc:.4f}")
+    logger.info("=" * 60)
+\end{lstlisting}
+
+\subsubsection{Log Data Pipeline Steps}
+
+\begin{lstlisting}
+def process_data_pipeline(data_source):
+    logger.info(f"Loading data from {data_source}")
+    data = load_data(data_source)
+    logger.debug(f"Raw data shape: {data.shape}")
+    
+    logger.info("Starting data preprocessing")
+    missing_count = data.isnull().sum().sum()
+    if missing_count > 0:
+        logger.warning(f"Found {missing_count} missing values")
+    
+    cleaned_data = preprocess(data)
+    logger.debug(f"Cleaned data shape: {cleaned_data.shape}")
+    
+    logger.info("Feature engineering started")
+    features = engineer_features(cleaned_data)
+    logger.info(f"Created {features.shape[1]} features")
+    logger.debug(f"Feature names: {list(features.columns)}")
+    
+    logger.info("Data pipeline completed successfully")
+    logger.info(f"Final dataset shape: {features.shape}")
+    
+    return features
+\end{lstlisting}
+
+\subsubsection{Log Model Predictions with Timing}
+
+\begin{lstlisting}
+import time
+
+def predict_with_logging(model, input_data, request_id=None):
+    if request_id is None:
+        request_id = str(time.time())
+    
+    logger.info(f"[{request_id}] Prediction request received")
+    logger.debug(f"[{request_id}] Input shape: {input_data.shape}")
+    
+    try:
+        start_time = time.time()
+        predictions = model.predict(input_data)
+        inference_time = time.time() - start_time
+        
+        logger.info(
+            f"[{request_id}] Prediction completed in "
+            f"{inference_time:.3f}s"
+        )
+        logger.debug(
+            f"[{request_id}] Predictions: {predictions[:5]}..."
+        )  # Log first 5 only
+        
+        return predictions
+        
+    except Exception as e:
+        logger.exception(f"[{request_id}] Prediction failed")
+        raise
+\end{lstlisting}
+
+\subsubsection{Log Experiment Configuration}
+
+\begin{lstlisting}
+def log_experiment_config(config):
+    logger.info("=" * 70)
+    logger.info("EXPERIMENT CONFIGURATION")
+    logger.info("=" * 70)
+    
+    for section, params in config.items():
+        logger.info(f"{section}:")
+        if isinstance(params, dict):
+            for key, value in params.items():
+                logger.info(f"  {key}: {value}")
+        else:
+            logger.info(f"  {params}")
+    
+    logger.info("=" * 70)
+
+# Usage
+config = {
+    'model': {
+        'type': 'RandomForest',
+        'n_estimators': 100,
+        'max_depth': 10
+    },
+    'training': {
+        'epochs': 50,
+        'batch_size': 32,
+        'learning_rate': 0.001
+    },
+    'data': {
+        'train_split': 0.8,
+        'random_state': 42
+    }
+}
+
+log_experiment_config(config)
+\end{lstlisting}
+
+\subsection{Error Handling Best Practices}
+
+\begin{lstlisting}
+def load_and_process_data(file_path):
+    try:
+        logger.info(f"Attempting to load data from {file_path}")
+        data = pd.read_csv(file_path)
+        
+        logger.info(f"Data loaded successfully: {data.shape}")
+        logger.debug(f"Columns: {list(data.columns)}")
+        
+        # Data validation
+        if data.empty:
+            logger.error("Loaded data is empty")
+            raise ValueError("Empty dataset")
+        
+        # Processing
+        logger.info("Starting data processing")
+        processed_data = process(data)
+        
+        logger.info("Data processing completed successfully")
+        return processed_data
+        
+    except FileNotFoundError:
+        logger.error(f"File not found: {file_path}")
+        logger.error("Please check the file path and try again")
+        raise
+        
+    except pd.errors.EmptyDataError:
+        logger.error(f"Empty data file: {file_path}")
+        raise
+        
+    except pd.errors.ParserError as e:
+        logger.error(f"Error parsing CSV file: {str(e)}")
+        logger.error("Check file format and encoding")
+        raise
+        
+    except MemoryError:
+        logger.critical(
+            f"Out of memory while loading {file_path}"
+        )
+        logger.critical("Try loading data in chunks")
+        raise
+        
+    except Exception as e:
+        logger.exception(
+            f"Unexpected error loading data from {file_path}"
+        )
+        raise
+\end{lstlisting}
+
+\newpage
+
+% ========================
+% SECTION 8: REAL-WORLD EXAMPLES
+% ========================
+\section{Complete Real-World Examples}
+
+\subsection{ML Training Script with Comprehensive Logging}
+
+\begin{lstlisting}
+import logging
+from logging.handlers import RotatingFileHandler
+import time
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import (
+    accuracy_score, precision_score, 
+    recall_score, f1_score
+)
+
+# ============================================
+# Logger Configuration
+# ============================================
+
+def setup_training_logger():
+    """Setup logger for ML training with file rotation"""
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+    
+    # Console handler - INFO and above
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+    console_formatter = logging.Formatter(
+        '%(levelname)s - %(message)s'
+    )
+    console_handler.setFormatter(console_formatter)
+    
+    # File handler - all messages with rotation
+    file_handler = RotatingFileHandler(
+        'training.log',
+        maxBytes=10*1024*1024,  # 10MB
+        backupCount=5
+    )
+    file_handler.setLevel(logging.DEBUG)
+    file_formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - '
+        '[%(filename)s:%(lineno)d] - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    file_handler.setFormatter(file_formatter)
+    
+    # Add handlers
+    logger.addHandler(console_handler)
+    logger.addHandler(file_handler)
+    
+    return logger
+
+logger = setup_training_logger()
+
+# ============================================
+# Training Functions
+# ============================================
+
+def validate_data(X, y):
+    """Validate input data with logging"""
+    logger.debug("Validating input data")
+    
+    if X is None or y is None:
+        logger.error("Input data is None")
+        raise ValueError("Invalid input data")
+    
+    if len(X) != len(y):
+        logger.error(
+            f"Shape mismatch: X has {len(X)} samples, "
+            f"y has {len(y)} samples"
+        )
+        raise ValueError("X and y length mismatch")
+    
+    if len(X) < 100:
+        logger.warning(
+            f"Small dataset: only {len(X)} samples"
+        )
+    
+    logger.debug(f"Data validation passed: {len(X)} samples")
+
+def train_model(X, y, config):
+    """
+    Train ML model with comprehensive logging
+    
+    Args:
+        X: Feature matrix
+        y: Target vector
+        config: Training configuration dictionary
+    
+    Returns:
+        Trained model
+    """
+    
+    logger.info("=" * 70)
+    logger.info("STARTING MODEL TRAINING")
+    logger.info("=" * 70)
+    
+    # Log configuration
+    logger.info("Training Configuration:")
+    for key, value in config.items():
+        logger.info(f"  {key}: {value}")
+    logger.info("-" * 70)
+    
+    try:
+        # Validate data
+        validate_data(X, y)
+        
+        # Split data
+        logger.info("Splitting data into train and test sets")
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, 
+            test_size=config['test_size'],
+            random_state=config['random_state']
+        )
+        
+        logger.info(f"Training set: {len(X_train)} samples")
+        logger.info(f"Test set: {len(X_test)} samples")
+        logger.debug(f"Training features shape: {X_train.shape}")
+        logger.debug(f"Test features shape: {X_test.shape}")
+        
+        # Check class balance
+        unique, counts = np.unique(y_train, return_counts=True)
+        logger.debug(f"Class distribution: {dict(zip(unique, counts))}")
+        if max(counts) / min(counts) > 10:
+            logger.warning("Highly imbalanced dataset detected")
+        
+        # Initialize model
+        logger.info("Initializing Random Forest model")
+        logger.debug(f"Model parameters: {config}")
+        
+        model = RandomForestClassifier(
+            n_estimators=config['n_estimators'],
+            max_depth=config['max_depth'],
+            random_state=config['random_state'],
+            n_jobs=-1,  # Use all CPU cores
+            verbose=0
+        )
+        
+        # Train model
+        logger.info("Starting model training...")
+        start_time = time.time()
+        
+        model.fit(X_train, y_train)
+        
+        training_time = time.time() - start_time
+        logger.info(
+            f"Training completed in {training_time:.2f} seconds"
+        )
+        
+        # Evaluate on training set
+        logger.debug("Evaluating on training set")
+        y_train_pred = model.predict(X_train)
+        train_acc = accuracy_score(y_train, y_train_pred)
+        logger.debug(f"Training accuracy: {train_acc:.4f}")
+        
+        # Evaluate on test set
+        logger.info("Evaluating model on test set")
+        start_eval = time.time()
+        y_pred = model.predict(X_test)
+        eval_time = time.time() - start_eval
+        
+        logger.debug(f"Evaluation time: {eval_time:.3f}s")
+        
+        # Calculate metrics
+        accuracy = accuracy_score(y_test, y_pred)
+        precision = precision_score(
+            y_test, y_pred, average='weighted', zero_division=0
+        )
+        recall = recall_score(
+            y_test, y_pred, average='weighted', zero_division=0
+        )
+        f1 = f1_score(
+            y_test, y_pred, average='weighted', zero_division=0
+        )
+        
+        # Log results
+        logger.info("=" * 70)
+        logger.info("MODEL EVALUATION RESULTS")
+        logger.info("=" * 70)
+        logger.info(f"Accuracy:  {accuracy:.4f}")
+        logger.info(f"Precision: {precision:.4f}")
+        logger.info(f"Recall:    {recall:.4f}")
+        logger.info(f"F1-Score:  {f1:.4f}")
+        logger.info("=" * 70)
+        
+        # Feature importance
+        if hasattr(model, 'feature_importances_'):
+            importance = model.feature_importances_
+            logger.debug(f"Feature importances: {importance}")
+            top_features = np.argsort(importance)[-5:][::-1]
+            logger.info(
+                f"Top 5 important features: {top_features.tolist()}"
+            )
+        
+        # Performance warnings
+        if accuracy < 0.7:
+            logger.warning(
+                f"Low accuracy: {accuracy:.4f}. "
+                "Consider feature engineering or hyperparameter tuning"
+            )
+        
+        if training_time > 300:  # 5 minutes
+            logger.warning(
+                f"Long training time: {training_time:.2f}s. "
+                "Consider reducing model complexity"
+            )
+        
+        logger.info("Model training pipeline completed successfully")
+        
+        return model
+        
+    except ValueError as e:
+        logger.error(f"Value error during training: {str(e)}")
+        raise
+        
+    except MemoryError:
+        logger.critical(
+            "Out of memory during model training. "
+            "Try reducing dataset size or model complexity"
+        )
+        raise
+        
+    except Exception as e:
+        logger.exception("Unexpected error during model training")
+        raise
+
+# ============================================
+# Main Execution
+# ============================================
+
+if __name__ == "__main__":
+    logger.info("Script started")
+    logger.info(f"Python logging version: {logging.__version__}")
+    
+    # Configuration
+    config = {
+        'n_estimators': 100,
+        'max_depth': 10,
+        'test_size': 0.2,
+        'random_state': 42
+    }
+    
+    try:
+        # Generate sample data
+        logger.info("Generating sample dataset")
+        np.random.seed(42)
+        X = np.random.rand(1000, 10)
+        y = np.random.randint(0, 2, 1000)
+        logger.info("Sample data generated successfully")
+        
+        # Train model
+        model = train_model(X, y, config)
+        
+        logger.info("Script completed successfully")
+        
+    except KeyboardInterrupt:
+        logger.warning("Script interrupted by user")
+    except Exception as e:
+        logger.critical("Script failed with critical error")
+        logger.exception("Error details")
+        raise
+\end{lstlisting}
+
+\subsection{Data Pipeline with Logging}
+
+\begin{lstlisting}
+import logging
+import pandas as pd
+import numpy as np
+from datetime import datetime
+
+logger = logging.getLogger(__name__)
+
+class DataPipeline:
+    """
+    Data pipeline with comprehensive logging
+    
+    Handles data loading, cleaning, and feature engineering
+    with detailed logging at each step.
+    """
+    
+    def __init__(self, config):
+        self.config = config
+        logger.info("DataPipeline initialized")
+        logger.debug(f"Pipeline config: {config}")
+    
+    def load_data(self, file_path):
+        """Load data with error handling and logging"""
+        try:
+            logger.info(f"Loading data from: {file_path}")
+            start_time = datetime.now()
+            
+            data = pd.read_csv(file_path)
+            
+            load_time = (datetime.now() - start_time).total_seconds()
+            logger.info(f"Data loaded in {load_time:.2f} seconds")
+            logger.info(f"Dataset shape: {data.shape}")
+            logger.debug(f"Columns ({len(data.columns)}): {list(data.columns)}")
+            logger.debug(f"Memory usage: {data.memory_usage(deep=True).sum() / 1024**2:.2f} MB")
+            
+            # Log data types
+            logger.debug("Data types:")
+            for col, dtype in data.dtypes.items():
+                logger.debug(f"  {col}: {dtype}")
+            
+            return data
+            
+        except FileNotFoundError:
+            logger.error(f"File not found: {file_path}")
+            logger.error("Please verify the file path")
+            raise
+            
+        except pd.errors.ParserError as e:
+            logger.error(f"Error parsing CSV: {str(e)}")
+            logger.error("Check file format, delimiter, and encoding")
+            raise
+            
+        except pd.errors.EmptyDataError:
+            logger.error(f"Empty file: {file_path}")
+            raise
+            
+        except Exception as e:
+            logger.exception("Unexpected error loading data")
+            raise
+    
+    def clean_data(self, data):
+        """Clean data with detailed logging"""
+        logger.info("Starting data cleaning")
+        
+        original_shape = data.shape
+        original_rows = original_shape[0]
+        logger.debug(f"Original shape: {original_shape}")
+        
+        # Check missing values
+        missing_count = data.isnull().sum().sum()
+        if missing_count > 0:
+            missing_pct = (missing_count / data.size) * 100
+            logger.warning(
+                f"Found {missing_count} missing values "
+                f"({missing_pct:.2f}% of data)"
+            )
+            
+            # Log missing values per column
+            missing_cols = data.isnull().sum()
+            missing_cols = missing_cols[missing_cols > 0]
+            for col, count in missing_cols.items():
+                col_pct = (count / len(data)) * 100
+                logger.debug(
+                    f"  {col}: {count} missing ({col_pct:.1f}%)"
+                )
+            
+            # Handle missing values
+            logger.info("Handling missing values")
+            numeric_cols = data.select_dtypes(
+                include=[np.number]
+            ).columns
+            data[numeric_cols] = data[numeric_cols].fillna(
+                data[numeric_cols].mean()
+            )
+            logger.info("Numeric missing values filled with mean")
+            
+                        categorical_cols = data.select_dtypes(
+                include=['object']
+            ).columns
+            data[categorical_cols] = data[categorical_cols].fillna(
+                data[categorical_cols].mode().iloc[0]
+            )
+            logger.info("Categorical missing values filled with mode")
+        else:
+            logger.info("No missing values found")
+        
+        # Remove duplicates
+        duplicates = data.duplicated().sum()
+        if duplicates > 0:
+            dup_pct = (duplicates / len(data)) * 100
+            logger.warning(
+                f"Found {duplicates} duplicate rows ({dup_pct:.2f}%)"
+            )
+            data = data.drop_duplicates()
+            logger.info(f"Removed {duplicates} duplicate rows")
+        else:
+            logger.info("No duplicates found")
+        
+        # Remove outliers (optional)
+        numeric_cols = data.select_dtypes(include=[np.number]).columns
+        outliers_removed = 0
+        for col in numeric_cols:
+            Q1 = data[col].quantile(0.25)
+            Q3 = data[col].quantile(0.75)
+            IQR = Q3 - Q1
+            lower_bound = Q1 - 1.5 * IQR
+            upper_bound = Q3 + 1.5 * IQR
+            
+            outliers = ((data[col] < lower_bound) | 
+                       (data[col] > upper_bound)).sum()
+            if outliers > 0:
+                logger.debug(f"  {col}: {outliers} outliers detected")
+                outliers_removed += outliers
+        
+        if outliers_removed > 0:
+            logger.info(f"Total outliers detected: {outliers_removed}")
+        
+        final_shape = data.shape
+        rows_removed = original_rows - final_shape[0]
+        
+        logger.info("Data cleaning completed")
+        logger.info(f"Final shape: {final_shape}")
+        logger.info(f"Rows removed: {rows_removed}")
+        
+        return data
+    
+    def feature_engineering(self, data):
+        """Perform feature engineering with logging"""
+        logger.info("Starting feature engineering")
+        
+        original_features = data.shape[1]
+        logger.debug(f"Original features: {original_features}")
+        
+        try:
+            # Example: Create interaction features
+            logger.debug("Creating derived features")
+            
+            # Add timestamp features if date column exists
+            date_cols = data.select_dtypes(
+                include=['datetime64']
+            ).columns
+            if len(date_cols) > 0:
+                logger.info(
+                    f"Processing {len(date_cols)} datetime columns"
+                )
+                for col in date_cols:
+                    data[f'{col}_year'] = data[col].dt.year
+                    data[f'{col}_month'] = data[col].dt.month
+                    data[f'{col}_day'] = data[col].dt.day
+                    logger.debug(
+                        f"Created time features from {col}"
+                    )
+            
+            new_features = data.shape[1]
+            added_features = new_features - original_features
+            
+            logger.info("Feature engineering completed")
+            logger.info(f"Total features: {new_features}")
+            logger.info(f"Added features: {added_features}")
+            logger.debug(f"New columns: {list(data.columns)}")
+            
+            return data
+            
+        except Exception as e:
+            logger.exception("Error during feature engineering")
+            raise
+    
+    def run(self, file_path):
+        """Execute complete pipeline"""
+        logger.info("=" * 70)
+        logger.info("STARTING DATA PIPELINE")
+        logger.info("=" * 70)
+        
+        pipeline_start = datetime.now()
+        
+        try:
+            # Load data
+            data = self.load_data(file_path)
+            
+            # Clean data
+            data = self.clean_data(data)
+            
+            # Feature engineering
+            data = self.feature_engineering(data)
+            
+            pipeline_time = (
+                datetime.now() - pipeline_start
+            ).total_seconds()
+            
+            logger.info("=" * 70)
+            logger.info("PIPELINE COMPLETED SUCCESSFULLY")
+            logger.info(
+                f"Total pipeline time: {pipeline_time:.2f} seconds"
+            )
+            logger.info("=" * 70)
+            
+            return data
+            
+        except Exception as e:
+            logger.critical("Pipeline failed")
+            logger.exception("Pipeline error details")
+            raise
+
+# Usage example
+if __name__ == "__main__":
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler('pipeline.log'),
+            logging.StreamHandler()
+        ]
+    )
+    
+    config = {'version': '1.0', 'mode': 'production'}
+    pipeline = DataPipeline(config)
+    
+    # Run pipeline
+    try:
+        result = pipeline.run('data.csv')
+        logger.info("Pipeline execution successful")
+    except Exception:
+        logger.error("Pipeline execution failed")
+\end{lstlisting}
+
+\subsection{Model Serving API with Logging}
+
+\begin{lstlisting}
+import logging
+from flask import Flask, request, jsonify
+import numpy as np
+import time
+import uuid
+
+app = Flask(__name__)
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('api.log'),
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
+
+# Global model variable
+model = None
+
+@app.before_first_request
+def setup():
+    """Initialize application"""
+    global model
+    logger.info("=" * 70)
+    logger.info("INITIALIZING MODEL SERVING API")
+    logger.info("=" * 70)
+    
+    try:
+        logger.info("Loading model")
+        # model = load_model('model.pkl')  # Placeholder
+        logger.info("Model loaded successfully")
+        logger.info("API initialization complete")
+    except Exception as e:
+        logger.critical("Failed to load model")
+        logger.exception("Model loading error")
+        raise
+
+@app.route('/predict', methods=['POST'])
+def predict():
+    """Prediction endpoint with comprehensive logging"""
+    request_id = str(uuid.uuid4())[:8]
+    
+    logger.info(f"[{request_id}] Prediction request received")
+    logger.debug(f"[{request_id}] Request headers: {dict(request.headers)}")
+    
+    try:
+        # Parse request
+        data = request.get_json()
+        logger.debug(f"[{request_id}] Request data keys: {list(data.keys())}")
+        
+        # Validate request
+        if not data or 'features' not in data:
+            logger.warning(
+                f"[{request_id}] Invalid request: missing 'features'"
+            )
+            return jsonify({'error': 'Missing features field'}), 400
+        
+        features = np.array(data['features'])
+        logger.debug(f"[{request_id}] Features shape: {features.shape}")
+        
+        # Validate input shape
+        if features.ndim != 2:
+            logger.error(
+                f"[{request_id}] Invalid shape: {features.shape}. "
+                f"Expected 2D array"
+            )
+            return jsonify({
+                'error': f'Invalid feature shape: {features.shape}'
+            }), 400
+        
+        # Check for invalid values
+        if np.isnan(features).any():
+            logger.error(f"[{request_id}] NaN values in input")
+            return jsonify({'error': 'NaN values in features'}), 400
+        
+        if np.isinf(features).any():
+            logger.error(f"[{request_id}] Inf values in input")
+            return jsonify({'error': 'Inf values in features'}), 400
+        
+        # Make prediction
+        logger.info(f"[{request_id}] Starting prediction")
+        start_time = time.time()
+        
+        # prediction = model.predict(features)  # Placeholder
+        prediction = np.random.rand(features.shape[0])  # Mock prediction
+        
+        inference_time = time.time() - start_time
+        
+        logger.info(
+            f"[{request_id}] Prediction completed in "
+            f"{inference_time:.3f}s"
+        )
+        logger.debug(
+            f"[{request_id}] Prediction shape: {prediction.shape}"
+        )
+        logger.debug(
+            f"[{request_id}] Sample predictions: {prediction[:3]}"
+        )
+        
+        # Log slow predictions
+        if inference_time > 1.0:
+            logger.warning(
+                f"[{request_id}] Slow prediction: {inference_time:.3f}s"
+            )
+        
+        response = {
+            'request_id': request_id,
+            'prediction': prediction.tolist(),
+            'inference_time': inference_time,
+            'status': 'success'
+        }
+        
+        logger.info(f"[{request_id}] Request completed successfully")
+        return jsonify(response), 200
+        
+    except ValueError as e:
+        logger.error(f"[{request_id}] Value error: {str(e)}")
+        return jsonify({
+            'error': 'Invalid input values',
+            'details': str(e)
+        }), 400
+        
+    except Exception as e:
+        logger.exception(f"[{request_id}] Prediction failed")
+        return jsonify({
+            'error': 'Internal server error',
+            'request_id': request_id
+        }), 500
+
+@app.route('/health', methods=['GET'])
+def health():
+    """Health check endpoint"""
+    logger.debug("Health check requested")
+    return jsonify({
+        'status': 'healthy',
+        'timestamp': time.time()
+    }), 200
+
+@app.route('/metrics', methods=['GET'])
+def metrics():
+    """Metrics endpoint"""
+    logger.debug("Metrics requested")
+    # Return application metrics
+    return jsonify({
+        'requests_total': 0,  # Placeholder
+        'errors_total': 0,    # Placeholder
+        'avg_inference_time': 0.0  # Placeholder
+    }), 200
+
+if __name__ == '__main__':
+    logger.info("Starting Flask application")
+    logger.info("Server configuration:")
+    logger.info("  Host: 0.0.0.0")
+    logger.info("  Port: 5000")
+    logger.info("  Debug: False")
+    
+    app.run(host='0.0.0.0', port=5000, debug=False)
+\end{lstlisting}
+
+\newpage
+
+% ========================
+% SECTION 9: ADVANCED TOPICS
+% ========================
+\section{Advanced Logging Topics}
+
+\subsection{Logger Hierarchy}
+
+Loggers follow a hierarchical naming structure using dots (.), similar to Python's module structure.
+
+\begin{lstlisting}
+import logging
+
+# Parent logger
+parent_logger = logging.getLogger('myapp')
+
+# Child loggers (automatically inherit from parent)
+data_logger = logging.getLogger('myapp.data')
+model_logger = logging.getLogger('myapp.model')
+api_logger = logging.getLogger('myapp.api')
+
+# Grandchild logger
+preprocessing_logger = logging.getLogger('myapp.data.preprocessing')
+\end{lstlisting}
+
+\textbf{Propagation Rules}:
+\begin{itemize}[leftmargin=*]
+    \item Child loggers inherit settings from parent loggers
+    \item Messages propagate up the hierarchy by default
+    \item Set \texttt{propagate=False} to prevent propagation
+    \item Root logger is at the top of all hierarchies
+\end{itemize}
+
+\begin{lstlisting}
+# Configure parent logger
+parent = logging.getLogger('myapp')
+parent.setLevel(logging.INFO)
+handler = logging.StreamHandler()
+parent.addHandler(handler)
+
+# Child automatically inherits configuration
+child = logging.getLogger('myapp.module')
+child.info("This uses parent's handler")  # Works!
+
+# Disable propagation
+child.propagate = False  # Now won't use parent's handlers
+\end{lstlisting}
+
+\subsection{Custom Log Levels}
+
+You can define custom logging levels for specialized needs:
+
+\begin{lstlisting}
+import logging
+
+# Define custom level between DEBUG and INFO
+TRACE = 5
+logging.addLevelName(TRACE, "TRACE")
+
+def trace(self, message, *args, **kwargs):
+    """Add trace method to logger"""
+    if self.isEnabledFor(TRACE):
+        self._log(TRACE, message, args, **kwargs)
+
+# Add method to Logger class
+logging.Logger.trace = trace
+
+# Usage
+logger = logging.getLogger(__name__)
+logger.setLevel(TRACE)
+
+handler = logging.StreamHandler()
+handler.setLevel(TRACE)
+logger.addHandler(handler)
+
+logger.trace("This is a trace message")  # Works!
+logger.debug("This is a debug message")
+\end{lstlisting}
+
+\subsection{Filters}
+
+Filters provide fine-grained control over which log records are processed:
+
+\begin{lstlisting}
+import logging
+
+class LevelRangeFilter(logging.Filter):
+    """Filter to only allow specific level range"""
+    
+    def __init__(self, min_level, max_level):
+        super().__init__()
+        self.min_level = min_level
+        self.max_level = max_level
+    
+    def filter(self, record):
+        return self.min_level <= record.levelno <= self.max_level
+
+# Usage
+logger = logging.getLogger(__name__)
+handler = logging.FileHandler('info_warnings.log')
+
+# Only log INFO and WARNING (not DEBUG, ERROR, CRITICAL)
+level_filter = LevelRangeFilter(logging.INFO, logging.WARNING)
+handler.addFilter(level_filter)
+
+logger.addHandler(handler)
+
+logger.debug("Not logged")        # Below min
+logger.info("Logged")             # In range
+logger.warning("Logged")          # In range
+logger.error("Not logged")        # Above max
+\end{lstlisting}
+
+\subsubsection{Context Filter Example}
+
+\begin{lstlisting}
+class ContextFilter(logging.Filter):
+    """Add contextual information to logs"""
+    
+    def __init__(self, user_id=None):
+        super().__init__()
+        self.user_id = user_id
+    
+    def filter(self, record):
+        record.user_id = self.user_id or 'anonymous'
+        return True
+
+# Setup
+logger = logging.getLogger(__name__)
+handler = logging.StreamHandler()
+formatter = logging.Formatter(
+    '%(asctime)s - [User:%(user_id)s] - %(levelname)s - %(message)s'
+)
+handler.setFormatter(formatter)
+
+# Add filter
+context_filter = ContextFilter(user_id='user123')
+handler.addFilter(context_filter)
+
+logger.addHandler(handler)
+
+logger.info("Processing request")
+# Output: 2024-12-17 14:30:45 - [User:user123] - INFO - Processing request
+\end{lstlisting}
+
+\subsection{Logging in Multiprocessing}
+
+When using multiprocessing, special care is needed to avoid conflicts:
+
+\begin{lstlisting}
+import logging
+from logging.handlers import QueueHandler, QueueListener
+from multiprocessing import Queue, Process
+import time
+
+def worker_process(queue, worker_id):
+    """Worker process with queue-based logging"""
+    # Configure worker to use queue
+    qh = QueueHandler(queue)
+    logger = logging.getLogger()
+    logger.addHandler(qh)
+    logger.setLevel(logging.INFO)
+    
+    # Do work with logging
+    logger.info(f"Worker {worker_id} started")
+    time.sleep(1)
+    logger.info(f"Worker {worker_id} processing")
+    time.sleep(1)
+    logger.info(f"Worker {worker_id} completed")
+
+if __name__ == '__main__':
+    # Create queue for log records
+    log_queue = Queue()
+    
+    # Setup handlers that will process records
+    console_handler = logging.StreamHandler()
+    file_handler = logging.FileHandler('multiprocess.log')
+    
+    formatter = logging.Formatter(
+        '%(asctime)s - [PID:%(process)d] - %(levelname)s - %(message)s'
+    )
+    console_handler.setFormatter(formatter)
+    file_handler.setFormatter(formatter)
+    
+    # Create listener to process queue
+    listener = QueueListener(
+        log_queue,
+        console_handler,
+        file_handler,
+        respect_handler_level=True
+    )
+    listener.start()
+    
+    # Create and start worker processes
+    processes = []
+    for i in range(4):
+        p = Process(target=worker_process, args=(log_queue, i))
+        p.start()
+        processes.append(p)
+    
+    # Wait for all workers
+    for p in processes:
+        p.join()
+    
+    # Stop listener
+    listener.stop()
+    
+    print("All workers completed")
+\end{lstlisting}
+
+\subsection{Structured Logging with JSON}
+
+For better log parsing and analysis, use JSON format:
+
+\begin{lstlisting}
+import logging
+import json
+from datetime import datetime
+
+class JsonFormatter(logging.Formatter):
+    """Format logs as JSON"""
+    
+    def format(self, record):
+        log_data = {
+            'timestamp': datetime.utcnow().isoformat(),
+            'level': record.levelname,
+            'logger': record.name,
+            'message': record.getMessage(),
+            'module': record.module,
+            'function': record.funcName,
+            'line': record.lineno
+        }
+        
+        # Add exception info if present
+        if record.exc_info:
+            log_data['exception'] = self.formatException(record.exc_info)
+        
+        # Add extra fields
+        if hasattr(record, 'user_id'):
+            log_data['user_id'] = record.user_id
+        if hasattr(record, 'request_id'):
+            log_data['request_id'] = record.request_id
+        
+        return json.dumps(log_data)
+
+# Usage
+logger = logging.getLogger(__name__)
+handler = logging.FileHandler('app.json.log')
+handler.setFormatter(JsonFormatter())
+logger.addHandler(handler)
+
+logger.info("User logged in", extra={'user_id': 'user123'})
+# Output: {"timestamp": "2024-12-17T14:30:45.123456", 
+#          "level": "INFO", "logger": "__main__", 
+#          "message": "User logged in", "user_id": "user123", ...}
+\end{lstlisting}
+
+\newpage
+
+% ========================
+% SECTION 10: TROUBLESHOOTING
+% ========================
+\section{Common Issues and Solutions}
+
+\subsection{Duplicate Log Messages}
+
+\textbf{Problem}: Log messages appear multiple times in output.
+
+\vspace{0.5em}
+
+\textbf{Cause}: Multiple handlers attached to logger or propagation causing duplicates.
+
+\vspace{0.5em}
+\textbf{Solutions}:
+
+\begin{lstlisting}
+# Solution 1: Check if handlers already exist
+logger = logging.getLogger(__name__)
+if not logger.handlers:
+    handler = logging.StreamHandler()
+    logger.addHandler(handler)
+
+# Solution 2: Clear existing handlers
+logger.handlers = []
+logger.addHandler(new_handler)
+
+# Solution 3: Disable propagation
+logger.propagate = False
+
+# Solution 4: Use hasHandlers() to check
+if not logger.hasHandlers():
+    logger.addHandler(handler)
+\end{lstlisting}
+
+\subsection{Logs Not Appearing}
+
+\textbf{Problem}: Log messages don't appear in expected output.
+
+\vspace{0.5em}
+\textbf{Causes and Solutions}:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Logger level too high}
+    \begin{lstlisting}
+# Check and set logger level
+logger = logging.getLogger(__name__)
+print(f"Current level: {logger.level}")
+logger.setLevel(logging.DEBUG)
+    \end{lstlisting}
+    
+    \item \textbf{Handler level too high}
+    \begin{lstlisting}
+# Set handler level appropriately
+for handler in logger.handlers:
+    print(f"Handler level: {handler.level}")
+    handler.setLevel(logging.DEBUG)
+    \end{lstlisting}
+    
+    \item \textbf{No handlers attached}
+    \begin{lstlisting}
+# Verify handlers exist
+print(f"Handlers: {logger.handlers}")
+if not logger.handlers:
+    logger.addHandler(logging.StreamHandler())
+    \end{lstlisting}
+    
+    \item \textbf{Root logger not configured}
+    \begin{lstlisting}
+# Configure root logger
+logging.basicConfig(level=logging.DEBUG)
+    \end{lstlisting}
+\end{enumerate}
+
+\subsection{basicConfig() Not Working}
+
+\textbf{Problem}: \texttt{basicConfig()} appears to have no effect.
+
+\vspace{0.5em}
+\textbf{Cause}: \texttt{basicConfig()} only works once and only if root logger has no handlers.
+
+\vspace{0.5em}
+\textbf{Solutions}:
+
+\begin{lstlisting}
+# Solution 1: Use force=True (Python 3.8+)
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    force=True  # Reconfigure even if already configured
+)
+
+# Solution 2: Manually reset root logger
+root = logging.getLogger()
+for handler in root.handlers[:]:
+    root.removeHandler(handler)
+logging.basicConfig(level=logging.DEBUG)
+
+# Solution 3: Check if already configured
+if not logging.getLogger().hasHandlers():
+    logging.basicConfig(level=logging.DEBUG)
+\end{lstlisting}
+
+\subsection{File Handler Not Writing}
+
+\textbf{Problem}: Log file is not created or not being written to.
+
+\vspace{0.5em}
+\textbf{Solutions}:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Check file permissions and path}
+    \begin{lstlisting}
+import os
+
+log_file = 'app.log'
+log_dir = os.path.dirname(log_file) or '.'
+
+# Check if directory exists
+if not os.path.exists(log_dir):
+    os.makedirs(log_dir)
+
+# Check write permissions
+if not os.access(log_dir, os.W_OK):
+    print(f"No write permission for {log_dir}")
+    \end{lstlisting}
+    
+    \item \textbf{Ensure proper levels set}
+    \begin{lstlisting}
+logger.setLevel(logging.DEBUG)
+file_handler.setLevel(logging.DEBUG)
+    \end{lstlisting}
+    
+    \item \textbf{Force flush after logging}
+    \begin{lstlisting}
+for handler in logger.handlers:
+    handler.flush()
+    \end{lstlisting}
+\end{enumerate}
+
+\subsection{Performance Issues}
+
+\textbf{Problem}: Logging causes performance degradation.
+
+\vspace{0.5em}
+\textbf{Solutions}:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Use lazy formatting}
+    \begin{lstlisting}
+# Good - only formats if logged
+logger.debug("Value: %s", expensive_computation())
+
+# Bad - always computes and formats
+logger.debug(f"Value: {expensive_computation()}")
+    \end{lstlisting}
+    
+    \item \textbf{Increase logging level in production}
+    \begin{lstlisting}
+# Development
+logger.setLevel(logging.DEBUG)
+
+# Production
+logger.setLevel(logging.INFO)
+    \end{lstlisting}
+    
+    \item \textbf{Use QueueHandler for async logging}
+    \begin{lstlisting}
+from logging.handlers import QueueHandler
+import queue
+
+log_queue = queue.Queue()
+queue_handler = QueueHandler(log_queue)
+logger.addHandler(queue_handler)
+    \end{lstlisting}
+\end{enumerate}
+
+\newpage
+
+% ========================
+% SECTION 11: QUICK REFERENCE
+% ========================
+\section{Quick Reference Guide}
+
+\subsection{Essential Commands Cheat Sheet}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title=Basic Setup]
+\begin{lstlisting}
+import logging
+
+# Quick setup
+logging.basicConfig(level=logging.INFO)
+
+# Create logger
+logger = logging.getLogger(__name__)
+
+# Set level
+logger.setLevel(logging.DEBUG)
+\end{lstlisting}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Logging Messages]
+\begin{lstlisting}
+# Five standard levels
+logger.debug("Detailed diagnostic information")
+logger.info("Informational message")
+logger.warning("Warning message")
+logger.error("Error message")
+logger.critical("Critical error message")
+
+# Exception logging (includes traceback)
+try:
+    risky_operation()
+except Exception:
+    logger.exception("Operation failed")
+\end{lstlisting}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=purple!5!white,colframe=purple!75!black,title=Handlers and Formatters]
+\begin{lstlisting}
+# Create handlers
+console_handler = logging.StreamHandler()
+file_handler = logging.FileHandler('app.log')
+
+# Rotating file handler
+from logging.handlers import RotatingFileHandler
+rotating_handler = RotatingFileHandler(
+    'app.log',
+    maxBytes=10*1024*1024,  # 10MB
+    backupCount=5
+)
+
+# Create formatter
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+
+# Attach formatter to handler
+handler.setFormatter(formatter)
+
+# Add handler to logger
+logger.addHandler(handler)
+\end{lstlisting}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=orange!5!white,colframe=orange!75!black,title=Complete Setup Example]
+\begin{lstlisting}
+import logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+
+# Console handler
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+console.setFormatter(logging.Formatter('%(levelname)s - %(message)s'))
+
+# File handler
+file_h = logging.FileHandler('app.log')
+file_h.setLevel(logging.DEBUG)
+file_h.setFormatter(logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+))
+
+logger.addHandler(console)
+logger.addHandler(file_h)
+
+logger.info("Logger configured")
+\end{lstlisting}
+\end{tcolorbox}
+
+\subsection{Logging Levels Quick Reference}
+
+\begin{center}
+\begin{tabular}{|c|l|l|p{0.4\textwidth}|}
+\hline
+\textbf{Level} & \textbf{Numeric} & \textbf{Method} & \textbf{When to Use} \\
+\hline
+DEBUG & 10 & \texttt{logger.debug()} & Detailed diagnostic info \\
+\hline
+INFO & 20 & \texttt{logger.info()} & General informational messages \\
+\hline
+WARNING & 30 & \texttt{logger.warning()} & Warning messages \\
+\hline
+ERROR & 40 & \texttt{logger.error()} & Error messages \\
+\hline
+CRITICAL & 50 & \texttt{logger.critical()} & Critical errors \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Format String Placeholders}
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Placeholder} & \textbf{Description} \\
+\hline
+\texttt{\%(name)s} & Logger name \\
+\texttt{\%(levelname)s} & Log level name \\
+\texttt{\%(message)s} & Log message \\
+\texttt{\%(asctime)s} & Timestamp \\
+\texttt{\%(filename)s} & Source filename \\
+\texttt{\%(lineno)d} & Line number \\
+\texttt{\%(funcName)s} & Function name \\
+\texttt{\%(process)d} & Process ID \\
+\texttt{\%(thread)d} & Thread ID \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Best Practices Checklist}
+
+\begin{itemize}[leftmargin=*]
+    \item[$\square$] Use \texttt{logging.getLogger(\_\_name\_\_)} for logger names
+    \item[$\square$] Configure logging once at application startup
+    \item[$\square$] Use appropriate log levels (DEBUG in dev, INFO+ in prod)
+    \item[$\square$] Use lazy formatting: \texttt{logger.info("User \%s", user)}
+    \item[$\square$] Use \texttt{logger.exception()} in except blocks
+    \item[$\square$] Never log sensitive information (passwords, keys)
+    \item[$\square$] Implement log rotation for production systems
+    \item[$\square$] Add timestamps to all log messages
+    \item[$\square$] Include context (request ID, user ID) when relevant
+    \item[$\square$] Test logging configuration before deploying
+    \item[$\square$] Monitor log file sizes regularly
+    \item[$\square$] Use structured logging (JSON) for complex systems
+    \item[$\square$] Set up centralized logging for distributed systems
+    \item[$\square$] Document logging conventions for your team
+\end{itemize}
+
+\newpage
+
+% ========================
+% SECTION 12: GLOSSARY
+% ========================
+\section{Glossary}
+
+\begin{description}[leftmargin=4cm,style=nextline]
+    \item[Logger] The main interface that applications use to log messages. Loggers are organized hierarchically by name.
+    
+    \item[Handler] Object responsible for dispatching log records to specific destinations (console, file, network, etc.).
+    
+    \item[Formatter] Specifies the layout of log messages, including which attributes to include and how to format them.
+    
+    \item[Filter] Provides fine-grained control over which log records are processed, beyond simple level filtering.
+    
+    \item[Log Level] Severity indicator for log messages (DEBUG=10, INFO=20, WARNING=30, ERROR=40, CRITICAL=50).
+    
+    \item[Log Record] Object containing all information about a single logging event (message, level, timestamp, location, etc.).
+    
+    \item[Propagation] Process by which log messages are passed from child loggers to parent loggers in the hierarchy.
+    
+    \item[Root Logger] The top-level logger in the hierarchy (\texttt{logging.getLogger()} with no name), parent to all other loggers.
+    
+    \item[StreamHandler] Handler that sends log output to streams like sys.stdout or sys.stderr (console output).
+    
+    \item[FileHandler] Handler that writes log messages to a file on disk.
+    
+    \item[RotatingFileHandler] Handler that automatically rotates log files when they reach a specified size.
+    
+    \item[TimedRotatingFileHandler] Handler that rotates log files at specified time intervals (hourly, daily, etc.).
+    
+    \item[basicConfig()] Convenience function for simple logging configuration, works only once per program.
+    
+    \item[Lazy Formatting] Technique where string formatting is delayed until the message is actually logged, improving performance.
+    
+    \item[Structured Logging] Practice of logging data in a structured format (e.g., JSON) rather than plain text, making logs easier to parse and analyze.
+    
+    \item[QueueHandler] Handler that sends log records to a queue for asynchronous processing, useful in multiprocessing environments.
+    
+    \item[QueueListener] Receives log records from a queue and dispatches them to configured handlers.
+    
+    \item[Logger Hierarchy] Tree structure of loggers where child loggers inherit configuration from parent loggers.
+    
+    \item[Exception Logging] Special logging that includes full traceback information, typically done with \texttt{logger.exception()}.
+    
+    \item[Handler Level] Minimum severity level a handler will output, independent of the logger's level.
+    
+    \item[Logger Level] Minimum severity level a logger will process before passing to handlers.
+    
+    \item[Context Information] Additional data attached to log records (user ID, request ID, session info) for better traceability.
+\end{description}
+
+\newpage
+
+% ========================
+% CONCLUSION
+% ========================
+\section{Conclusion}
+
+Effective logging is a cornerstone of professional software development and absolutely essential for Machine Learning Operations (MLOps). The Python logging module provides a robust, flexible, and production-ready framework for tracking application behavior, debugging issues, and monitoring systems in production environments.
+
+\subsection{Key Takeaways}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Never Use print() in Production}
+    
+    Always use the logging module instead of print() statements. Logging provides:
+    \begin{itemize}
+        \item Severity levels for filtering
+        \item Flexible output destinations
+        \item Automatic timestamps and context
+        \item Production-ready features
+    \end{itemize}
+    
+    \item \textbf{Choose Appropriate Log Levels}
+    
+    Use the right level for each situation:
+    \begin{itemize}
+        \item DEBUG for development and detailed diagnostics
+        \item INFO for production tracking and milestones
+        \item WARNING for potential issues that don't stop execution
+        \item ERROR for failures that affect functionality
+        \item CRITICAL for system-level failures
+    \end{itemize}
+    
+    \item \textbf{Configure Logging Properly}
+    
+    Set up logging at application startup with:
+    \begin{itemize}
+        \item Appropriate handlers (console, file, rotating)
+        \item Clear, informative formatters
+        \item Correct levels for each environment
+        \item Log rotation to manage disk space
+    \end{itemize}
+    
+    \item \textbf{Log at the Right Verbosity}
+    
+    Balance information and noise:
+    \begin{itemize}
+        \item Too much logging creates noise and performance issues
+        \item Too little logging misses important events
+        \item Use DEBUG liberally in development
+        \item Be selective with INFO/WARNING in production
+    \end{itemize}
+    
+    \item \textbf{Include Relevant Context}
+    
+    Make logs actionable by including:
+    \begin{itemize}
+        \item Request IDs for tracing requests
+        \item User IDs for user-specific issues
+        \item Timestamps for temporal analysis
+        \item Function names and line numbers for debugging
+    \end{itemize}
+    
+    \item \textbf{Handle Errors Gracefully}
+    
+    Always use proper exception logging:
+    \begin{itemize}
+        \item Use \texttt{logger.exception()} in except blocks
+        \item Include full tracebacks for debugging
+        \item Log before re-raising exceptions
+        \item Don't swallow exceptions silently
+    \end{itemize}
+    
+    \item \textbf{Monitor and Rotate Logs}
+    
+    In production systems:
+    \begin{itemize}
+        \item Implement log rotation to prevent disk full
+        \item Monitor log file sizes regularly
+        \item Archive old logs appropriately
+        \item Set up alerts for critical errors
+    \end{itemize}
+\end{enumerate}
+
+\subsection{MLOps-Specific Recommendations}
+
+For machine learning operations, logging serves critical functions:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Model Training}: Track epochs, loss, metrics, and training time
+    \item \textbf{Data Pipelines}: Log data loading, cleaning, and transformation steps
+    \item \textbf{Model Serving}: Record prediction requests, responses, and inference times
+    \item \textbf{Performance Monitoring}: Track resource usage (CPU, GPU, memory)
+    \item \textbf{Error Tracking}: Identify and debug production failures quickly
+    \item \textbf{Audit Trails}: Maintain compliance and reproducibility records
+    \item \textbf{Experiment Tracking}: Document configurations and results
+\end{itemize}
+
+\subsection{Implementation Strategy}
+
+When implementing logging in your projects:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Start Simple}: Begin with \texttt{basicConfig()} for prototypes
+    \item \textbf{Expand Gradually}: Add handlers and formatters as needs grow
+    \item \textbf{Establish Standards}: Define logging conventions for your team
+    \item \textbf{Review Regularly}: Analyze logs to improve logging strategy
+    \item \textbf{Integrate Tools}: Connect logging with monitoring and alerting systems
+    \item \textbf{Test Configuration}: Verify logging works before deploying
+    \item \textbf{Document Practices}: Maintain clear documentation for team members
+\end{enumerate}
+
+\subsection{Common Pitfalls to Avoid}
+
+\begin{warningbox}
+\textbf{Avoid These Common Mistakes}:
+\begin{itemize}[leftmargin=*]
+    \item Using print() instead of logging in production
+    \item Logging sensitive information (passwords, API keys)
+    \item Over-logging in tight loops (performance impact)
+    \item Not rotating log files (disk space issues)
+    \item Using string concatenation instead of lazy formatting
+    \item Forgetting to set appropriate log levels
+    \item Not including enough context in log messages
+    \item Swallowing exceptions without logging
+    \item Configuring logging multiple times
+    \item Not testing logging configuration
+\end{itemize}
+\end{warningbox}
+
+\subsection{Next Steps}
+
+To continue improving your logging practices:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Practice}: Implement logging in personal projects
+    \item \textbf{Experiment}: Try different handlers and formatters
+    \item \textbf{Integrate}: Connect logging with monitoring tools (ELK, Splunk, Datadog)
+    \item \textbf{Learn Advanced Topics}: Explore async logging, custom handlers, filters
+    \item \textbf{Study Production Systems}: Analyze logging in open-source projects
+    \item \textbf{Optimize}: Profile and optimize logging performance
+    \item \textbf{Automate}: Set up automated log analysis and alerting
+\end{enumerate}
+
+\subsection{Integration with Other Tools}
+
+Python logging integrates well with:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{MLflow}: Experiment tracking and model registry
+    \item \textbf{TensorBoard}: Visualization and monitoring
+    \item \textbf{ELK Stack}: Elasticsearch, Logstash, Kibana for log analysis
+    \item \textbf{Splunk}: Enterprise log management
+    \item \textbf{Datadog}: Cloud monitoring and analytics
+    \item \textbf{Sentry}: Error tracking and monitoring
+    \item \textbf{CloudWatch}: AWS log management
+    \item \textbf{Prometheus/Grafana}: Metrics and dashboards
+\end{itemize}
+
+\subsection{Final Recommendations}
+
+\begin{infobox}{Best Practices Summary}
+\begin{enumerate}[leftmargin=*]
+    \item Use \texttt{logging.getLogger(\_\_name\_\_)} for all loggers
+    \item Configure logging once at application startup
+    \item Use appropriate levels: DEBUG $<$ INFO $<$ WARNING $<$ ERROR $<$ CRITICAL
+    \item Implement log rotation in production
+    \item Include context information (timestamps, IDs, locations)
+    \item Use lazy formatting for performance
+    \item Never log sensitive information
+    \item Use \texttt{logger.exception()} in except blocks
+    \item Test logging configuration thoroughly
+    \item Monitor and analyze logs regularly
+\end{enumerate}
+\end{infobox}
+
+\subsection{Additional Resources}
+
+For further learning and reference:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Official Documentation}: 
+    \begin{itemize}
+        \item Python Logging Module: \url{https://docs.python.org/3/library/logging.html}
+        \item Logging Cookbook: \url{https://docs.python.org/3/howto/logging-cookbook.html}
+        \item Logging HOWTO: \url{https://docs.python.org/3/howto/logging.html}
+    \end{itemize}
+    
+    \item \textbf{Tutorials and Guides}:
+    \begin{itemize}
+        \item Real Python Logging Guide: \url{https://realpython.com/python-logging/}
+        \item Python Logging Best Practices: \url{https://www.loggly.com/ultimate-guide/python-logging-basics/}
+    \end{itemize}
+    
+    \item \textbf{MLOps Integration}:
+    \begin{itemize}
+        \item MLflow Documentation: \url{https://www.mlflow.org/docs/latest/tracking.html}
+        \item TensorBoard Logging: \url{https://www.tensorflow.org/tensorboard}
+    \end{itemize}
+    
+    \item \textbf{Log Management Tools}:
+    \begin{itemize}
+        \item ELK Stack: \url{https://www.elastic.co/elastic-stack}
+        \item Splunk: \url{https://www.splunk.com/}
+        \item Datadog: \url{https://www.datadoghq.com/}
+        \item Sentry: \url{https://sentry.io/}
+    \end{itemize}
+    
+    \item \textbf{Books}:
+    \begin{itemize}
+        \item "Logging and Log Management" by Anton Chuvakin
+        \item "Python Logging Essentials" by Chetan Giridhar
+    \end{itemize}
+\end{itemize}
+
+\vspace{2em}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Remember]
+\textbf{Logging is not just about recording events—it's about making your application observable, debuggable, and maintainable.}
+
+Good logging practices will:
+\begin{itemize}[leftmargin=*]
+    \item Save hours of debugging time
+    \item Enable quick problem resolution in production
+    \item Provide insights into system behavior
+    \item Build confidence in your deployments
+    \item Support compliance and auditing requirements
+    \item Facilitate team collaboration
+\end{itemize}
+
+Invest time in proper logging setup—it pays dividends throughout the application lifecycle!
+\end{tcolorbox}
+
+\vspace{2em}
+\hrule
+\vspace{0.5em}
+\begin{center}
+\textit{End of Python Logging Module Complete Reference Guide}
+
+\vspace{1em}
+
+\textit{"The most effective debugging tool is still careful thought,\\
+coupled with judiciously placed print statements."}\\
+\textit{— Brian Kernighan}
+
+\vspace{0.5em}
+
+\end{center}
+
+\end{document}
+

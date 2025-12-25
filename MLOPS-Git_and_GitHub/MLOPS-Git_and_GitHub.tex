@@ -1,0 +1,1317 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{hyperref}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Git \& GitHub Complete Guide}
+\lhead{Version Control Systems}
+\cfoot{\thepage}
+
+% Title formatting
+\titleformat{\section}{\Large\bfseries\color{blue!70!black}}{\thesection}{1em}{}[\titlerule]
+\titleformat{\subsection}{\large\bfseries\color{blue!50!black}}{\thesubsection}{1em}{}
+
+% Code styling
+\definecolor{codebg}{gray}{0.95}
+\lstset{
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    xleftmargin=2em,
+    framexleftmargin=1.5em
+}
+
+% Command box
+\newtcolorbox{cmdbox}{
+    colback=codebg,
+    colframe=black!50,
+    boxrule=0.5pt,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm
+}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Huge\bfseries Git \& GitHub\\[0.5cm] Complete Reference Guide\par}
+    \vspace{1cm}
+    {\Large Version Control Systems\par}
+    \vspace{2cm}
+    {\large A Comprehensive Guide to Git Commands,\\
+    GitHub Workflows, and Best Practices\par}
+    \vspace{3cm}
+    {\Large\bfseries Sujil S\par}
+    \vspace{0.5cm}
+    {\large\texttt{sujil9480@gmail.com}\par}
+    \vfill
+    {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ========================
+% SECTION 1: INTRODUCTION
+% ========================
+\section{Introduction to Git}
+
+\subsection{What is Git?}
+Git is a \textbf{distributed version control system} (DVCS) designed to manage source code efficiently. It enables developers to:
+\begin{itemize}[leftmargin=*]
+    \item Track changes in code over time
+    \item Collaborate effectively with multiple developers
+    \item Support flexible and non-linear development workflows
+    \item Maintain complete project history locally and remotely
+\end{itemize}
+
+\subsection{Key Features of Git}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Version Control}: Complete history of all changes
+    \item \textbf{Distributed Nature}: Every developer has a full repository copy
+    \item \textbf{Branching \& Merging}: Parallel development support
+    \item \textbf{Fast Performance}: Efficient operations on large codebases
+    \item \textbf{Data Integrity}: SHA-based commit identification
+\end{enumerate}
+
+\subsection{Why Use Git?}
+
+\subsubsection{Bug Fixing and Code Versioning}
+\begin{itemize}[leftmargin=*]
+    \item Maintains complete history of code changes
+    \item Tracks \textit{who} made changes, \textit{when}, and \textit{why}
+    \item Enables reverting to previous stable versions
+    \item Supports multiple software versions simultaneously
+    \item Allows safe testing without affecting main codebase
+\end{itemize}
+
+\subsubsection{Collaboration}
+\begin{itemize}[leftmargin=*]
+    \item Multiple developers work on same project simultaneously
+    \item Manages and resolves conflicts between changes
+    \item Each developer works on local repository copy
+    \item Pull requests and code reviews improve quality
+    \item Enhances teamwork in large projects
+\end{itemize}
+
+\subsubsection{Non-Linear Development}
+\begin{itemize}[leftmargin=*]
+    \item Branching supports parallel development
+    \item Separate branches for features, bug fixes, experiments
+    \item Independent work without disturbing main code
+    \item Tested branches merge into main branch
+    \item Improves flexibility and development speed
+\end{itemize}
+
+\newpage
+
+% ========================
+% SECTION 2: CORE CONCEPTS
+% ========================
+\section{Core Git Concepts}
+
+\subsection{Distributed Version Control System (DVCS)}
+\begin{itemize}[leftmargin=*]
+    \item Every developer has a complete repository copy
+    \item Full project history available locally
+    \item Supports offline work
+    \item Improves collaboration and redundancy
+    \item Example: Git, Mercurial
+\end{itemize}
+
+\subsection{Repository}
+A \textbf{repository} (or "repo") is a storage location for a Git project containing:
+\begin{itemize}[leftmargin=*]
+    \item All project files and directories
+    \item Complete commit history
+    \item All branches and tags
+    \item Configuration and metadata
+\end{itemize}
+
+Repositories can be:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Local}: Stored on developer's machine
+    \item \textbf{Remote}: Hosted on servers (GitHub, GitLab, Bitbucket)
+\end{itemize}
+
+\subsection{Commit}
+A \textbf{commit} is a snapshot of staged changes:
+\begin{itemize}[leftmargin=*]
+    \item Each commit has a unique SHA ID (hash)
+    \item Contains commit message describing changes
+    \item Forms the project's version history
+    \item Immutable once created
+\end{itemize}
+
+\subsection{Branch}
+A \textbf{branch} is a parallel line of development:
+\begin{itemize}[leftmargin=*]
+    \item Allows working on features independently
+    \item Main/master branch contains stable code
+    \item Feature branches for new development
+    \item Can be merged back into main branch
+\end{itemize}
+
+\subsection{Working Directory}
+The \textbf{working directory} is where files are created and modified:
+\begin{itemize}[leftmargin=*]
+    \item Contains current project files
+    \item Changes not tracked until staged
+    \item Reflects current branch state
+\end{itemize}
+
+\subsection{Staging Area (Index)}
+The \textbf{staging area} is an intermediate preparation zone:
+\begin{itemize}[leftmargin=*]
+    \item Prepares changes for commit
+    \item Allows selective file tracking
+    \item Files added using \texttt{git add}
+    \item Review changes before committing
+\end{itemize}
+
+\subsection{Merge}
+\textbf{Merging} combines changes from different branches:
+\begin{itemize}[leftmargin=*]
+    \item Integrates parallel development work
+    \item Creates merge commit (in complex merges)
+    \item May require conflict resolution
+\end{itemize}
+
+\subsection{Clone}
+\textbf{Cloning} creates a local copy of remote repository:
+\begin{itemize}[leftmargin=*]
+    \item Includes all files, branches, and history
+    \item Automatically sets up remote reference
+    \item Enables local development
+\end{itemize}
+
+\newpage
+
+% ========================
+% SECTION 3: GIT WORKFLOW
+% ========================
+\section{Git Framework and Workflow}
+
+\subsection{The Four-Stage Architecture}
+
+Git follows a structured workflow through four main areas:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Workspace (Working Directory)}
+    \begin{itemize}
+        \item Where files are created, modified, or deleted
+        \item Changes not tracked until staged
+        \item Example: Creating/editing \texttt{index.html}
+    \end{itemize}
+    
+    \item \textbf{Staging Area (Index)}
+    \begin{itemize}
+        \item Intermediate area for preparing commits
+        \item Allows selective change tracking
+        \item Command: \texttt{git add <file>}
+    \end{itemize}
+    
+    \item \textbf{Local Repository}
+    \begin{itemize}
+        \item Stores committed project history locally
+        \item Each commit is a snapshot of staged changes
+        \item Command: \texttt{git commit -m "message"}
+    \end{itemize}
+    
+    \item \textbf{Remote Repository}
+    \begin{itemize}
+        \item Hosted on servers (GitHub, GitLab)
+        \item Enables team collaboration
+        \item Command: \texttt{git push origin main}
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Typical Workflow Example}
+\begin{enumerate}[leftmargin=*]
+    \item Developer edits \texttt{index.html} in workspace
+    \item File added to staging area: \texttt{git add index.html}
+    \item Staged changes committed to local repository
+    \item Commit pushed to remote repository
+\end{enumerate}
+
+\begin{tcolorbox}[colback=yellow!10!white,colframe=orange!75!black,title=Key Point]
+The Git framework ensures systematic version control by organizing changes from development to collaboration through distinct stages.
+\end{tcolorbox}
+
+\newpage
+
+% ========================
+% SECTION 4: INITIAL SETUP
+% ========================
+\section{Git Configuration and Setup}
+
+\subsection{Initial Configuration}
+Before using Git, configure user identity. This information is associated with every commit.
+
+\subsubsection{Setting Username}
+\begin{cmdbox}
+\begin{verbatim}
+git config --global user.name "Your Name"
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Username appears in all commits
+    \item \texttt{--global} applies to all repositories
+\end{itemize}
+
+\subsubsection{Setting Email}
+\begin{cmdbox}
+\begin{verbatim}
+git config --global user.email "your.email@example.com"
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Email associates commits with user
+    \item Should match email on Git platforms
+\end{itemize}
+
+\subsubsection{Verifying Configuration}
+\begin{cmdbox}
+\begin{verbatim}
+git config --global user.name
+git config --global user.email
+\end{verbatim}
+\end{cmdbox}
+
+These commands display currently saved Git configuration values.
+
+\newpage
+
+% ========================
+% SECTION 5: BASIC COMMANDS
+% ========================
+\section{Essential Git Commands}
+
+\subsection{Repository Initialization}
+
+\subsubsection{\texttt{git init}}
+Initializes a new Git repository.
+\begin{cmdbox}
+\begin{verbatim}
+git init
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Creates hidden \texttt{.git} directory
+    \item Stores version control data
+    \item Execute once at project start
+\end{itemize}
+
+\subsection{Status and Tracking}
+
+\subsubsection{\texttt{git status}}
+Displays current repository state.
+\begin{cmdbox}
+\begin{verbatim}
+git status
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Shows modified, staged, and untracked files
+    \item Indicates which changes are ready to commit
+    \item Helps understand current working state
+\end{itemize}
+
+\subsection{Staging Files}
+
+\subsubsection{\texttt{git add .}}
+Stages all modified and untracked files.
+\begin{cmdbox}
+\begin{verbatim}
+git add .
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{\texttt{git add <file\_name>}}
+Stages specific file.
+\begin{cmdbox}
+\begin{verbatim}
+git add index.html
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Committing Changes}
+
+\subsubsection{\texttt{git commit -m "<message>"}}
+Saves staged changes to local repository.
+\begin{cmdbox}
+\begin{verbatim}
+git commit -m "Add homepage design"
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item \texttt{-m} flag provides commit message
+    \item Creates project snapshot
+    \item Message should be descriptive
+\end{itemize}
+
+\subsection{Unstaging Files}
+
+\subsubsection{\texttt{git restore --staged <file\_name>}}
+Removes file from staging area.
+\begin{cmdbox}
+\begin{verbatim}
+git restore --staged index.html
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Does not delete file or changes
+    \item Useful when file staged accidentally
+    \item Changes remain in workspace
+\end{itemize}
+
+\subsection{The .gitignore File}
+Specifies files and folders Git should ignore.
+\begin{cmdbox}
+\begin{verbatim}
+# Example .gitignore entries
+node_modules/
+*.log
+.env
+build/
+*.tmp
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Prevents tracking of build files, logs, secrets
+    \item One pattern per line
+    \item Use wildcards for pattern matching
+\end{itemize}
+
+\newpage
+
+% ========================
+% SECTION 6: VIEWING HISTORY
+% ========================
+\section{Viewing and Analyzing History}
+
+\subsection{Basic Log Commands}
+
+\subsubsection{\texttt{git log}}
+Displays complete commit history.
+\begin{cmdbox}
+\begin{verbatim}
+git log
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Shows full commit details
+    \item Includes SHA ID, author, date, message
+    \item Press \texttt{q} to exit
+\end{itemize}
+
+\subsubsection{\texttt{git log --oneline}}
+Displays condensed commit history.
+\begin{cmdbox}
+\begin{verbatim}
+git log --oneline
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item One commit per line
+    \item Shows shortened SHA and message
+    \item Quick history overview
+\end{itemize}
+
+\subsubsection{\texttt{git log --stat}}
+Shows file change statistics.
+\begin{cmdbox}
+\begin{verbatim}
+git log --stat
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Displays files changed per commit
+    \item Shows lines added/deleted
+    \item Useful for understanding commit scope
+\end{itemize}
+
+\subsubsection{\texttt{git log -p}}
+Displays detailed patch information.
+\begin{cmdbox}
+\begin{verbatim}
+git log -p
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Shows line-by-line changes
+    \item Full diff for each commit
+    \item Useful for detailed code review
+\end{itemize}
+
+\subsection{Branch History}
+
+\subsubsection{\texttt{git log --oneline --all}}
+Shows history of all branches.
+\begin{cmdbox}
+\begin{verbatim}
+git log --oneline --all
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{\texttt{git log --oneline --all --graph}}
+Displays graphical branch representation.
+\begin{cmdbox}
+\begin{verbatim}
+git log --oneline --all --graph
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Visualizes branching structure
+    \item Shows merge points
+    \item Helps understand development flow
+\end{itemize}
+
+\subsection{Viewing Specific Commits}
+
+\subsubsection{\texttt{git show <sha\_id>}}
+Displays detailed commit information.
+\begin{cmdbox}
+\begin{verbatim}
+git show a3f8e2
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item First 6 digits of SHA sufficient
+    \item Shows commit metadata and changes
+    \item Includes author, date, diff
+\end{itemize}
+
+\subsection{Comparing Changes}
+
+\subsubsection{\texttt{git diff}}
+Shows differences between files.
+\begin{cmdbox}
+\begin{verbatim}
+git diff
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Compares workspace vs staging area
+    \item Shows unstaged changes
+    \item Review before committing
+\end{itemize}
+
+\newpage
+
+% ========================
+% SECTION 7: BRANCHING
+% ========================
+\section{Branching and Navigation}
+
+\subsection{Understanding Branches}
+Branches are snapshots of a repository allowing independent development:
+\begin{itemize}[leftmargin=*]
+    \item Main branch contains stable version
+    \item Feature branches for new development
+    \item Enables parallel work by multiple developers
+    \item Changes tested before merging to main
+\end{itemize}
+
+\subsection{Branch Commands}
+
+\subsubsection{\texttt{git branch}}
+Lists all available branches.
+\begin{cmdbox}
+\begin{verbatim}
+git branch
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Current branch marked with asterisk (*)
+    \item Shows local branches only
+\end{itemize}
+
+\subsubsection{\texttt{git branch <name>}}
+Creates new branch.
+\begin{cmdbox}
+\begin{verbatim}
+git branch feature-login
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{\texttt{git branch <name> <sha\_id>}}
+Creates branch at specific commit.
+\begin{cmdbox}
+\begin{verbatim}
+git branch hotfix a3f8e2
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Useful for starting from older commit
+    \item Enables targeted development
+\end{itemize}
+
+\subsection{Switching Branches}
+
+\subsubsection{\texttt{git checkout <branch>}}
+Switches to specified branch.
+\begin{cmdbox}
+\begin{verbatim}
+git checkout feature-login
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Updates workspace to match branch
+    \item Changes HEAD pointer
+    \item Files may appear/disappear based on branch
+\end{itemize}
+
+\subsubsection{\texttt{git checkout <sha\_id>}}
+Moves to specific commit.
+\begin{cmdbox}
+\begin{verbatim}
+git checkout a3f8e2
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Enters \textit{detached HEAD} state
+    \item Used for inspecting old versions
+    \item Not for making new commits
+\end{itemize}
+
+\subsubsection{\texttt{git checkout main/master}}
+Returns to main branch.
+\begin{cmdbox}
+\begin{verbatim}
+git checkout main
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Branch Switching Behavior}
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Important Note]
+When switching branches:
+\begin{itemize}
+    \item Files from previous branch may be removed from workspace
+    \item Files are \textbf{NOT permanently deleted}
+    \item They are restored when switching back
+    \item Git updates workspace to match selected branch
+\end{itemize}
+\end{tcolorbox}
+
+\subsection{Deleting Branches}
+
+\subsubsection{\texttt{git branch -d <branch>}}
+Deletes merged branch safely.
+\begin{cmdbox}
+\begin{verbatim}
+git branch -d feature-login
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{\texttt{git branch -D <branch>}}
+Force deletes branch (even if unmerged).
+\begin{cmdbox}
+\begin{verbatim}
+git branch -D experimental-feature
+\end{verbatim}
+\end{cmdbox}
+
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Branch Deletion Rule]
+A branch currently in use cannot be deleted. Switch to another branch first to avoid data loss.
+\end{tcolorbox}
+
+\newpage
+
+% ========================
+% SECTION 8: MERGING
+% ========================
+\section{Merging Branches}
+
+\subsection{The Merge Process}
+
+\subsubsection{\texttt{git merge <branch>}}
+Merges specified branch into current branch.
+\begin{cmdbox}
+\begin{verbatim}
+git checkout main
+git merge feature-login
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Combines changes from branches
+    \item Always merge \textit{into} current branch
+    \item May require conflict resolution
+\end{itemize}
+
+\subsection{Types of Merging}
+
+\subsubsection{Fast-Forward Merge}
+Occurs when current branch has no new commits since branching.
+\begin{itemize}[leftmargin=*]
+    \item Git simply moves branch pointer forward
+    \item No merge commit created
+    \item Results in linear history
+    \item Clean and simple
+\end{itemize}
+
+\textbf{Scenario:}
+\begin{verbatim}
+main:     A---B
+               \
+feature:        C---D
+
+After merge:
+main:     A---B---C---D
+\end{verbatim}
+
+\subsubsection{Complex Merge (Three-Way Merge)}
+Occurs when both branches have new commits.
+\begin{itemize}[leftmargin=*]
+    \item Git creates new merge commit
+    \item Combines histories of both branches
+    \item May result in merge conflicts
+    \item Requires manual conflict resolution
+\end{itemize}
+
+\textbf{Scenario:}
+\begin{verbatim}
+main:     A---B---E---F
+               \
+feature:        C---D
+
+After merge:
+main:     A---B---E---F---M
+               \       /
+feature:        C---D
+\end{verbatim}
+
+\subsection{Branching Strategies}
+Common strategies for organizing development:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Feature Branching}: One branch per feature
+    \item \textbf{Git Flow}: Structured workflow with multiple branch types
+    \item \textbf{Release Branching}: Separate branches for releases
+    \item \textbf{Trunk-Based}: Short-lived branches, frequent merging
+\end{itemize}
+
+\newpage
+
+% ========================
+% SECTION 9: REMOTE REPOS
+% ========================
+\section{Working with Remote Repositories}
+
+\subsection{Connecting to Remote}
+
+\subsubsection{\texttt{git remote add origin <url>}}
+Adds remote repository reference.
+\begin{cmdbox}
+\begin{verbatim}
+git remote add origin https://github.com/username/repo.git
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Links local repository to remote server
+    \item \texttt{origin} is conventional name
+    \item Can have multiple remotes
+\end{itemize}
+
+\subsubsection{\texttt{git remote -v}}
+Displays all remote repositories.
+\begin{cmdbox}
+\begin{verbatim}
+git remote -v
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Shows remote names and URLs
+    \item Displays fetch and push URLs
+\end{itemize}
+
+\subsubsection{\texttt{git remote rename <old> <new>}}
+Renames existing remote.
+\begin{cmdbox}
+\begin{verbatim}
+git remote rename origin upstream
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Pushing Changes}
+
+\subsubsection{\texttt{git push origin <branch>}}
+Uploads local commits to remote.
+\begin{cmdbox}
+\begin{verbatim}
+git push origin main
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Synchronizes local with remote
+    \item Requires write permissions
+    \item Updates remote branch
+\end{itemize}
+
+\subsubsection{\texttt{git push origin <branch> --force}}
+Forcefully pushes commits, overwriting remote.
+\begin{cmdbox}
+\begin{verbatim}
+git push origin main --force
+\end{verbatim}
+\end{cmdbox}
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Warning]
+Use with extreme caution! Force push overwrites remote history and can cause data loss for collaborators.
+\end{tcolorbox}
+
+\subsection{Fetching and Pulling}
+
+\subsubsection{\texttt{git clone <url>}}
+Creates local copy of remote repository.
+\begin{cmdbox}
+\begin{verbatim}
+git clone https://github.com/username/repo.git
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Downloads complete repository
+    \item Automatically sets up remote reference
+    \item Creates directory with repo name
+\end{itemize}
+
+\subsubsection{\texttt{git fetch}}
+Downloads changes without merging.
+\begin{cmdbox}
+\begin{verbatim}
+git fetch origin
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Updates remote-tracking branches
+    \item Does not modify working directory
+    \item Safe operation for reviewing changes
+\end{itemize}
+
+\subsubsection{\texttt{git pull origin <branch>}}
+Fetches and automatically merges changes.
+\begin{cmdbox}
+\begin{verbatim}
+git pull origin main
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Equivalent to \texttt{git fetch} + \texttt{git merge}
+    \item Updates current branch
+    \item May cause merge conflicts
+\end{itemize}
+
+\subsection{Understanding Origin and Upstream}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{origin}: User's fork/personal repository
+    \item \textbf{upstream}: Original repository (in fork workflow)
+    \item \textbf{main}: Default primary branch name
+    \item \textbf{HEAD}: Pointer to current branch/commit
+\end{itemize}
+
+\newpage
+
+% ========================
+% SECTION 10: ADVANCED OPS
+% ========================
+\section{Advanced Operations}
+
+\subsection{Reverting Changes}
+
+\subsubsection{\texttt{git revert <sha\_id>}}
+Creates new commit that reverses changes.
+\begin{cmdbox}
+\begin{verbatim}
+git revert a3f8e2
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Does not delete commit history
+    \item Safer than reset in shared repos
+    \item Preserves project timeline
+    \item Recommended for public branches
+\end{itemize}
+
+\subsection{Viewing Differences with Remote}
+
+\subsubsection{\texttt{git log upstream/main --oneline}}
+Displays upstream commit history.
+\begin{cmdbox}
+\begin{verbatim}
+git log upstream/main --oneline
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{\texttt{git diff upstream/main}}
+Shows differences with upstream.
+\begin{cmdbox}
+\begin{verbatim}
+git diff upstream/main
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Compares current branch with upstream
+    \item Helps identify sync status
+    \item Useful before creating pull requests
+\end{itemize}
+
+\subsection{Syncing with Upstream}
+
+\subsubsection{\texttt{git pull upstream main}}
+Fetches and merges from original repository.
+\begin{cmdbox}
+\begin{verbatim}
+git pull upstream main
+\end{verbatim}
+\end{cmdbox}
+\begin{itemize}[leftmargin=*]
+    \item Updates fork with original changes
+    \item Essential for staying current
+    \item Prevents merge conflicts
+\end{itemize}
+
+\subsubsection{\texttt{git remote add upstream <url>}}
+Adds original repository as upstream.
+\begin{cmdbox}
+\begin{verbatim}
+git remote add upstream https://github.com/original/repo.git
+\end{verbatim}
+\end{cmdbox}
+
+\newpage
+
+% ========================
+% SECTION 11: PLATFORMS
+% ========================
+\section{Git Hosting Platforms}
+
+\subsection{GitHub}
+\textbf{GitHub} is a web-based hosting service for Git repositories.
+\begin{itemize}[leftmargin=*]
+    \item Owned by Microsoft
+    \item Largest developer community
+    \item Provides collaboration tools:
+    \begin{itemize}
+        \item Pull requests
+        \item Issue tracking
+        \item Project boards
+        \item GitHub Actions (CI/CD)
+        \item GitHub Pages (hosting)
+    \end{itemize}
+    \item Free public and private repositories
+    \item Popular for open-source projects
+\end{itemize}
+
+\subsection{GitLab}
+\textbf{GitLab} is a complete DevOps platform.
+\begin{itemize}[leftmargin=*]
+    \item Self-hosted or cloud-based
+    \item Integrated CI/CD pipelines
+    \item Built-in container registry
+    \item Issue tracking and boards
+    \item Wiki and documentation
+    \item Security scanning features
+    \item Can be deployed on-premises
+\end{itemize}
+
+\subsection{SSH Protocol}
+\textbf{SSH} (Secure Shell) provides secure authentication.
+\begin{itemize}[leftmargin=*]
+    \item Encrypted communication protocol
+    \item Password-less authentication via keys
+    \item More secure than HTTPS with passwords
+    \item Required for many Git operations
+    \item SSH keys consist of public/private pair
+\end{itemize}
+
+\newpage
+
+% ========================
+% SECTION 12: WORKFLOWS
+% ========================
+\section{Fork and Pull Request Workflow}
+
+\subsection{Understanding Forks}
+A \textbf{fork} is a personal copy of another user's repository.
+\begin{itemize}[leftmargin=*]
+    \item Allows independent development
+    \item Does not affect original repository
+    \item Common in open-source projects
+    \item Changes proposed via pull requests
+\end{itemize}
+
+\subsection{Clone vs Fork}
+\begin{center}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Cloning} & \textbf{Forking} \\
+\hline
+Creates local copy of repository & Creates copy in your GitHub account \\
+\hline
+Directly linked to original & Independent copy on remote \\
+\hline
+Used for any repository access & Used for contributing to others' projects \\
+\hline
+Command: \texttt{git clone <url>} & Done via GitHub/GitLab interface \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Pull Requests}
+A \textbf{pull request} (PR) proposes changes for review.
+\begin{itemize}[leftmargin=*]
+    \item Requests code review and approval
+    \item Allows discussion about changes
+    \item Ensures code quality before merging
+    \item Can be approved, rejected, or requested changes
+    \item Commonly used workflow in teams
+\end{itemize}
+
+\subsection{Git Fork Workflow}
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Fork} the original repository on GitHub
+    \item \textbf{Clone} your fork locally:
+    \begin{cmdbox}
+    \texttt{git clone https://github.com/yourname/repo.git}
+    \end{cmdbox}
+    \item \textbf{Add upstream} remote:
+    \begin{cmdbox}
+    \texttt{git remote add upstream https://github.com/original/repo.git}
+    \end{cmdbox}
+    \item \textbf{Create feature branch}:
+    \begin{cmdbox}
+    \texttt{git checkout -b feature-name}
+    \end{cmdbox}
+    \item \textbf{Make changes} and commit
+    \item \textbf{Push to origin}:
+    \begin{cmdbox}
+    \texttt{git push origin feature-name}
+    \end{cmdbox}
+    \item \textbf{Create pull request} from your fork to upstream/main
+    \item \textbf{Wait for review} and address feedback
+    \item After approval, changes are \textbf{merged} by maintainer
+\end{enumerate}
+
+\subsection{Keeping Fork Updated}
+\begin{cmdbox}
+\begin{verbatim}
+# Fetch upstream changes
+git fetch upstream
+
+# Merge upstream/main into your local main
+git checkout main
+git merge upstream/main
+
+# Push updates to your fork
+git push origin main
+\end{verbatim}
+\end{cmdbox}
+
+\newpage
+
+% ========================
+% SECTION 13: TERMINAL
+% ========================
+\section{Terminal and Directory Commands}
+
+\subsection{Basic Directory Operations}
+
+\subsubsection{\texttt{mkdir}}
+Creates new directory.
+\begin{cmdbox}
+\begin{verbatim}
+mkdir project-folder
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{\texttt{cd}}
+Changes current directory.
+\begin{cmdbox}
+\begin{verbatim}
+cd project-folder      # Enter directory
+cd ..                  # Go up one level
+cd ~                   # Go to home directory
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Terminal Control Commands}
+
+\subsubsection{\texttt{cls} (Command Prompt)}
+Clears Command Prompt screen.
+\begin{cmdbox}
+\begin{verbatim}
+cls
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{\texttt{clear} (PowerShell/Bash)}
+Clears terminal screen.
+\begin{cmdbox}
+\begin{verbatim}
+clear
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{\texttt{q}}
+Quits paginated output (git log, help pages).
+\begin{cmdbox}
+\begin{verbatim}
+q
+\end{verbatim}
+\end{cmdbox}
+
+\newpage
+
+% ========================
+% SECTION 14: GLOSSARY
+% ========================
+\section{Comprehensive Glossary}
+
+\begin{description}[leftmargin=3cm,style=nextline]
+    \item[Branch] A separate line of development allowing developers to work on features independently without affecting the main codebase.
+    
+    \item[Clone] A local copy of a remote Git repository created on a developer's computer, including all history and branches.
+    
+    \item[Commit] A snapshot of the project's state at a specific point, with a message describing changes made.
+    
+    \item[Continuous Delivery (CD)] Automated software movement through development lifecycle, ensuring code can be released reliably anytime.
+    
+    \item[Continuous Integration (CI)] Practice where developers frequently integrate code changes into shared codebase, often multiple times daily.
+    
+    \item[Distributed Version Control System (DVCS)] System tracking code changes regardless of storage location. Each user has complete repository copy.
+    
+    \item[Fork] Copy of existing repository in user's GitHub account, allowing independent development without affecting original.
+    
+    \item[Git] Free, open-source distributed version control system under GNU General Public License. Enables local project maintenance worldwide.
+    
+    \item[GitHub] Web-hosted platform providing Git repository hosting and collaboration tools like pull requests and issue tracking.
+    
+    \item[GitHub Branches] Store all repository files, used to isolate code changes. Completed changes merge back to main branch.
+    
+    \item[GitLab] Complete DevOps platform offering Git repository hosting, source code management, and CI/CD tools in single application.
+    
+    \item[HEAD] Pointer to currently checked-out branch or commit. Represents current working position in repository.
+    
+    \item[Merge] Process combining changes from one branch into another, typically merging feature branch into main.
+    
+    \item[Origin] Default name for remote repository. Points to main remote location where code is pushed/pulled.
+    
+    \item[Pull Request] Process requesting review and approval of code changes before merging into main branch.
+    
+    \item[Repository] Data structure storing project files, folders, and version history. Configured for version control.
+    
+    \item[SSH Protocol] Secure method for remote login and communication, commonly used for authenticating Git operations.
+    
+    \item[Staging Area] Intermediate preparation zone where changes are prepared before committing to repository.
+    
+    \item[Upstream] Remote reference to original repository (used in fork workflows). Distinguished from personal fork (origin).
+    
+    \item[Version Control] System tracking file changes over time, allowing recovery of previous versions if errors occur.
+    
+    \item[Working Directory] Directory on local file system containing files and subdirectories associated with Git repository.
+\end{description}
+
+\newpage
+
+% ========================
+% SECTION 15: QUICK REF
+% ========================
+\section{Quick Reference Guide}
+
+\subsection{Essential Commands Summary}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title=Setup \& Configuration]
+\begin{verbatim}
+git config --global user.name "Name"
+git config --global user.email "email@example.com"
+git init
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Basic Workflow]
+\begin{verbatim}
+git status
+git add <file>              # Stage specific file
+git add .                   # Stage all changes
+git commit -m "message"
+git push origin main
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=purple!5!white,colframe=purple!75!black,title=Branching]
+\begin{verbatim}
+git branch                  # List branches
+git branch <name>           # Create branch
+git checkout <branch>       # Switch branch
+git merge <branch>          # Merge branch
+git branch -d <branch>      # Delete merged branch
+git branch -D <branch>      # Force delete branch
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=orange!5!white,colframe=orange!75!black,title=Remote Operations]
+\begin{verbatim}
+git clone <url>
+git remote add origin <url>
+git remote -v
+git pull origin main
+git push origin main
+git fetch origin
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=History \& Inspection]
+\begin{verbatim}
+git log
+git log --oneline
+git log --oneline --all --graph
+git show <sha-id>
+git diff
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=yellow!5!white,colframe=yellow!75!black,title=Undoing Changes]
+\begin{verbatim}
+git restore --staged <file>  # Unstage file
+git revert <sha-id>          # Revert commit
+git checkout <sha-id>        # View old commit
+\end{verbatim}
+\end{tcolorbox}
+
+\newpage
+
+\subsection{Common Workflows}
+
+\subsubsection{Starting New Project}
+\begin{enumerate}
+    \item Create directory: \texttt{mkdir project-name}
+    \item Navigate: \texttt{cd project-name}
+    \item Initialize: \texttt{git init}
+    \item Create files and make changes
+    \item Stage: \texttt{git add .}
+    \item Commit: \texttt{git commit -m "Initial commit"}
+    \item Add remote: \texttt{git remote add origin <url>}
+    \item Push: \texttt{git push origin main}
+\end{enumerate}
+
+\subsubsection{Contributing to Existing Project}
+\begin{enumerate}
+    \item Fork repository on GitHub
+    \item Clone your fork: \texttt{git clone <your-fork-url>}
+    \item Add upstream: \texttt{git remote add upstream <original-url>}
+    \item Create branch: \texttt{git checkout -b feature-name}
+    \item Make changes and commit
+    \item Push to fork: \texttt{git push origin feature-name}
+    \item Create pull request on GitHub
+\end{enumerate}
+
+\subsubsection{Keeping Fork Updated}
+\begin{enumerate}
+    \item Fetch upstream: \texttt{git fetch upstream}
+    \item Switch to main: \texttt{git checkout main}
+    \item Merge upstream: \texttt{git merge upstream/main}
+    \item Push to fork: \texttt{git push origin main}
+\end{enumerate}
+
+\subsection{Best Practices}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Commit often} with meaningful messages
+    \item \textbf{Pull before push} to avoid conflicts
+    \item \textbf{Use branches} for features and fixes
+    \item \textbf{Review changes} before committing
+    \item \textbf{Write clear commit messages} (50 char summary, detailed description)
+    \item \textbf{Keep commits atomic} (one logical change per commit)
+    \item \textbf{Use .gitignore} to exclude unnecessary files
+    \item \textbf{Test before committing} to maintain working code
+    \item \textbf{Avoid force push} on shared branches
+    \item \textbf{Document your code} and repository
+\end{itemize}
+
+\subsection{Commit Message Guidelines}
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!75!black,title=Good Commit Messages]
+\textbf{Format:}
+\begin{verbatim}
+Short summary (50 chars or less)
+
+More detailed explanation if needed. Wrap at 72 characters.
+Explain what and why, not how.
+
+- Bullet points okay
+- Use present tense: "Add feature" not "Added feature"
+\end{verbatim}
+
+\textbf{Examples:}
+\begin{itemize}
+    \item \texttt{Add user authentication system}
+    \item \texttt{Fix bug in payment processing}
+    \item \texttt{Refactor database connection logic}
+    \item \texttt{Update README with installation steps}
+\end{itemize}
+\end{tcolorbox}
+
+\newpage
+
+% ========================
+% CONCLUSION
+% ========================
+\section{Conclusion}
+
+Git is an essential tool in modern software development that enables:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Effective version control} with complete history tracking
+    \item \textbf{Smooth collaboration} among distributed teams
+    \item \textbf{Non-linear development} through branching and merging
+    \item \textbf{Code quality} through review processes
+    \item \textbf{Project management} via platforms like GitHub and GitLab
+\end{itemize}
+
+\vspace{1em}
+
+Mastering Git requires practice and understanding of its core concepts. This reference guide provides the foundation needed to work effectively with Git in professional software development environments.
+
+\vspace{1em}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Remember]
+\begin{itemize}
+    \item Git is distributed - every copy is a full backup
+    \item Commits are permanent - think before you commit
+    \item Branches are cheap - use them liberally
+    \item Communication is key - write clear commit messages
+    \item When in doubt, consult \texttt{git --help}
+\end{itemize}
+\end{tcolorbox}
+
+\vspace{2em}
+
+\subsection{Additional Resources}
+\begin{itemize}[leftmargin=*]
+    \item Official Git Documentation: \url{https://git-scm.com/doc}
+    \item GitHub Guides: \url{https://guides.github.com}
+    \item GitLab Documentation: \url{https://docs.gitlab.com}
+    \item Interactive Git Tutorial: \url{https://learngitbranching.js.org}
+    \item Git Cheat Sheet: \url{https://education.github.com/git-cheat-sheet-education.pdf}
+\end{itemize}
+
+\vspace{2em}
+\hrule
+\vspace{0.5em}
+\begin{center}
+\textit{End of Git \& GitHub Complete Reference Guide}
+\end{center}
+
+\end{document}

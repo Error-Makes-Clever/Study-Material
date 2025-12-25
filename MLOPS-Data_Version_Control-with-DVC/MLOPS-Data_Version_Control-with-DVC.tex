@@ -1,0 +1,2454 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{fancyhdr}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{DVC Complete Guide}
+\lhead{Data Version Control}
+\cfoot{\thepage}
+
+% Title formatting
+\titleformat{\section}{\Large\bfseries\color{blue!70!black}}{\thesection}{1em}{}[\titlerule]
+\titleformat{\subsection}{\large\bfseries\color{blue!50!black}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{blue!40!black}}{\thesubsubsection}{1em}{}
+
+% Code styling
+\definecolor{codebg}{gray}{0.95}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    backgroundcolor=\color{codebg},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    frame=single,
+    xleftmargin=2em,
+    framexleftmargin=1.5em
+}
+
+\lstdefinestyle{bashstyle}{
+    language=bash,
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    xleftmargin=2em,
+    framexleftmargin=1.5em
+}
+
+\lstset{style=pythonstyle}
+
+% Command box
+\newtcolorbox{cmdbox}{
+    colback=codebg,
+    colframe=black!50,
+    boxrule=0.5pt,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm,
+    breakable
+}
+
+% Example box
+\newtcolorbox{examplebox}[1]{
+    colback=green!5!white,
+    colframe=green!75!black,
+    title=#1,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced jigsaw
+}
+
+% Note box
+\newtcolorbox{notebox}{
+    colback=yellow!10!white,
+    colframe=orange!75!black,
+    title=Important Note,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced jigsaw
+}
+
+% Warning box
+\newtcolorbox{warningbox}{
+    colback=red!5!white,
+    colframe=red!75!black,
+    title=Warning,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced jigsaw
+}
+
+% Info box - FIXED: Added missing comma
+\newtcolorbox{infobox}[1]{
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    title=#1,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced jigsaw
+}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Huge\bfseries Data Version Control\\[0.5cm] with DVC\par}
+    \vspace{1cm}
+    {\Large Complete MLOps Reference Guide\par}
+    \vspace{2cm}
+    {\large A Comprehensive Guide to DVC Commands,\\
+    Workflow, Integration with Git, and Best Practices\par}
+    \vspace{3cm}
+    {\Large\bfseries Sujil S\par}
+    \vspace{0.5cm}
+    {\large\texttt{sujil9480@gmail.com}\par}
+    \vfill
+    {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ========================
+% SECTION 1: INTRODUCTION
+% ========================
+\section{Introduction to DVC}
+
+\subsection{What is DVC?}
+
+\textbf{DVC (Data Version Control)} is an open-source version control system specifically designed for machine learning projects. It helps manage large datasets, model files, and ML pipelines alongside your code.
+
+\begin{infobox}{Key Definition}
+DVC extends Git capabilities to handle data versioning, making it possible to version control datasets, models, and ML experiments just like you version control code.
+\end{infobox}
+
+\subsection{Why is DVC Needed in MLOps?}
+
+In traditional software development, Git is sufficient for version control. However, machine learning projects have unique challenges:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Large Datasets}: Data files are too large for Git (GB to TB range)
+    \item \textbf{Binary Files}: Models, images, and data are binary, not text
+    \item \textbf{Reproducibility}: Need to track which data produced which results
+    \item \textbf{Experimentation}: Multiple experiments with different data versions
+    \item \textbf{Collaboration}: Teams need consistent data across environments
+\end{itemize}
+
+\subsection{The Machine Learning Pipeline}
+
+A typical ML pipeline consists of several interconnected components:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Data Ingestion}: Collecting raw data from various sources
+    \item \textbf{Data Preprocessing}: Cleaning, transforming, and preparing data
+    \item \textbf{Feature Engineering}: Creating meaningful features from raw data
+    \item \textbf{Feature Selection}: Selecting the most relevant features
+    \item \textbf{Model Training}: Training ML models on prepared data
+    \item \textbf{Model Evaluation}: Assessing model performance
+\end{enumerate}
+
+\begin{notebox}
+\textbf{Key Challenge}: Each component has its own artifacts (outputs), and changes in any component cascade to all subsequent components. Managing these dependencies and tracking experiments becomes complex without proper versioning.
+\end{notebox}
+
+\subsection{Real-World Scenario}
+
+Consider a real-world ML project scenario:
+
+\begin{examplebox}{Experimentation Challenge}
+\textbf{Scenario}:
+\begin{itemize}[leftmargin=*]
+    \item You run 50 experiments with different data preprocessing techniques
+    \item Each experiment produces different results
+    \item Experiment \#23 gives the best accuracy
+    \item Two weeks later, you need to reproduce that exact result
+    \item Problem: Which exact data, preprocessing steps, and parameters were used?
+\end{itemize}
+
+\textbf{Solution}: DVC tracks the exact version of data used with each code version, making experiments fully reproducible.
+\end{examplebox}
+
+\subsection{Why Not Just Use Git for Data?}
+
+Git has significant limitations for data versioning:
+
+\begin{center}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Git Limitations} & \textbf{DVC Solutions} \\
+\hline
+Storage Issues: Git repos become huge with large files & DVC stores data externally (cloud or local storage) \\
+\hline
+Performance: Git slows down with binary files & DVC handles large files efficiently \\
+\hline
+Line-by-line tracking: Inefficient for binary data & DVC uses checksums for tracking \\
+\hline
+Repository size limits on platforms like GitHub & DVC uses separate storage backends \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+% ========================
+% SECTION 2: HOW DVC WORKS
+% ========================
+\section{How DVC Works: The Temple Analogy}
+
+\subsection{Understanding DVC with a Real-World Example}
+
+Let's understand DVC's working mechanism through an intuitive analogy:
+
+\begin{examplebox}{The Temple Token System}
+\textbf{The Scenario}:
+
+Imagine you visit a temple where you must deposit personal items before entering:
+\begin{itemize}[leftmargin=*]
+    \item Items to deposit: Phone, wallet, bag, shoes, etc.
+    \item Two counters available:
+    \begin{itemize}
+        \item \textbf{Counter 1}: Handles shoes only
+        \item \textbf{Counter 2}: Handles phone, wallet, bag (everything except shoes)
+    \end{itemize}
+\end{itemize}
+
+\textbf{The Problem}:
+
+Without a system, items can get mismatched. Your shoes might be paired with someone else's phone and wallet when collecting items.
+
+\textbf{The Solution}:
+
+The temple implements a token system:
+\begin{enumerate}[leftmargin=*]
+    \item Deposit shoes at \textbf{Counter 1} $\rightarrow$ Receive \textbf{Token A}
+    \item Go to \textbf{Counter 2} with \textbf{Token A}
+    \item Deposit phone, wallet, bag \textbf{+ Token A} at Counter 2 $\rightarrow$ Receive \textbf{Token B}
+    \item When returning:
+    \begin{itemize}
+        \item Give \textbf{Token B} to Counter 2 $\rightarrow$ Get phone, wallet, bag + \textbf{Token A}
+        \item Give \textbf{Token A} to Counter 1 $\rightarrow$ Get your shoes back
+    \end{itemize}
+\end{enumerate}
+
+\textbf{Result}: Perfect matching! Your shoes are always linked to your other belongings.
+\end{examplebox}
+
+\subsection{The DVC-Git Relationship}
+
+Now let's map this analogy to DVC and Git:
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Temple Component} & \textbf{Technology} & \textbf{What It Stores} \\
+\hline
+Counter 1 (Shoes) & DVC & Large data files \\
+\hline
+Counter 2 (Phone, Wallet) & Git & Code, configs, small files \\
+\hline
+Token A & .dvc file & Hash/pointer to data \\
+\hline
+Token B & Git commit & Code version + .dvc file \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{DVC Working Mechanism}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Store Data in DVC}:
+    \begin{itemize}
+        \item Large datasets stored in DVC remote storage
+        \item DVC generates a unique hash (token) for this data
+        \item This hash acts as the "pointer" to your data
+    \end{itemize}
+    
+    \item \textbf{Store Pointer in Git}:
+    \begin{itemize}
+        \item The .dvc file (containing the hash) is tracked by Git
+        \item Git commits this .dvc file along with your code
+        \item Small text file, perfect for Git versioning
+    \end{itemize}
+    
+    \item \textbf{Retrieve Data}:
+    \begin{itemize}
+        \item Git checkout gives you code + .dvc file (token)
+        \item DVC pull uses the token to fetch exact data version
+        \item Complete reproducibility achieved
+    \end{itemize}
+\end{enumerate}
+
+\subsection{What Gets Stored Where}
+
+\begin{infobox}{Storage Distribution}
+\textbf{Git Stores}:
+\begin{itemize}[leftmargin=*]
+    \item Source code (.py, .js, .java files)
+    \item Configuration files (.yaml, .json)
+    \item Documentation (.md, .txt)
+    \item \textbf{.dvc files} (tokens/pointers)
+    \item .gitignore and .dvcignore
+\end{itemize}
+
+\textbf{DVC Stores}:
+\begin{itemize}[leftmargin=*]
+    \item Large datasets (.csv, .parquet, images)
+    \item Trained models (.pkl, .h5, .pth)
+    \item Preprocessed data
+    \item Feature files
+    \item Evaluation metrics
+    \item Any large binary files
+\end{itemize}
+\end{infobox}
+
+\subsection{Visual Representation}
+
+% FIXED: Simplified layout - code and .dvc side by side
+\begin{center}
+\begin{tikzpicture}[
+    node distance=2cm,
+    box/.style={rectangle, rounded corners, draw=red!70, fill=red!5, thick, minimum width=2.5cm, minimum height=1.2cm, align=center},
+    storage/.style={circle, draw=red!70, fill=red!5, thick, minimum width=2.5cm, align=center},
+    arrow/.style={->, >=stealth, thick, red}
+]
+
+% Top row - side by side
+\node[box] (code) {Code};
+\node[box, right=1.5cm of code] (dvcfile) {.dvc};
+\node[box, right=3cm of dvcfile] (data) {Data File};
+
+% Bottom row - storage
+\node[storage, below=2cm of code, xshift=2cm] (git) {Git};
+\node[storage, below=2cm of data] (dvcremote) {DVC\\Remote};
+
+% Arrows
+\draw[arrow] (code) -- node[midway, left, font=\small] {tracked by} (git);
+\draw[arrow] (dvcfile) -- node[midway, right, font=\small] {tracked by} (git);
+\draw[arrow] (data) -- node[midway, right, font=\small] {stored in} (dvcremote);
+\draw[arrow, dashed] (dvcfile) -- node[above, font=\small] {points to} (data);
+
+\end{tikzpicture}
+\end{center}
+
+\newpage
+
+% ========================
+% SECTION 3: DVC INSTALLATION
+% ========================
+\section{Setting Up DVC}
+
+\subsection{Prerequisites}
+
+Before installing DVC, ensure you have:
+
+\begin{itemize}[leftmargin=*]
+    \item Python 3.8 or higher installed
+    \item Git installed and configured
+    \item pip (Python package manager)
+    \item Basic understanding of command line/terminal
+\end{itemize}
+
+\subsection{Installation}
+
+\subsubsection{Installing DVC}
+
+\begin{cmdbox}
+\begin{verbatim}
+pip install dvc
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Verifying Installation}
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc version
+\end{verbatim}
+\end{cmdbox}
+
+Expected output:
+\begin{verbatim}
+DVC version: 3.x.x
+\end{verbatim}
+
+\subsection{Essential Terminal Commands}
+
+Before working with DVC, familiarize yourself with basic terminal commands:
+
+\begin{center}
+\begin{tabular}{|l|p{0.65\textwidth}|}
+\hline
+\textbf{Command} & \textbf{Description} \\
+\hline
+\texttt{cd} & Change directory \\
+\hline
+\texttt{ls} & List files and directories (Linux/Mac) \\
+\hline
+\texttt{dir} & List files and directories (Windows) \\
+\hline
+\texttt{mkdir} & Create new directory \\
+\hline
+\texttt{pwd} & Print working directory (show current location) \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Python Virtual Environment}
+
+It's recommended to use a virtual environment for DVC projects:
+
+\begin{examplebox}{Setting Up Virtual Environment}
+\begin{lstlisting}[style=bashstyle]
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# On Windows:
+venv\Scripts\activate.bat
+
+# On Linux/Mac:
+source venv/bin/activate
+\end{lstlisting}
+\end{examplebox}
+
+\newpage
+
+% ========================
+% SECTION 4: DVC WORKFLOW
+% ========================
+
+\section{Complete DVC Workflow}
+
+\subsection{Workflow Overview}
+
+The DVC workflow integrates seamlessly with Git. Here's the complete process:
+
+\begin{enumerate}[leftmargin=*]
+    \item Initialize Git repository
+    \item Initialize DVC
+    \item Configure remote storage
+    \item Track data with DVC
+    \item Version code and data pointers with Git
+    \item Push data to DVC remote
+    \item Collaborate and reproduce experiments
+\end{enumerate}
+
+\subsection{Step-by-Step Implementation}
+
+\subsubsection{Step 1: Create and Clone Git Repository}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Create repository on GitHub/GitLab
+# Clone to local machine
+git clone https://github.com/username/project-name.git
+cd project-name
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Step 2: Create Python Script}
+
+Create a file named \texttt{DVC\_Code.py}:
+
+\begin{examplebox}{Version 1 - Initial Code}
+\begin{lstlisting}[language=Python]
+import pandas as pd
+import os
+
+# Create a sample DataFrame
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie'],
+    'Age': [25, 30, 35],
+    'City': ['New York', 'Los Angeles', 'Chicago']
+}
+
+df = pd.DataFrame(data)
+
+# Create directory for data
+data_dir = 'DVC_data'
+os.makedirs(data_dir, exist_ok=True)
+
+# Define file path
+file_path = os.path.join(data_dir, 'Sample_data.csv')
+
+# Save DataFrame to CSV
+df.to_csv(file_path, index=False)
+
+print(f"CSV file saved to {file_path}")
+\end{lstlisting}
+\end{examplebox}
+
+\subsubsection{Step 3: Configure .gitignore}
+
+Create/update \texttt{.gitignore} file:
+
+\begin{cmdbox}
+\begin{verbatim}
+# Add to .gitignore
+DVC_data/
+S3/
+venv/
+__pycache__/
+*.pyc
+\end{verbatim}
+\end{cmdbox}
+
+\begin{notebox}
+Adding \texttt{DVC\_data/} to .gitignore prevents Git from tracking large data files. DVC will handle data versioning instead.
+\end{notebox}
+
+\subsubsection{Step 4: Initial Git Commit}
+
+\begin{cmdbox}
+\begin{verbatim}
+git add .
+git commit -m "Initial Commit before initializing DVC"
+git push origin main
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Step 5: Initialize DVC}
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc init
+\end{verbatim}
+\end{cmdbox}
+
+This creates:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{.dvc/} directory (DVC configuration and cache)
+    \item \texttt{.dvcignore} file (similar to .gitignore for DVC)
+\end{itemize}
+
+\begin{infobox}{What's Inside .dvc/?}
+The \texttt{.dvc/} directory contains:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{cache/}: Stores all versions of tracked data locally
+    \item \textbf{config}: DVC configuration settings
+    \item \textbf{.gitignore}: Prevents cache from being tracked by Git
+\end{itemize}
+\end{infobox}
+
+\subsubsection{Step 6: Configure Remote Storage}
+
+For this tutorial, we'll use local storage. In production, you'd use cloud storage (S3, GCS, Azure).
+
+\begin{cmdbox}
+\begin{verbatim}
+# Create local storage directory
+mkdir S3
+
+# Add S3 to .gitignore
+echo "S3/" >> .gitignore
+
+# Configure DVC remote storage
+dvc remote add -d dvc_origin S3
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{Command breakdown}:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{dvc remote add}: Add remote storage
+    \item \texttt{-d}: Set as default remote
+    \item \texttt{dvc\_origin}: Name for this remote
+    \item \texttt{S3}: Path to storage location
+\end{itemize}
+
+\subsubsection{Step 7: Verify Remote Configuration}
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc remote list
+\end{verbatim}
+\end{cmdbox}
+
+Expected output:
+\begin{verbatim}
+dvc_origin    S3
+\end{verbatim}
+
+\subsubsection{Step 8: Track Data with DVC}
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc add DVC_Data/
+\end{verbatim}
+\end{cmdbox}
+
+\begin{warningbox}
+On first run, if DVC\_Data was previously tracked by Git, you'll see:
+\begin{verbatim}
+To stop tracking:
+git rm -r --cached 'DVC_Data'
+git commit -m "stop tracking DVC_Data"
+\end{verbatim}
+
+Execute these commands, then run \texttt{dvc add DVC\_Data/} again.
+\end{warningbox}
+
+This creates \texttt{DVC\_Data.dvc} file containing:
+
+\begin{cmdbox}
+\begin{verbatim}
+outs:
+- md5: abc123def456...
+  size: 1024
+  path: DVC_Data
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Step 9: Track .dvc File with Git}
+
+\begin{cmdbox}
+\begin{verbatim}
+git add .gitignore DVC_Data.dvc
+git commit -m "First Commit after initializing DVC"
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Step 10: Check DVC Status}
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc status
+\end{verbatim}
+\end{cmdbox}
+
+If everything is tracked:
+\begin{verbatim}
+Data and pipelines are up to date.
+\end{verbatim}
+
+\subsubsection{Step 11: Push Data to DVC Remote}
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc push
+\end{verbatim}
+\end{cmdbox}
+
+This uploads:
+\begin{itemize}[leftmargin=*]
+    \item The actual data files to S3 (or configured remote)
+    \item Creates hash-named files in remote storage
+\end{itemize}
+
+\subsubsection{Step 12: Push Code to Git}
+
+\begin{cmdbox}
+\begin{verbatim}
+git push origin main
+\end{verbatim}
+\end{cmdbox}
+
+\begin{notebox}
+At this point, Version 1 of both code and data is saved:
+\begin{itemize}[leftmargin=*]
+    \item Git: Has code + .dvc file (pointer)
+    \item DVC Remote: Has actual data
+    \item Local .dvc/cache: Has data copy for fast access
+\end{itemize}
+\end{notebox}
+
+\newpage
+
+% ========================
+% SECTION 5: VERSIONING DATA
+% ========================
+
+\section{Versioning Data Through Iterations}
+
+\subsection{Creating Version 2}
+
+\subsubsection{Update the Code}
+
+Modify \texttt{DVC\_Code.py} to add a new row:
+
+\begin{examplebox}{Version 2 - Adding One Row}
+\begin{lstlisting}[language=Python]
+import pandas as pd
+import os
+
+# Create initial DataFrame
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie'],
+    'Age': [25, 30, 35],
+    'City': ['New York', 'Los Angeles', 'Chicago']
+}
+
+df = pd.DataFrame(data)
+
+# Create directory
+data_dir = 'DVC_data'
+os.makedirs(data_dir, exist_ok=True)
+
+# Add new row for Version 2
+new_row_loc = {'Name': 'GF1', 'Age': 20, 'City': 'City1'}
+df.loc[len(df.index)] = new_row_loc
+
+# Save to CSV
+file_path = os.path.join(data_dir, 'Sample_data.csv')
+df.to_csv(file_path, index=False)
+
+print(f"CSV file saved to {file_path}")
+\end{lstlisting}
+\end{examplebox}
+
+\subsubsection{Run the Script}
+
+\begin{cmdbox}
+\begin{verbatim}
+python DVC_Code.py
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Check DVC Status}
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc status
+\end{verbatim}
+\end{cmdbox}
+
+Output:
+\begin{verbatim}
+DVC_Data.dvc:
+    changed outs:
+        modified:  DVC_Data
+\end{verbatim}
+
+This indicates data has changed since last commit.
+
+\subsubsection{Commit and Push Version 2}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Add changes to DVC
+dvc add DVC_Data/
+
+# Commit DVC changes
+dvc commit
+
+# Push data to remote
+dvc push
+
+# Track pointer file with Git
+git add DVC_Data.dvc
+git commit -m "Second Commit after initializing DVC"
+git push origin main
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Creating Version 3}
+
+\subsubsection{Update Code Again}
+
+\begin{examplebox}{Version 3 - Adding Second Row}
+\begin{lstlisting}[language=Python]
+import pandas as pd
+import os
+
+# Create initial DataFrame
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie'],
+    'Age': [25, 30, 35],
+    'City': ['New York', 'Los Angeles', 'Chicago']
+}
+
+df = pd.DataFrame(data)
+
+# Create directory
+data_dir = 'DVC_data'
+os.makedirs(data_dir, exist_ok=True)
+
+# Add first new row (V2)
+new_row_loc = {'Name': 'GF1', 'Age': 20, 'City': 'City1'}
+df.loc[len(df.index)] = new_row_loc
+
+# Add second new row (V3)
+new_row_loc2 = {'Name': 'GF2', 'Age': 30, 'City': 'City2'}
+df.loc[len(df.index)] = new_row_loc2
+
+# Save to CSV
+file_path = os.path.join(data_dir, 'Sample_data.csv')
+df.to_csv(file_path, index=False)
+
+print(f"CSV file saved to {file_path}")
+\end{lstlisting}
+\end{examplebox}
+
+\subsubsection{Version and Commit}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Run script
+python DVC_Code.py
+
+# Check status
+dvc status
+
+# Version with DVC
+dvc add DVC_Data/
+dvc commit
+dvc push
+
+# Version with Git
+git add DVC_Data.dvc DVC_Code.py
+git commit -m "Third Commit after initializing DVC"
+git push origin main
+\end{verbatim}
+\end{cmdbox}
+
+% ========================
+% VERSIONING PROCESS EXPLANATION
+% ========================
+
+\subsection{Understanding the Versioning Process}
+
+\begin{infobox}{What Happens During Versioning?}
+\textbf{When you run dvc add DVC\_Data/ (first time):}
+\begin{itemize}[leftmargin=*]
+    \item Starts tracking the data directory
+    \item Calculates MD5 hash of data
+    \item Copies data into \texttt{.dvc/cache/}
+    \item Creates \texttt{DVC\_Data.dvc} pointer file (tracked by Git)
+\end{itemize}
+
+\textbf{When you modify the data later:}
+\begin{itemize}[leftmargin=*]
+    \item Workspace data changes
+    \item Cache still contains the previous version
+    \item \texttt{dvc status} shows "modified"
+\end{itemize}
+
+\textbf{When you run dvc add DVC\_Data/ again (subsequent times):}
+\begin{itemize}[leftmargin=*]
+    \item Recalculates hash of modified data
+    \item Updates cache with new data version
+    \item Updates \texttt{DVC\_Data.dvc} with new hash
+    \item No need for \texttt{dvc commit} — cache is already updated!
+\end{itemize}
+\end{infobox}
+
+\begin{infobox}{What Happens During Versioning?}
+\textbf{When you run dvc push:}
+\begin{itemize}[leftmargin=*]
+    \item Uploads data from cache to remote storage (S3/GCS/etc.)
+    \item Only uploads changed/new files (efficient!)
+    \item All versions are preserved in remote
+\end{itemize}
+\end{infobox}
+
+\begin{warningbox}
+\textbf{Important: When is dvc commit actually needed?}
+
+\vspace{0.5em}
+
+In the workflow above, \textbf{dvc commit is NOT needed} because:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{dvc add} automatically updates the cache
+    \item Each \texttt{dvc add} creates a new cached version
+\end{itemize}
+
+\vspace{0.5em}
+
+\textbf{What happens if you run both commands?}
+\begin{verbatim}
+dvc add DVC_Data/      # Caches data
+dvc commit             # Has no effect, redundant
+\end{verbatim}
+\begin{itemize}[leftmargin=*]
+    \item After \texttt{dvc add}, workspace = cache (already in sync)
+    \item \texttt{dvc commit} checks: workspace matches cache? Yes!
+    \item Result: Has no effect in this workflow and is redundant
+\end{itemize}
+
+\vspace{0.5em}
+
+\textbf{dvc commit is only needed when:}
+\begin{itemize}[leftmargin=*]
+    \item You manually edit tracked files (outside DVC commands)
+    \item Example:
+    \begin{verbatim}
+    vim DVC_Data/Sample_data.csv  # Manual edit
+    dvc commit DVC_Data.dvc       # Finalize changes
+    \end{verbatim}
+    \item It finalizes changes to already tracked outputs
+    \item It updates cache with manually modified data
+    \item \textbf{Note:} This is less common; \texttt{dvc add} is preferred for most workflows
+\end{itemize}
+
+\vspace{0.5em}
+
+\textbf{Key principle:}
+\begin{itemize}[leftmargin=*]
+    \item \texttt{dvc add} = start tracking + cache updates
+    \item \texttt{dvc commit} = finalize manual changes to tracked data
+    \item \texttt{dvc add} + \texttt{dvc commit} = second command is redundant
+    \item For normal versioning workflow: \texttt{dvc add} is sufficient
+\end{itemize}
+\end{warningbox}
+
+\newpage
+
+\subsection{Corrected Versioning Workflow}
+
+\subsubsection{Version 2 - Correct Commands}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Run script to modify data
+python DVC_Code.py
+
+# Check what changed
+dvc status
+
+# Add changes to DVC (caches automatically)
+dvc add DVC_Data/
+
+# Push to remote storage
+dvc push
+
+# Commit pointer file to Git
+git add DVC_Data.dvc DVC_Code.py
+git commit -m "Second Commit after initializing DVC"
+git push origin main
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{Note}: No \texttt{dvc commit} needed — \texttt{dvc add} already cached the data!
+
+\subsubsection{Version 3 - Correct Commands}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Run script to add more data
+python DVC_Code.py
+
+# Check status
+dvc status
+
+# Version with DVC (caches automatically)
+dvc add DVC_Data/
+
+# Push to remote
+dvc push
+
+# Version with Git
+git add DVC_Data.dvc DVC_Code.py
+git commit -m "Third Commit after initializing DVC"
+git push origin main
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Understanding Cache Behavior}
+
+\begin{infobox}{How DVC Cache Works}
+\textbf{Cache Structure:}
+\begin{itemize}[leftmargin=*]
+    \item Located in \texttt{.dvc/cache/}
+    \item Each file/directory version gets a unique hash
+    \item Multiple versions coexist in cache
+    \item Cache is content-addressable (hash-based)
+\end{itemize}
+
+\textbf{Version History:}
+\begin{itemize}[leftmargin=*]
+    \item Each \texttt{git commit} captures one \texttt{.dvc} file state
+    \item Each \texttt{.dvc} file points to one cache version
+    \item Git history = timeline of data versions
+    \item \texttt{git checkout} + \texttt{dvc checkout} = restore any version
+\end{itemize}
+\end{infobox}
+
+\subsection{Viewing Version History}
+
+\subsubsection{Check Git Log}
+
+\begin{cmdbox}
+\begin{verbatim}
+git log --oneline
+\end{verbatim}
+\end{cmdbox}
+
+Example output:
+\begin{verbatim}
+32fe46b (HEAD -> main) Third Commit after initializing DVC
+2a8dc29 Second Commit after initializing DVC
+361d7ac First Commit after initializing DVC
+ec2e1d7 Initial Commit before initializing DVC
+776595f (origin/main) Initial commit
+\end{verbatim}
+
+Each commit represents a specific version of code + data pointer.
+
+\newpage
+
+% ========================
+% SECTION 6: ROLLING BACK
+% ========================
+
+\section{Rolling Back to Previous Versions}
+
+\subsection{The Need for Rollback}
+
+After running multiple experiments, you might need to:
+\begin{itemize}[leftmargin=*]
+    \item Reproduce results from an earlier experiment
+    \item Compare current version with previous version
+    \item Debug issues by reverting to working version
+    \item Retrieve specific data configuration
+\end{itemize}
+
+\subsection{Rollback Process}
+
+Rolling back involves two steps:
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Git checkout}: Retrieves code + .dvc file (data pointer)
+    \item \textbf{DVC pull}: Uses pointer to fetch actual data
+\end{enumerate}
+
+\subsection{Step-by-Step Rollback}
+
+\subsubsection{Step 1: View Available Versions}
+
+\begin{cmdbox}
+\begin{verbatim}
+git log --oneline
+\end{verbatim}
+\end{cmdbox}
+
+Output shows all commits with their hash IDs.
+
+\subsubsection{Step 2: Checkout Specific Version}
+
+To rollback to Version 1:
+
+\begin{cmdbox}
+\begin{verbatim}
+git checkout 361d7ac
+\end{verbatim}
+\end{cmdbox}
+
+\begin{notebox}
+\textbf{Detached HEAD State}:
+
+You'll see a message about "detached HEAD" state. This is normal when checking out a specific commit. You're viewing a specific point in history.
+\end{notebox}
+
+\textbf{Result}: Your code now matches Version 1:
+
+\begin{lstlisting}[language=Python]
+# DVC_Code.py - Version 1
+import pandas as pd
+import os
+
+data = {
+    'Name': ['Alice', 'Bob', 'Charlie'],
+    'Age': [25, 30, 35],
+    'City': ['New York', 'Los Angeles', 'Chicago']
+}
+
+df = pd.DataFrame(data)
+data_dir = 'DVC_data'
+os.makedirs(data_dir, exist_ok=True)
+file_path = os.path.join(data_dir, 'Sample_data.csv')
+df.to_csv(file_path, index=False)
+print(f"CSV file saved to {file_path}")
+\end{lstlisting}
+
+\subsubsection{Step 3: Check DVC Status}
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc status
+\end{verbatim}
+\end{cmdbox}
+
+Output:
+\begin{verbatim}
+DVC_Data.dvc:
+    changed outs:
+        modified:  DVC_Data
+\end{verbatim}
+
+This indicates your local data doesn't match the version specified in the .dvc file.
+
+\subsubsection{Step 4: Pull Data from DVC}
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc pull
+\end{verbatim}
+\end{cmdbox}
+
+Output:
+\begin{verbatim}
+Collecting                                    |2.00 [00:00, 69.9entry/s]
+Fetching
+Building workspace index                      |3.00 [00:00,  255entry/s]
+Comparing indexes                             |3.00 [00:00,  735entry/s]
+Applying changes                              |1.00 [00:00,  176file/s]
+M       DVC_Data\
+1 file modified
+\end{verbatim}
+
+\subsubsection{Step 5: Verify Rollback}
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc status
+\end{verbatim}
+\end{cmdbox}
+
+Output:
+\begin{verbatim}
+Data and pipelines are up to date.
+\end{verbatim}
+
+Check the data file:
+
+\begin{examplebox}{Sample\_data.csv - Version 1}
+\begin{verbatim}
+Name,Age,City
+Alice,25,New York
+Bob,30,Los Angeles
+Charlie,35,Chicago
+\end{verbatim}
+\end{examplebox}
+
+\subsection{Returning to Latest Version}
+
+To return to the most recent version:
+
+\begin{cmdbox}
+\begin{verbatim}
+# Return to main branch
+git checkout main
+
+# Pull latest data
+dvc pull
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Rollback Workflow Diagram}
+
+\begin{center}
+\begin{tikzpicture}[
+    node distance=1.5cm,
+    process/.style={rectangle, rounded corners, draw=blue!50, fill=blue!10, thick, minimum width=2.5cm, minimum height=0.8cm, font=\small},
+    decision/.style={diamond, aspect=2, draw=red!50, fill=red!10, thick, font=\small},
+    arrow/.style={->, >=stealth, thick}
+]
+
+\node[process] (gitlog) {git log --oneline};
+\node[process, below of=gitlog] (checkout) {git checkout $<$hash$>$};
+\node[process, below of=checkout] (status) {dvc status};
+\node[decision, below of=status, yshift=-0.5cm, text width=2cm, align=center] (check) {Data matches?};
+\node[process, below of=check, yshift=-0.8cm] (pull) {dvc pull};
+\node[process, below of=pull] (verify) {Verify data};
+
+\draw[arrow] (gitlog) -- node[right, font=\tiny] {Select version} (checkout);
+\draw[arrow] (checkout) -- (status);
+\draw[arrow] (status) -- (check);
+\draw[arrow] (check) -- node[right, font=\tiny] {No} (pull);
+\draw[arrow] (check) -- node[above, font=\tiny] {Yes} ++(3,0) -- ++(0,-3.8) -- (verify);
+\draw[arrow] (pull) -- (verify);
+
+\end{tikzpicture}
+\end{center}
+
+\newpage
+
+% ========================
+% SECTION 7: DVC COMMANDS REFERENCE
+% ========================
+
+\section{Complete DVC Commands Reference}
+
+\subsection{Initialization and Configuration}
+
+\begin{center}
+\begin{tabular}{|l|p{0.6\textwidth}|}
+\hline
+\textbf{Command} & \textbf{Description} \\
+\hline
+\texttt{dvc init} & Initialize DVC in current Git repository \\
+\hline
+\texttt{dvc version} & Display DVC version \\
+\hline
+\texttt{dvc remote add $<$name$>$ $<$url$>$} & Add remote storage location \\
+\hline
+\texttt{dvc remote add -d $<$name$>$ $<$url$>$} & Add and set as default remote \\
+\hline
+\texttt{dvc remote list} & List configured remote storage locations \\
+\hline
+\texttt{dvc remote remove $<$name$>$} & Remove a remote storage \\
+\hline
+\texttt{dvc config} & View/modify DVC configuration \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Data Tracking}
+
+\begin{center}
+\begin{tabular}{|l|p{0.6\textwidth}|}
+\hline
+\textbf{Command} & \textbf{Description} \\
+\hline
+\texttt{dvc add $<$file/dir$>$} & Start tracking file or directory \\
+\hline
+\texttt{dvc remove $<$file.dvc$>$} & Stop tracking (remove .dvc file) \\
+\hline
+\texttt{dvc move $<$src$>$ $<$dst$>$} & Move tracked file/directory \\
+\hline
+\texttt{dvc unprotect $<$file$>$} & Make tracked file writable \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Status and Information}
+
+\begin{center}
+\begin{tabular}{|l|p{0.6\textwidth}|}
+\hline
+\textbf{Command} & \textbf{Description} \\
+\hline
+\texttt{dvc status} & Check status of tracked data \\
+\hline
+\texttt{dvc status -c} & Show status with cloud comparison \\
+\hline
+\texttt{dvc diff} & Show changes between commits \\
+\hline
+\texttt{dvc list $<$repo$>$ $<$path$>$} & List repository contents \\
+\hline
+\texttt{dvc dag} & Visualize pipeline dependencies \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Data Synchronization}
+
+\begin{center}
+\begin{tabular}{|l|p{0.6\textwidth}|}
+\hline
+\textbf{Command} & \textbf{Description} \\
+\hline
+\texttt{dvc push} & Upload tracked data to remote storage \\
+\hline
+\texttt{dvc push -r $<$remote$>$} & Push to specific remote \\
+\hline
+\texttt{dvc pull} & Download data from remote storage \\
+\hline
+\texttt{dvc pull -r $<$remote$>$} & Pull from specific remote \\
+\hline
+\texttt{dvc fetch} & Download data without modifying workspace \\
+\hline
+\texttt{dvc checkout} & Update workspace with tracked data \\
+\hline
+\texttt{dvc commit} & Save current state to cache \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Pipeline Management}
+
+\begin{center}
+\begin{tabular}{|l|p{0.6\textwidth}|}
+\hline
+\textbf{Command} & \textbf{Description} \\
+\hline
+\texttt{dvc run} & Create a pipeline stage \\
+\hline
+\texttt{dvc repro} & Reproduce pipeline or specific stage \\
+\hline
+\texttt{dvc pipeline show} & Display pipeline structure \\
+\hline
+\texttt{dvc params} & Manage and show parameters \\
+\hline
+\texttt{dvc metrics} & Track and compare metrics \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Other Useful Commands}
+
+\begin{center}
+\begin{tabular}{|l|p{0.6\textwidth}|}
+\hline
+\textbf{Command} & \textbf{Description} \\
+\hline
+\texttt{dvc gc} & Garbage collect unused cache files \\
+\hline
+\texttt{dvc cache dir} & Show cache directory location \\
+\hline
+\texttt{dvc import $<$url$>$ $<$path$>$} & Download and track data from repository \\
+\hline
+\texttt{dvc get $<$url$>$ $<$path$>$} & Download data without tracking \\
+\hline
+\texttt{dvc doctor} & Check DVC installation and setup \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+% ========================
+% SECTION 8: REMOTE STORAGE
+% ========================
+
+\section{Remote Storage Configuration}
+
+\subsection{Supported Storage Types}
+
+DVC supports various remote storage backends:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Local Storage}: Local directory or network drive
+    \item \textbf{Amazon S3}: AWS cloud storage
+    \item \textbf{Google Cloud Storage (GCS)}: Google cloud storage
+    \item \textbf{Azure Blob Storage}: Microsoft cloud storage
+    \item \textbf{Google Drive}: Personal cloud storage
+    \item \textbf{SSH/SFTP}: Remote servers via SSH
+    \item \textbf{HDFS}: Hadoop Distributed File System
+    \item \textbf{HTTP/HTTPS}: Web servers
+\end{enumerate}
+
+\subsection{Local Storage Configuration}
+
+\begin{examplebox}{Local Storage Setup}
+\begin{lstlisting}[style=bashstyle]
+# Create local storage directory
+mkdir /path/to/storage
+
+# Add as DVC remote
+dvc remote add -d myremote /path/to/storage
+
+# Verify
+dvc remote list
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Amazon S3 Configuration}
+
+\begin{examplebox}{AWS S3 Setup}
+\begin{lstlisting}[style=bashstyle]
+# Add S3 bucket as remote
+dvc remote add -d s3remote s3://mybucket/path
+
+# Configure AWS credentials (Option 1: AWS CLI)
+aws configure
+
+# Or configure directly in DVC (Option 2)
+dvc remote modify s3remote access_key_id 'mykey'
+dvc remote modify s3remote secret_access_key 'mysecret'
+
+# Optional: Set region
+dvc remote modify s3remote region us-west-2
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Google Cloud Storage Configuration}
+
+\begin{examplebox}{GCS Setup}
+\begin{lstlisting}[style=bashstyle]
+# Add GCS bucket as remote
+dvc remote add -d gcsremote gs://mybucket/path
+
+# Authenticate with Google Cloud
+gcloud auth application-default login
+
+# Or set service account key
+dvc remote modify gcsremote \
+  credentialpath /path/to/key.json
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Azure Blob Storage Configuration}
+
+\begin{examplebox}{Azure Setup}
+\begin{lstlisting}[style=bashstyle]
+# Add Azure container as remote
+dvc remote add -d azureremote \
+  azure://mycontainer/path
+
+# Configure connection string
+dvc remote modify azureremote \
+  connection_string 'myconnectionstring'
+
+# Or use account name and key
+dvc remote modify azureremote account_name 'myaccount'
+dvc remote modify azureremote account_key 'mykey'
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Google Drive Configuration}
+
+\begin{examplebox}{Google Drive Setup}
+\begin{lstlisting}[style=bashstyle]
+# Add Google Drive as remote
+dvc remote add -d gdriveremote \
+  gdrive://folder_id
+
+# First push will prompt for authentication
+dvc push
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{SSH/SFTP Configuration}
+
+\begin{examplebox}{SSH Setup}
+\begin{lstlisting}[style=bashstyle]
+# Add SSH remote
+dvc remote add -d sshremote \
+  ssh://user@example.com/path/to/storage
+
+# Configure SSH key
+dvc remote modify sshremote keyfile /path/to/key
+
+# Or use password (not recommended)
+dvc remote modify sshremote password 'mypassword'
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Managing Multiple Remotes}
+
+You can configure multiple remotes and switch between them:
+
+\begin{cmdbox}
+\begin{verbatim}
+# Add multiple remotes
+dvc remote add s3prod s3://prod-bucket/data
+dvc remote add s3dev s3://dev-bucket/data
+dvc remote add local /mnt/storage
+
+# Set default
+dvc remote default s3prod
+
+# Push to specific remote
+dvc push -r s3dev
+
+# Pull from specific remote
+dvc pull -r local
+\end{verbatim}
+\end{cmdbox}
+
+\newpage
+
+% ========================
+% SECTION 9: COLLABORATION
+% ========================
+
+\section{Collaboration with DVC}
+
+\subsection{Team Workflow}
+
+DVC enables seamless team collaboration on ML projects:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Shared Remote Storage}: All team members access same data versions
+    \item \textbf{Git for Coordination}: Code and .dvc files synced through Git
+    \item \textbf{Reproducible Experiments}: Everyone can reproduce exact results
+    \item \textbf{No Data Duplication}: Data shared efficiently through remotes
+\end{enumerate}
+
+\subsection{Collaborator Setup}
+
+\subsubsection{Initial Setup for New Team Member}
+
+\begin{examplebox}{Onboarding Workflow}
+\begin{lstlisting}[style=bashstyle]
+# 1. Clone the Git repository
+git clone https://github.com/team/ml-project.git
+cd ml-project
+
+# 2. Install dependencies
+pip install -r requirements.txt
+
+# 3. DVC is already initialized (from repo)
+# Check DVC remotes
+dvc remote list
+
+# 4. Configure credentials if needed
+# (For S3, GCS, etc.)
+
+# 5. Pull all data
+dvc pull
+
+# 6. Verify everything is ready
+dvc status
+# Should show: "Data and pipelines are up to date."
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Making Changes and Sharing}
+
+\subsubsection{Developer Workflow}
+
+\begin{examplebox}{Typical Development Cycle}
+\begin{lstlisting}[style=bashstyle]
+# 1. Ensure you're up to date
+git pull
+dvc pull
+
+# 2. Create feature branch
+git checkout -b experiment-new-feature
+
+# 3. Make changes to code and data
+python train.py  # Generates new data
+
+# 4. Track new/modified data
+dvc add data/processed/
+dvc add models/
+
+# 5. Commit DVC changes
+dvc commit
+dvc push
+
+# 6. Commit to Git
+git add .
+git commit -m "Experiment: new feature with improved accuracy"
+git push origin experiment-new-feature
+
+# 7. Create pull request for review
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Reviewing Changes}
+
+Team members can review experiments:
+
+\begin{cmdbox}
+\begin{verbatim}
+# Checkout colleague's branch
+git checkout experiment-new-feature
+
+# Pull corresponding data
+dvc pull
+
+# Run and verify results
+python evaluate.py
+
+# Compare with main branch
+git checkout main
+dvc pull
+python evaluate.py
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Best Practices for Teams}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Naming Conventions}:
+    \begin{itemize}
+        \item Use descriptive branch names: \texttt{exp-optimizer-adam}, \texttt{data-augmentation-v2}
+        \item Clear commit messages linking code and data changes
+    \end{itemize}
+    
+    \item \textbf{Data Management}:
+    \begin{itemize}
+        \item Don't track generated/intermediate files unnecessarily
+        \item Use \texttt{.dvcignore} for temporary files
+        \item Regularly clean cache: \texttt{dvc gc}
+    \end{itemize}
+    
+    \item \textbf{Communication}:
+    \begin{itemize}
+        \item Document experiments in commit messages
+        \item Maintain README with DVC setup instructions
+        \item Share remote storage credentials securely
+    \end{itemize}
+    
+    \item \textbf{Access Control}:
+    \begin{itemize}
+        \item Set appropriate permissions on remote storage
+        \item Use separate remotes for dev/staging/prod
+        \item Monitor storage usage and costs
+    \end{itemize}
+\end{enumerate}
+
+\newpage
+
+% ========================
+% SECTION 10: ADVANCED FEATURES
+% ========================
+
+\section{Advanced DVC Features}
+
+\subsection{DVC Pipelines}
+
+DVC pipelines automate ML workflows and track dependencies.
+
+\subsubsection{Creating a Pipeline}
+
+\begin{examplebox}{Simple Pipeline Example}
+\begin{lstlisting}[style=bashstyle]
+# Stage 1: Data preprocessing
+dvc run -n preprocess \
+  -d data/raw \
+  -o data/processed \
+  python preprocess.py
+
+# Stage 2: Feature extraction
+dvc run -n features \
+  -d data/processed \
+  -o data/features \
+  python extract_features.py
+
+# Stage 3: Model training
+dvc run -n train \
+  -d data/features \
+  -o models/model.pkl \
+  -M metrics/train.json \
+  python train.py
+
+# Stage 4: Evaluation
+dvc run -n evaluate \
+  -d models/model.pkl \
+  -d data/features \
+  -M metrics/eval.json \
+  python evaluate.py
+\end{lstlisting}
+\end{examplebox}
+
+\subsubsection{Reproducing Pipelines}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Reproduce entire pipeline
+dvc repro
+
+# Reproduce specific stage
+dvc repro train
+
+# Force reproduce (ignore cache)
+dvc repro -f
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Parameters and Metrics}
+
+\subsubsection{Tracking Parameters}
+
+Create \texttt{params.yaml}:
+
+\begin{lstlisting}[language=Python]
+train:
+  learning_rate: 0.001
+  epochs: 100
+  batch_size: 32
+
+model:
+  layers: [64, 32, 16]
+  dropout: 0.2
+\end{lstlisting}
+
+Access in code:
+
+\begin{lstlisting}[language=Python]
+import yaml
+
+with open('params.yaml', 'r') as f:
+    params = yaml.safe_load(f)
+
+lr = params['train']['learning_rate']
+\end{lstlisting}
+
+View parameters:
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc params diff
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Tracking Metrics}
+
+Save metrics in JSON format:
+
+\begin{lstlisting}[language=Python]
+import json
+
+metrics = {
+    'accuracy': 0.95,
+    'loss': 0.12,
+    'f1_score': 0.93
+}
+
+with open('metrics.json', 'w') as f:
+    json.dump(metrics, f)
+\end{lstlisting}
+
+Compare metrics:
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc metrics show
+dvc metrics diff
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Experiments}
+
+DVC experiments feature helps manage ML experiments.
+
+\begin{cmdbox}
+\begin{verbatim}
+# Run experiment
+dvc exp run
+
+# Run with modified parameters
+dvc exp run --set-param train.lr=0.01
+
+# List experiments
+dvc exp show
+
+# Compare experiments
+dvc exp diff
+
+# Apply best experiment
+dvc exp apply <exp-name>
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Data Registry}
+
+Share data across projects using DVC:
+
+\begin{examplebox}{Data Registry Workflow}
+\begin{lstlisting}[style=bashstyle]
+# In data repository
+dvc add dataset.csv
+git add dataset.csv.dvc .gitignore
+git commit -m "Add dataset"
+git push
+
+# In ML project
+dvc import https://github.com/team/data-repo \
+  dataset.csv
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Cache Management}
+
+\subsubsection{Cache Location}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Show cache directory
+dvc cache dir
+
+# Change cache directory
+dvc cache dir /new/path/to/cache
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Cleaning Cache}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Remove unused cached files
+dvc gc
+
+# Remove all cache files not in workspace
+dvc gc --workspace
+
+# Remove cache for specific remote
+dvc gc --cloud
+\end{verbatim}
+\end{cmdbox}
+
+\newpage
+
+% ========================
+% SECTION 11: TROUBLESHOOTING
+% ========================
+
+\section{Troubleshooting and Common Issues}
+
+\subsection{Common Errors and Solutions}
+
+\subsubsection{Error: "Failed to push data to remote"}
+
+\textbf{Cause}: Connection issues or incorrect remote configuration
+
+\textbf{Solution}:
+\begin{cmdbox}
+\begin{verbatim}
+# Check remote configuration
+dvc remote list
+dvc config remote.myremote.url
+
+# Test connection
+dvc push -v  # Verbose output
+
+# Verify credentials (for cloud storage)
+# Check AWS/GCS/Azure credentials
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Error: "Output is already tracked"}
+
+\textbf{Cause}: File is tracked by both Git and DVC
+
+\textbf{Solution}:
+\begin{cmdbox}
+\begin{verbatim}
+# Remove from Git tracking
+git rm --cached file.csv
+
+# Add to .gitignore
+echo "file.csv" >> .gitignore
+
+# Track with DVC
+dvc add file.csv
+
+# Commit changes
+git add file.csv.dvc .gitignore
+git commit -m "Move tracking from Git to DVC"
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Error: "Failed to pull data"}
+
+\textbf{Cause}: Data not available in remote or local cache
+
+\textbf{Solution}:
+\begin{cmdbox}
+\begin{verbatim}
+# Check status
+dvc status -c
+
+# Fetch data from remote
+dvc fetch
+
+# Checkout fetched data
+dvc checkout
+
+# Or pull directly
+dvc pull -v
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Error: "Corrupted cache"}
+
+\textbf{Cause}: Cache files corrupted or modified
+
+\textbf{Solution}:
+\begin{cmdbox}
+\begin{verbatim}
+# Clear corrupted cache
+rm -rf .dvc/cache
+
+# Pull fresh data
+dvc pull
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Performance Issues}
+
+\subsubsection{Slow Push/Pull Operations}
+
+\textbf{Solutions}:
+\begin{enumerate}[leftmargin=*]
+    \item Use jobs parameter for parallel transfers:
+    \begin{cmdbox}
+\begin{verbatim}
+dvc push -j 4  # Use 4 parallel jobs
+\end{verbatim}
+    \end{cmdbox}
+    
+    \item Configure cloud provider CLI for better performance
+    
+    \item Use local cache effectively:
+    \begin{cmdbox}
+\begin{verbatim}
+dvc config cache.type hardlink,symlink
+\end{verbatim}
+    \end{cmdbox}
+\end{enumerate}
+
+\subsubsection{Large Cache Size}
+
+\textbf{Solutions}:
+\begin{enumerate}[leftmargin=*]
+    \item Remove unused files:
+    \begin{cmdbox}
+\begin{verbatim}
+dvc gc --workspace
+\end{verbatim}
+    \end{cmdbox}
+    
+    \item Move cache to external drive:
+    \begin{cmdbox}
+\begin{verbatim}
+dvc cache dir /mnt/external/cache
+\end{verbatim}
+    \end{cmdbox}
+    
+    \item Use shared cache for team:
+    \begin{cmdbox}
+\begin{verbatim}
+dvc config cache.dir /shared/cache
+dvc config cache.shared group
+\end{verbatim}
+    \end{cmdbox}
+\end{enumerate}
+
+\subsection{Debugging Tips}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Use Verbose Mode}:
+    \begin{cmdbox}
+\begin{verbatim}
+dvc push -v
+dvc pull -v
+\end{verbatim}
+    \end{cmdbox}
+    
+    \item \textbf{Check System Health}:
+    \begin{cmdbox}
+\begin{verbatim}
+dvc doctor
+\end{verbatim}
+    \end{cmdbox}
+    
+    \item \textbf{Verify Configuration}:
+    \begin{cmdbox}
+\begin{verbatim}
+dvc config --list
+cat .dvc/config
+\end{verbatim}
+    \end{cmdbox}
+    
+    \item \textbf{Check File Integrity}:
+    \begin{cmdbox}
+\begin{verbatim}
+dvc status
+dvc diff
+\end{verbatim}
+    \end{cmdbox}
+\end{enumerate}
+
+\newpage
+
+% ========================
+% SECTION 12: BEST PRACTICES
+% ========================
+
+\section{DVC Best Practices}
+
+\subsection{Project Organization}
+
+\subsubsection{Recommended Directory Structure}
+
+% FIXED: Replaced Unicode tree characters with standard ASCII
+\begin{cmdbox}
+\begin{verbatim}
+ml-project/
+|-- data/
+|   |-- raw/              # Original, immutable data
+|   |-- processed/        # Cleaned data
+|   +-- features/         # Feature files
+|-- models/               # Trained models
+|-- notebooks/            # Jupyter notebooks
+|-- src/                  # Source code
+|   |-- data/             # Data processing scripts
+|   |-- features/         # Feature engineering
+|   |-- models/           # Model training
+|   +-- visualization/    # Plotting scripts
+|-- metrics/              # Evaluation metrics
+|-- params.yaml           # Parameters
+|-- dvc.yaml              # Pipeline definition
+|-- .dvc/                 # DVC configuration
+|-- .dvcignore            # DVC ignore file
+|-- .gitignore            # Git ignore file
++-- README.md             # Project documentation
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{What to Track with DVC}
+
+\subsubsection{DO Track}
+
+\begin{itemize}[leftmargin=*]
+    \item Raw datasets
+    \item Processed/cleaned data
+    \item Feature files
+    \item Trained model files (.pkl, .h5, .pth)
+    \item Large binary files (images, videos, audio)
+    \item Evaluation results
+    \item Pre-trained embeddings
+\end{itemize}
+
+\subsubsection{DON'T Track}
+
+\begin{itemize}[leftmargin=*]
+    \item Temporary files
+    \item Cache files
+    \item Virtual environment folders
+    \item IDE configuration files
+    \item System files (.DS\_Store, Thumbs.db)
+    \item Logs (unless necessary for experiments)
+\end{itemize}
+
+\subsection{.dvcignore Configuration}
+
+\begin{examplebox}{Sample .dvcignore}
+\begin{verbatim}
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+env/
+\end{verbatim}
+\end{examplebox}
+
+\subsection{Commit Message Conventions}
+
+Use clear, descriptive commit messages that link code and data changes:
+
+\begin{examplebox}{Good Commit Messages}
+\begin{verbatim}
+[OK] "feat: Add data augmentation pipeline"
+[OK] "exp: Test BERT model with lr=0.001"
+[OK] "data: Update training set with 10k new samples"
+[OK] "fix: Correct normalization in preprocessing"
+[OK] "perf: Optimize feature extraction (20% faster)"
+\end{verbatim}
+\end{examplebox}
+
+\begin{warningbox}
+\textbf{Avoid Vague Messages}:
+\begin{verbatim}
+[x] "Update"
+[x] "Fix bug"
+[x] "Changes"
+[x] "WIP"
+\end{verbatim}
+\end{warningbox}
+
+\subsection{Data Versioning Strategy}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Version by Dataset Splits}:
+    \begin{itemize}
+        \item Track train/val/test sets separately
+        \item Ensures consistent evaluation
+    \end{itemize}
+    
+    \item \textbf{Version Preprocessing Steps}:
+    \begin{itemize}
+        \item Track both raw and processed data
+        \item Enables reproducing preprocessing
+    \end{itemize}
+    
+    \item \textbf{Use Meaningful Versions}:
+    \begin{itemize}
+        \item Tag important versions: \texttt{git tag v1.0-baseline}
+        \item Document what changed between versions
+    \end{itemize}
+    
+    \item \textbf{Regular Cleanup}:
+    \begin{itemize}
+        \item Periodically run \texttt{dvc gc}
+        \item Archive old experiments
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Security Considerations}
+
+\begin{warningbox}
+\textbf{Never Commit Credentials}:
+\begin{itemize}[leftmargin=*]
+    \item Don't put API keys in code or configs
+    \item Use environment variables for secrets
+    \item Add credential files to .gitignore
+    \item Use separate configs for dev/prod
+\end{itemize}
+\end{warningbox}
+
+\begin{examplebox}{Secure Credential Management}
+\begin{lstlisting}[language=Python]
+import os
+
+# Good: Use environment variables
+AWS_KEY = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET = os.getenv('AWS_SECRET_ACCESS_KEY')
+
+# Bad: Hardcoded credentials
+# AWS_KEY = "AKIAIOSFODNN7EXAMPLE"  # DON'T DO THIS!
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Documentation}
+
+Maintain comprehensive documentation:
+
+\begin{examplebox}{Essential Documentation}
+\textbf{README.md} should include:
+\begin{itemize}[leftmargin=*]
+    \item Project overview and goals
+    \item Setup instructions (Git + DVC)
+    \item Remote storage configuration
+    \item How to reproduce experiments
+    \item Data sources and descriptions
+    \item Pipeline overview
+    \item Contact information
+\end{itemize}
+\end{examplebox}
+
+\newpage
+
+% ========================
+% SECTION 13: CASE STUDIES
+% ========================
+\section{Real-World Case Studies}
+
+\subsection{Case Study 1: Image Classification Project}
+
+\begin{examplebox}{Scenario}
+\textbf{Project}: Medical image classification for disease detection
+
+\textbf{Challenges}:
+\begin{itemize}[leftmargin=*]
+    \item 500GB of medical images
+    \item Multiple preprocessing pipelines tested
+    \item 50+ experiments with different architectures
+    \item Team of 5 data scientists
+\end{itemize}
+
+\textbf{DVC Solution}:
+\begin{itemize}[leftmargin=*]
+    \item Images tracked with DVC, stored in AWS S3
+    \item Each preprocessing version tracked separately
+    \item Pipeline defined in dvc.yaml for reproducibility
+    \item Parameters tracked in params.yaml
+    \item Metrics logged for each experiment
+\end{itemize}
+
+\textbf{Results}:
+\begin{itemize}[leftmargin=*]
+    \item Reduced onboarding time from 2 days to 2 hours
+    \item Full experiment reproducibility
+    \item 70\% reduction in storage costs (deduplicated data)
+    \item Easy rollback to best-performing model
+\end{itemize}
+\end{examplebox}
+
+\subsection{Case Study 2: NLP Pipeline}
+
+\begin{examplebox}{Scenario}
+\textbf{Project}: Sentiment analysis for customer reviews
+
+\textbf{Challenges}:
+\begin{itemize}[leftmargin=*]
+    \item Text data updated monthly
+    \item Multiple feature engineering approaches
+    \item Different models (BERT, GPT, custom)
+    \item Need to track embeddings (5GB each)
+\end{itemize}
+
+\textbf{DVC Solution}:
+\begin{itemize}[leftmargin=*]
+    \item Raw text data tracked with DVC
+    \item Preprocessing pipeline automated with dvc repro
+    \item Embeddings versioned and cached
+    \item Model checkpoints tracked
+    \item Automatic retraining when data updated
+\end{itemize}
+
+\textbf{Results}:
+\begin{itemize}[leftmargin=*]
+    \item Automated monthly retraining
+    \item Easy A/B testing of models
+    \item Clear audit trail of changes
+    \item Improved collaboration across teams
+\end{itemize}
+\end{examplebox}
+
+\newpage
+
+% ========================
+% SECTION 14: QUICK REFERENCE
+% ========================
+\section{Quick Reference Guide}
+
+\subsection{Essential Commands Cheat Sheet}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Setup \& Configuration]
+\begin{verbatim}
+dvc init                        # Initialize DVC
+dvc remote add -d name url      # Add remote storage
+dvc remote list                 # List remotes
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title=Data Tracking]
+\begin{verbatim}
+dvc add data/                   # Track data
+dvc push                        # Upload to remote
+dvc pull                        # Download from remote
+dvc status                      # Check status
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=orange!5!white,colframe=orange!75!black,title=Version Control]
+\begin{verbatim}
+git checkout <commit>           # Switch to version
+dvc pull                        # Get corresponding data
+git checkout main               # Return to latest
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=purple!5!white,colframe=purple!75!black,title=Pipelines]
+\begin{verbatim}
+dvc run -n stage ...            # Create stage
+dvc repro                       # Reproduce pipeline
+dvc dag                         # View pipeline
+\end{verbatim}
+\end{tcolorbox}
+
+\subsection{Common Workflows}
+
+\subsubsection{Initial Project Setup}
+
+\begin{lstlisting}[style=bashstyle]
+# 1. Initialize
+git init
+dvc init
+
+# 2. Configure storage
+dvc remote add -d storage s3://bucket/path
+
+# 3. Track data
+dvc add data/
+
+# 4. Commit
+git add .
+git commit -m "Initial setup"
+dvc push
+git push
+\end{lstlisting}
+
+\subsubsection{Daily Development}
+
+\begin{lstlisting}[style=bashstyle]
+# 1. Start work
+git pull
+dvc pull
+
+# 2. Make changes
+python train.py
+
+# 3. Track changes
+dvc add models/
+dvc push
+
+# 4. Commit
+git add .
+git commit -m "Updated model"
+git push
+\end{lstlisting}
+
+\subsubsection{Experiment Workflow}
+
+\begin{lstlisting}[style=bashstyle]
+# 1. Create branch
+git checkout -b experiment-1
+
+# 2. Modify parameters
+vim params.yaml
+
+# 3. Run experiment
+dvc repro
+
+# 4. Version results
+dvc add models/ metrics/
+dvc push
+
+# 5. Commit
+git add .
+git commit -m "Experiment: increased learning rate"
+git push
+\end{lstlisting}
+
+\subsection{Troubleshooting Checklist}
+
+\begin{center}
+\begin{tabular}{|p{0.5\textwidth}|p{0.4\textwidth}|}
+\hline
+\textbf{Issue} & \textbf{Solution} \\
+\hline
+Can't push data & Check \texttt{dvc remote list} and credentials \\
+\hline
+Data not pulling & Run \texttt{dvc status -c} to check remote \\
+\hline
+Cache too large & Run \texttt{dvc gc --workspace} \\
+\hline
+Slow operations & Use \texttt{-j} flag for parallel jobs \\
+\hline
+Git tracking data & Add to .gitignore, track with DVC \\
+\hline
+Corrupted cache & Delete cache, run \texttt{dvc pull} \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+% ========================
+% SECTION 15: CONCLUSION
+% ========================
+\section{Conclusion}
+
+\subsection{Key Takeaways}
+
+DVC is an essential tool for modern machine learning workflows, providing:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Data Versioning}: Track large datasets efficiently
+    \item \textbf{Reproducibility}: Reproduce any experiment with exact data
+    \item \textbf{Collaboration}: Team can work on same project seamlessly
+    \item \textbf{Pipeline Automation}: Automate ML workflows
+    \item \textbf{Storage Flexibility}: Support for various cloud providers
+    \item \textbf{Git Integration}: Works alongside existing Git workflow
+\end{enumerate}
+
+\subsection{When to Use DVC}
+
+\textbf{Use DVC when you need:}
+\begin{itemize}[leftmargin=*]
+    \item Version control for large datasets
+    \item Track ML experiments systematically
+    \item Reproduce results reliably
+    \item Collaborate on ML projects
+    \item Automate ML pipelines
+    \item Manage model files efficiently
+\end{itemize}
+
+\textbf{DVC might be overkill if:}
+\begin{itemize}[leftmargin=*]
+    \item Working with small datasets ($<$ 100MB)
+    \item Single-person, one-time analysis
+    \item No need for reproducibility
+    \item Simple data that fits in Git
+\end{itemize}
+
+\subsection{The DVC Advantage}
+
+\begin{infobox}{Why DVC Matters}
+DVC bridges the gap between traditional software engineering (Git) and modern machine learning workflows. It extends version control to data and models, making ML projects:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Reproducible}: Anyone can reproduce any experiment
+    \item \textbf{Collaborative}: Teams work together effectively
+    \item \textbf{Auditable}: Complete history of all changes
+    \item \textbf{Efficient}: Smart caching and storage optimization
+    \item \textbf{Scalable}: Handles projects from MB to TB
+\end{itemize}
+\end{infobox}
+
+\subsection{Next Steps}
+
+To continue your DVC journey:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Practice}: Set up DVC in a personal project
+    \item \textbf{Experiment}: Try different storage backends
+    \item \textbf{Pipelines}: Create automated ML pipelines
+    \item \textbf{Integrate}: Combine with MLflow, Jupyter, CI/CD
+    \item \textbf{Contribute}: Join the DVC community
+\end{enumerate}
+
+\subsection{Additional Resources}
+
+\begin{itemize}[leftmargin=*]
+    \item Official Documentation: \url{https://dvc.org/doc}
+    \item DVC GitHub Repository: \url{https://github.com/iterative/dvc}
+    \item DVC Community: \url{https://discord.com/invite/dvwXA2N}
+    \item DVC Blog: \url{https://dvc.org/blog}
+    \item Tutorials: \url{https://dvc.org/doc/start}
+    \item Use Cases: \url{https://dvc.org/doc/use-cases}
+\end{itemize}
+
+\subsection{Final Thoughts}
+
+DVC represents a paradigm shift in how we approach machine learning project management. By treating data as a first-class citizen alongside code, DVC enables the same level of rigor and best practices in ML that software engineering has enjoyed for decades.
+
+\begin{notebox}
+\textbf{Remember the Temple Analogy}:
+
+Just as the temple token system ensures your belongings stay together, DVC ensures your data and code stay in sync across all versions and team members. This simple but powerful concept makes ML projects more reliable, reproducible, and collaborative.
+\end{notebox}
+
+\vspace{2em}
+\hrule
+\vspace{0.5em}
+\begin{center}
+\textit{End of DVC Complete Reference Guide}
+
+\vspace{1em}
+
+\textit{"In God we trust. All others must bring data."}\\
+\textit{— W. Edwards Deming}
+
+\vspace{1em}
+
+\textit{With DVC, bring versioned data!}
+\end{center}
+
+\end{document}

@@ -1,0 +1,122 @@
+\contentsline {section}{\numberline {1}Introduction to Git}{4}{section.1}%
+\contentsline {subsection}{\numberline {1.1}What is Git?}{4}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Key Features of Git}{4}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Why Use Git?}{4}{subsection.1.3}%
+\contentsline {subsubsection}{\numberline {1.3.1}Bug Fixing and Code Versioning}{4}{subsubsection.1.3.1}%
+\contentsline {subsubsection}{\numberline {1.3.2}Collaboration}{4}{subsubsection.1.3.2}%
+\contentsline {subsubsection}{\numberline {1.3.3}Non-Linear Development}{5}{subsubsection.1.3.3}%
+\contentsline {section}{\numberline {2}Core Git Concepts}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Distributed Version Control System (DVCS)}{6}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Repository}{6}{subsection.2.2}%
+\contentsline {subsection}{\numberline {2.3}Commit}{6}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Branch}{6}{subsection.2.4}%
+\contentsline {subsection}{\numberline {2.5}Working Directory}{7}{subsection.2.5}%
+\contentsline {subsection}{\numberline {2.6}Staging Area (Index)}{7}{subsection.2.6}%
+\contentsline {subsection}{\numberline {2.7}Merge}{7}{subsection.2.7}%
+\contentsline {subsection}{\numberline {2.8}Clone}{7}{subsection.2.8}%
+\contentsline {section}{\numberline {3}Git Framework and Workflow}{8}{section.3}%
+\contentsline {subsection}{\numberline {3.1}The Four-Stage Architecture}{8}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Typical Workflow Example}{8}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Git Configuration and Setup}{9}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Initial Configuration}{9}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Setting Username}{9}{subsubsection.4.1.1}%
+\contentsline {subsubsection}{\numberline {4.1.2}Setting Email}{9}{subsubsection.4.1.2}%
+\contentsline {subsubsection}{\numberline {4.1.3}Verifying Configuration}{9}{subsubsection.4.1.3}%
+\contentsline {section}{\numberline {5}Essential Git Commands}{10}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Repository Initialization}{10}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {5.1.1}\texttt {git init}}{10}{subsubsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.2}Status and Tracking}{10}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}\texttt {git status}}{10}{subsubsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.3}Staging Files}{10}{subsection.5.3}%
+\contentsline {subsubsection}{\numberline {5.3.1}\texttt {git add .}}{10}{subsubsection.5.3.1}%
+\contentsline {subsubsection}{\numberline {5.3.2}\texttt {git add <file\_name>}}{10}{subsubsection.5.3.2}%
+\contentsline {subsection}{\numberline {5.4}Committing Changes}{10}{subsection.5.4}%
+\contentsline {subsubsection}{\numberline {5.4.1}\texttt {git commit -m "<message>"}}{10}{subsubsection.5.4.1}%
+\contentsline {subsection}{\numberline {5.5}Unstaging Files}{11}{subsection.5.5}%
+\contentsline {subsubsection}{\numberline {5.5.1}\texttt {git restore --staged <file\_name>}}{11}{subsubsection.5.5.1}%
+\contentsline {subsection}{\numberline {5.6}The .gitignore File}{11}{subsection.5.6}%
+\contentsline {section}{\numberline {6}Viewing and Analyzing History}{12}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Basic Log Commands}{12}{subsection.6.1}%
+\contentsline {subsubsection}{\numberline {6.1.1}\texttt {git log}}{12}{subsubsection.6.1.1}%
+\contentsline {subsubsection}{\numberline {6.1.2}\texttt {git log --oneline}}{12}{subsubsection.6.1.2}%
+\contentsline {subsubsection}{\numberline {6.1.3}\texttt {git log --stat}}{12}{subsubsection.6.1.3}%
+\contentsline {subsubsection}{\numberline {6.1.4}\texttt {git log -p}}{12}{subsubsection.6.1.4}%
+\contentsline {subsection}{\numberline {6.2}Branch History}{12}{subsection.6.2}%
+\contentsline {subsubsection}{\numberline {6.2.1}\texttt {git log --oneline --all}}{12}{subsubsection.6.2.1}%
+\contentsline {subsubsection}{\numberline {6.2.2}\texttt {git log --oneline --all --graph}}{13}{subsubsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.3}Viewing Specific Commits}{13}{subsection.6.3}%
+\contentsline {subsubsection}{\numberline {6.3.1}\texttt {git show <sha\_id>}}{13}{subsubsection.6.3.1}%
+\contentsline {subsection}{\numberline {6.4}Comparing Changes}{13}{subsection.6.4}%
+\contentsline {subsubsection}{\numberline {6.4.1}\texttt {git diff}}{13}{subsubsection.6.4.1}%
+\contentsline {section}{\numberline {7}Branching and Navigation}{14}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Understanding Branches}{14}{subsection.7.1}%
+\contentsline {subsection}{\numberline {7.2}Branch Commands}{14}{subsection.7.2}%
+\contentsline {subsubsection}{\numberline {7.2.1}\texttt {git branch}}{14}{subsubsection.7.2.1}%
+\contentsline {subsubsection}{\numberline {7.2.2}\texttt {git branch <name>}}{14}{subsubsection.7.2.2}%
+\contentsline {subsubsection}{\numberline {7.2.3}\texttt {git branch <name> <sha\_id>}}{14}{subsubsection.7.2.3}%
+\contentsline {subsection}{\numberline {7.3}Switching Branches}{14}{subsection.7.3}%
+\contentsline {subsubsection}{\numberline {7.3.1}\texttt {git checkout <branch>}}{14}{subsubsection.7.3.1}%
+\contentsline {subsubsection}{\numberline {7.3.2}\texttt {git checkout <sha\_id>}}{15}{subsubsection.7.3.2}%
+\contentsline {subsubsection}{\numberline {7.3.3}\texttt {git checkout main/master}}{15}{subsubsection.7.3.3}%
+\contentsline {subsection}{\numberline {7.4}Branch Switching Behavior}{15}{subsection.7.4}%
+\contentsline {subsection}{\numberline {7.5}Deleting Branches}{15}{subsection.7.5}%
+\contentsline {subsubsection}{\numberline {7.5.1}\texttt {git branch -d <branch>}}{15}{subsubsection.7.5.1}%
+\contentsline {subsubsection}{\numberline {7.5.2}\texttt {git branch -D <branch>}}{15}{subsubsection.7.5.2}%
+\contentsline {section}{\numberline {8}Merging Branches}{16}{section.8}%
+\contentsline {subsection}{\numberline {8.1}The Merge Process}{16}{subsection.8.1}%
+\contentsline {subsubsection}{\numberline {8.1.1}\texttt {git merge <branch>}}{16}{subsubsection.8.1.1}%
+\contentsline {subsection}{\numberline {8.2}Types of Merging}{16}{subsection.8.2}%
+\contentsline {subsubsection}{\numberline {8.2.1}Fast-Forward Merge}{16}{subsubsection.8.2.1}%
+\contentsline {subsubsection}{\numberline {8.2.2}Complex Merge (Three-Way Merge)}{16}{subsubsection.8.2.2}%
+\contentsline {subsection}{\numberline {8.3}Branching Strategies}{17}{subsection.8.3}%
+\contentsline {section}{\numberline {9}Working with Remote Repositories}{18}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Connecting to Remote}{18}{subsection.9.1}%
+\contentsline {subsubsection}{\numberline {9.1.1}\texttt {git remote add origin <url>}}{18}{subsubsection.9.1.1}%
+\contentsline {subsubsection}{\numberline {9.1.2}\texttt {git remote -v}}{18}{subsubsection.9.1.2}%
+\contentsline {subsubsection}{\numberline {9.1.3}\texttt {git remote rename <old> <new>}}{18}{subsubsection.9.1.3}%
+\contentsline {subsection}{\numberline {9.2}Pushing Changes}{18}{subsection.9.2}%
+\contentsline {subsubsection}{\numberline {9.2.1}\texttt {git push origin <branch>}}{18}{subsubsection.9.2.1}%
+\contentsline {subsubsection}{\numberline {9.2.2}\texttt {git push origin <branch> --force}}{18}{subsubsection.9.2.2}%
+\contentsline {subsection}{\numberline {9.3}Fetching and Pulling}{19}{subsection.9.3}%
+\contentsline {subsubsection}{\numberline {9.3.1}\texttt {git clone <url>}}{19}{subsubsection.9.3.1}%
+\contentsline {subsubsection}{\numberline {9.3.2}\texttt {git fetch}}{19}{subsubsection.9.3.2}%
+\contentsline {subsubsection}{\numberline {9.3.3}\texttt {git pull origin <branch>}}{19}{subsubsection.9.3.3}%
+\contentsline {subsection}{\numberline {9.4}Understanding Origin and Upstream}{19}{subsection.9.4}%
+\contentsline {section}{\numberline {10}Advanced Operations}{20}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Reverting Changes}{20}{subsection.10.1}%
+\contentsline {subsubsection}{\numberline {10.1.1}\texttt {git revert <sha\_id>}}{20}{subsubsection.10.1.1}%
+\contentsline {subsection}{\numberline {10.2}Viewing Differences with Remote}{20}{subsection.10.2}%
+\contentsline {subsubsection}{\numberline {10.2.1}\texttt {git log upstream/main --oneline}}{20}{subsubsection.10.2.1}%
+\contentsline {subsubsection}{\numberline {10.2.2}\texttt {git diff upstream/main}}{20}{subsubsection.10.2.2}%
+\contentsline {subsection}{\numberline {10.3}Syncing with Upstream}{20}{subsection.10.3}%
+\contentsline {subsubsection}{\numberline {10.3.1}\texttt {git pull upstream main}}{20}{subsubsection.10.3.1}%
+\contentsline {subsubsection}{\numberline {10.3.2}\texttt {git remote add upstream <url>}}{20}{subsubsection.10.3.2}%
+\contentsline {section}{\numberline {11}Git Hosting Platforms}{21}{section.11}%
+\contentsline {subsection}{\numberline {11.1}GitHub}{21}{subsection.11.1}%
+\contentsline {subsection}{\numberline {11.2}GitLab}{21}{subsection.11.2}%
+\contentsline {subsection}{\numberline {11.3}SSH Protocol}{21}{subsection.11.3}%
+\contentsline {section}{\numberline {12}Fork and Pull Request Workflow}{22}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Understanding Forks}{22}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Clone vs Fork}{22}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Pull Requests}{22}{subsection.12.3}%
+\contentsline {subsection}{\numberline {12.4}Git Fork Workflow}{22}{subsection.12.4}%
+\contentsline {subsection}{\numberline {12.5}Keeping Fork Updated}{23}{subsection.12.5}%
+\contentsline {section}{\numberline {13}Terminal and Directory Commands}{24}{section.13}%
+\contentsline {subsection}{\numberline {13.1}Basic Directory Operations}{24}{subsection.13.1}%
+\contentsline {subsubsection}{\numberline {13.1.1}\texttt {mkdir}}{24}{subsubsection.13.1.1}%
+\contentsline {subsubsection}{\numberline {13.1.2}\texttt {cd}}{24}{subsubsection.13.1.2}%
+\contentsline {subsection}{\numberline {13.2}Terminal Control Commands}{24}{subsection.13.2}%
+\contentsline {subsubsection}{\numberline {13.2.1}\texttt {cls} (Command Prompt)}{24}{subsubsection.13.2.1}%
+\contentsline {subsubsection}{\numberline {13.2.2}\texttt {clear} (PowerShell/Bash)}{24}{subsubsection.13.2.2}%
+\contentsline {subsubsection}{\numberline {13.2.3}\texttt {q}}{24}{subsubsection.13.2.3}%
+\contentsline {section}{\numberline {14}Comprehensive Glossary}{25}{section.14}%
+\contentsline {section}{\numberline {15}Quick Reference Guide}{27}{section.15}%
+\contentsline {subsection}{\numberline {15.1}Essential Commands Summary}{27}{subsection.15.1}%
+\contentsline {subsection}{\numberline {15.2}Common Workflows}{28}{subsection.15.2}%
+\contentsline {subsubsection}{\numberline {15.2.1}Starting New Project}{28}{subsubsection.15.2.1}%
+\contentsline {subsubsection}{\numberline {15.2.2}Contributing to Existing Project}{28}{subsubsection.15.2.2}%
+\contentsline {subsubsection}{\numberline {15.2.3}Keeping Fork Updated}{28}{subsubsection.15.2.3}%
+\contentsline {subsection}{\numberline {15.3}Best Practices}{28}{subsection.15.3}%
+\contentsline {subsection}{\numberline {15.4}Commit Message Guidelines}{29}{subsection.15.4}%
+\contentsline {section}{\numberline {16}Conclusion}{30}{section.16}%
+\contentsline {subsection}{\numberline {16.1}Additional Resources}{30}{subsection.16.1}%

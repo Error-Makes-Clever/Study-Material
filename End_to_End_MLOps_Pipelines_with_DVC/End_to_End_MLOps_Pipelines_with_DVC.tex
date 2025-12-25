@@ -1,0 +1,4958 @@
+\documentclass[11pt,a4paper]{article}
+\setlength{\headheight}{14pt}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
+
+\usepackage[utf8]{inputenc}
+\DeclareUnicodeCharacter{2502}{|}
+\DeclareUnicodeCharacter{251C}{+}
+\DeclareUnicodeCharacter{2500}{-}
+\DeclareUnicodeCharacter{2514}{+}
+
+% Header and Footer
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{MLOps Pipeline Complete Guide}
+\lhead{DVC Pipeline Automation}
+\cfoot{\thepage}
+
+% Title formatting
+\titleformat{\section}{\Large\bfseries\color{blue!70!black}}{\thesection}{1em}{}[\titlerule]
+\titleformat{\subsection}{\large\bfseries\color{blue!50!black}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\bfseries\color{blue!40!black}}{\thesubsubsection}{1em}{}
+
+% Code styling
+\definecolor{codebg}{gray}{0.95}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{pythonstyle}{
+    language=Python,
+    backgroundcolor=\color{codebg},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    frame=single,
+    xleftmargin=2em,
+    framexleftmargin=1.5em
+}
+
+\lstdefinestyle{bashstyle}{
+    language=bash,
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    xleftmargin=2em,
+    framexleftmargin=1.5em
+}
+
+\lstdefinestyle{yamlstyle}{
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    xleftmargin=2em,
+    framexleftmargin=1.5em
+}
+
+\lstset{style=pythonstyle}
+
+% Command box
+\newtcolorbox{cmdbox}{
+    colback=codebg,
+    colframe=black!50,
+    boxrule=0.5pt,
+    left=2mm,
+    right=2mm,
+    top=1mm,
+    bottom=1mm,
+    breakable,
+    enhanced jigsaw
+}
+
+% Example box
+\newtcolorbox{examplebox}[1]{
+    colback=green!5!white,
+    colframe=green!75!black,
+    title=#1,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced jigsaw
+}
+
+% Note box
+\newtcolorbox{notebox}{
+    colback=yellow!10!white,
+    colframe=orange!75!black,
+    title=Important Note,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced jigsaw
+}
+
+% Warning box
+\newtcolorbox{warningbox}{
+    colback=red!5!white,
+    colframe=red!75!black,
+    title=Warning,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced jigsaw
+}
+
+% Info box
+\newtcolorbox{infobox}[1]{
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    title=#1,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced jigsaw
+}
+
+\begin{document}
+
+% Title Page
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    {\Huge\bfseries Building End-to-End\\[0.5cm] MLOps Pipelines with DVC\par}
+    \vspace{1cm}
+    {\Large Complete MLOps Implementation Guide\par}
+    \vspace{2cm}
+    {\large A Comprehensive Guide to Building Production-Ready\\
+    ML Pipelines with DVC Automation, Experiment Tracking,\\
+    and AWS Integration\par}
+    \vspace{3cm}
+    {\Large\bfseries Sujil S\par}
+    \vspace{0.5cm}
+    {\large\texttt{sujil9480@gmail.com}\par}
+    \vfill
+    {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ========================
+% SECTION 1: INTRODUCTION
+% ========================
+\section{Introduction to MLOps Pipelines}
+
+\subsection{What is MLOps?}
+
+\textbf{MLOps (Machine Learning Operations)} is a set of practices that combines Machine Learning, DevOps, and Data Engineering to deploy and maintain ML systems in production reliably and efficiently.
+
+\begin{infobox}{Core MLOps Principles}
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Automation}: Automate ML workflows and deployments
+    \item \textbf{Reproducibility}: Ensure experiments can be recreated
+    \item \textbf{Versioning}: Track code, data, and models
+    \item \textbf{Monitoring}: Track model performance in production
+    \item \textbf{Collaboration}: Enable team collaboration on ML projects
+\end{itemize}
+\end{infobox}
+
+\subsection{Course Agenda}
+
+This comprehensive guide covers the following key topics:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{End-to-End ML Pipeline}: Building complete ML workflows with logging and exception handling
+    \item \textbf{DVC Automation}: Automating pipelines using DVC YAML configuration
+    \item \textbf{Parameterization}: Adding configurable parameters for experimentation
+    \item \textbf{Experiment Tracking}: Using DVCLive for tracking experiments
+    \item \textbf{AWS Integration}: Setting up AWS S3 for data versioning
+\end{enumerate}
+
+\subsection{Basic ML Pipeline Components}
+
+A typical machine learning pipeline consists of the following stages:
+
+\begin{center}
+\begin{tikzpicture}[
+    node distance=1.5cm,
+    box/.style={rectangle, rounded corners, draw=blue!70, fill=blue!10, thick, minimum width=3cm, minimum height=1cm, align=center},
+    arrow/.style={->, >=stealth, thick, blue}
+]
+
+\node[box] (ingestion) {Data\\Ingestion};
+\node[box, right=of ingestion] (preprocess) {Pre\\Processing};
+\node[box, right=of preprocess] (feature) {Feature\\Engineering};
+\node[box, below=of feature] (training) {Model\\Training};
+\node[box, left=of training] (evaluation) {Model\\Evaluation};
+
+\draw[arrow] (ingestion) -- (preprocess);
+\draw[arrow] (preprocess) -- (feature);
+\draw[arrow] (feature) -- (training);
+\draw[arrow] (training) -- (evaluation);
+
+\end{tikzpicture}
+\end{center}
+
+\subsubsection{Pipeline Stages Explained}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Data Ingestion}: Collecting and loading raw data from various sources
+    \item \textbf{Pre-Processing}: Cleaning, transforming, and preparing data
+    \item \textbf{Feature Engineering}: Creating meaningful features from raw data
+    \item \textbf{Model Training}: Training machine learning models on prepared data
+    \item \textbf{Model Evaluation}: Assessing model performance with metrics
+\end{enumerate}
+
+\subsection{Data Science vs MLOps Practice}
+
+\begin{center}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Data Science Focus} & \textbf{MLOps Focus} \\
+\hline
+Pre-processing techniques & Coding best practices \\
+\hline
+Feature engineering methods & Robust pipeline architecture \\
+\hline
+Model hyperparameter tuning & Experiment tracking \\
+\hline
+Grid search and optimization & Automation with YAML \\
+\hline
+Algorithm selection & AWS/Cloud integration \\
+\hline
+Model performance & Reproducibility and versioning \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{notebox}
+MLOps extends data science by adding engineering rigor: version control, automation, testing, monitoring, and deployment practices that make ML systems production-ready.
+\end{notebox}
+
+\newpage
+
+% ========================
+% SECTION 2: PROJECT SETUP
+% ========================
+\section{Project Setup and Structure}
+
+\subsection{Initial Repository Setup}
+
+\subsubsection{Step 1: Create GitHub Repository}
+
+\begin{cmdbox}
+\begin{verbatim}
+# On GitHub: Create new repository named "MLOPS-DVC-Project"
+# Clone to local machine
+git clone https://github.com/username/MLOPS-DVC-Project.git
+cd MLOPS-DVC-Project
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Step 2: Project Directory Structure}
+
+Create the following directory structure:
+
+\begin{cmdbox}
+\begin{verbatim}
+MLOPS-DVC-Project/
+  Experiments/
+    spam.csv
+    mynotebook.ipynb
+  src/
+    Data_Ingestion.py
+    Data_Pre_Processing.py
+    Feature_Engineering.py
+    Model_Building.py
+    Model_Evaluation.py
+  data/
+    raw/
+    interim/
+    processed/
+  models/
+  reports/
+  logs/
+  .gitignore
+  dvc.yaml
+  params.yaml
+  README.md
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Initial Experiment Setup}
+
+The \texttt{Experiments/} folder contains the initial exploration work:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{spam.csv}: Raw dataset for spam classification
+    \item \textbf{mynotebook.ipynb}: Jupyter notebook with exploratory data analysis
+\end{itemize}
+
+\begin{infobox}{Purpose of Experiments Folder}
+The experiments folder serves as a sandbox for:
+\begin{itemize}[leftmargin=*]
+    \item Exploratory data analysis (EDA)
+    \item Trying different preprocessing techniques
+    \item Testing various model architectures
+    \item Validating assumptions before production code
+\end{itemize}
+\end{infobox}
+
+\subsection{Creating the Source Directory}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Create src directory
+mkdir src
+cd src
+\end{verbatim}
+\end{cmdbox}
+
+The \texttt{src/} directory will contain all production-ready Python scripts:
+
+\begin{itemize}[leftmargin=*]
+    \item Each component as a separate module
+    \item Proper logging configuration
+    \item Exception handling
+    \item Modular and reusable code
+\end{itemize}
+
+\subsection{Configuring .gitignore}
+
+Create a \texttt{.gitignore} file to exclude unnecessary files:
+
+\begin{examplebox}{Initial .gitignore Configuration}
+\begin{verbatim}
+# Data directories
+data/
+models/
+reports/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+
+# Logs
+logs/
+*.log
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# DVC
+/dvc.lock
+\end{verbatim}
+\end{examplebox}
+
+\begin{warningbox}
+\textbf{Important}: Always add \texttt{data/}, \texttt{models/}, and \texttt{reports/} to .gitignore. DVC will handle versioning these large files, not Git.
+\end{warningbox}
+
+\newpage
+
+% ========================
+% SECTION 3: EXPLORATORY PHASE
+% ========================
+\section{Exploratory Data Analysis Phase}
+
+\subsection{Understanding the Dataset}
+
+The spam classification dataset contains SMS messages labeled as spam or ham (not spam).
+
+\begin{examplebox}{Dataset Structure}
+\textbf{Columns}:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{v1}: Label (spam/ham)
+    \item \texttt{v2}: SMS text message
+    \item \texttt{Unnamed: 2, 3, 4}: Empty columns to be dropped
+\end{itemize}
+\end{examplebox}
+
+\subsection{Notebook Workflow Overview}
+
+The \texttt{mynotebook.ipynb} follows this workflow:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Import Libraries}: NumPy, Pandas, Matplotlib, NLTK
+    \item \textbf{Load Data}: Read CSV file
+    \item \textbf{Data Cleaning}: Drop unnecessary columns, rename columns
+    \item \textbf{Preprocessing}: Encode labels, remove duplicates
+    \item \textbf{Feature Engineering}: Text transformation, TF-IDF
+    \item \textbf{Model Training}: Train multiple classifiers
+    \item \textbf{Model Evaluation}: Compare accuracy and precision
+\end{enumerate}
+
+\subsection{Key Code Snippets from Notebook}
+
+\subsubsection{Basic Imports and Setup}
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+from wordcloud import WordCloud
+import nltk
+from nltk.corpus import stopwords
+
+# Download NLTK data
+nltk.download('stopwords')
+nltk.download('punkt')
+\end{lstlisting}
+
+\subsubsection{Data Loading and Cleaning}
+
+\begin{lstlisting}[language=Python]
+# Load data
+df = pd.read_csv('spam.csv')
+
+# Drop unnecessary columns
+df.drop(columns=['Unnamed: 2', 'Unnamed: 3', 'Unnamed: 4'], 
+        inplace=True)
+
+# Rename columns
+df.rename(columns={'v1': 'target', 'v2': 'text'}, inplace=True)
+
+# Check duplicates
+print(f"Duplicates: {df.duplicated().sum()}")
+df = df.drop_duplicates(keep='first')
+\end{lstlisting}
+
+\subsubsection{Text Transformation Function}
+
+\begin{lstlisting}[language=Python]
+from nltk.stem.porter import PorterStemmer
+import string
+
+ps = PorterStemmer()
+
+def transform_text(text):
+    # Lowercase transformation
+    text = text.lower()
+    
+    # Tokenization
+    text = nltk.word_tokenize(text)
+    
+    # Remove special characters
+    text = [word for word in text if word.isalnum()]
+    
+    # Remove stopwords and punctuation
+    text = [word for word in text 
+            if word not in stopwords.words('english') 
+            and word not in string.punctuation]
+    
+    # Stemming
+    text = [ps.stem(word) for word in text]
+    
+    return " ".join(text)
+
+# Apply transformation
+df['transformed_text'] = df['text'].apply(transform_text)
+\end{lstlisting}
+
+\subsubsection{Feature Engineering with TF-IDF}
+
+\begin{lstlisting}[language=Python]
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+# Create TF-IDF features
+tfidf = TfidfVectorizer(max_features=500)
+X = tfidf.fit_transform(df['transformed_text']).toarray()
+y = df['target'].values
+\end{lstlisting}
+
+\subsubsection{Train-Test Split}
+
+\begin{lstlisting}[language=Python]
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.20, random_state=2
+)
+\end{lstlisting}
+
+\subsection{Model Training and Comparison}
+
+\subsubsection{Multiple Classifier Setup}
+
+\begin{lstlisting}[language=Python]
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import (RandomForestClassifier, 
+                              AdaBoostClassifier,
+                              BaggingClassifier,
+                              ExtraTreesClassifier,
+                              GradientBoostingClassifier)
+from xgboost import XGBClassifier
+
+# Initialize classifiers
+clfs = {
+    'SVC': SVC(kernel="sigmoid", gamma=1.0),
+    'KNN': KNeighborsClassifier(),
+    'NB': MultinomialNB(),
+    'DT': DecisionTreeClassifier(max_depth=5),
+    'LR': LogisticRegression(solver='liblinear', penalty='l1'),
+    'RF': RandomForestClassifier(n_estimators=50, random_state=2),
+    'Adaboost': AdaBoostClassifier(n_estimators=50, random_state=2),
+    'Bgc': BaggingClassifier(n_estimators=50, random_state=2),
+    'ETC': ExtraTreesClassifier(n_estimators=50, random_state=2),
+    'GBDT': GradientBoostingClassifier(n_estimators=50, 
+                                        random_state=2),
+    'xgb': XGBClassifier(n_estimators=50, random_state=2)
+}
+\end{lstlisting}
+
+\subsubsection{Model Evaluation Function}
+
+\begin{lstlisting}[language=Python]
+from sklearn.metrics import accuracy_score, precision_score
+
+def train_classifier(clf, X_train, y_train, X_test, y_test):
+    clf.fit(X_train, y_train)
+    y_pred = clf.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    precision = precision_score(y_test, y_pred)
+    return accuracy, precision
+
+# Train and evaluate all classifiers
+for name, clf in clfs.items():
+    accuracy, precision = train_classifier(
+        clf, X_train, y_train, X_test, y_test
+    )
+    print(f"\nFor: {name}")
+    print(f"Accuracy: {accuracy:.4f}")
+    print(f"Precision: {precision:.4f}")
+\end{lstlisting}
+
+\begin{notebox}
+The notebook phase is exploratory. Once you identify the best approaches, refactor the code into production-ready modules in the \texttt{src/} directory with proper logging, error handling, and modularity.
+\end{notebox}
+
+\newpage
+
+% ========================
+% SECTION 4: DATA INGESTION
+% ========================
+\section{Data Ingestion Module}
+
+\subsection{Overview}
+
+The Data Ingestion module is responsible for:
+\begin{itemize}[leftmargin=*]
+    \item Loading raw data from source (URL, file, database)
+    \item Basic preprocessing (dropping columns, renaming)
+    \item Splitting data into train and test sets
+    \item Saving processed data to designated directories
+\end{itemize}
+
+\subsection{Complete Implementation}
+
+\begin{examplebox}{src/Data\_Ingestion.py}
+\begin{lstlisting}[language=Python]
+import pandas as pd
+import os
+from sklearn.model_selection import train_test_split
+import logging
+
+# Ensure the "logs" directory exists
+log_dir = 'logs'
+os.makedirs(log_dir, exist_ok=True)
+
+# Logging configuration
+logger = logging.getLogger('Data_Ingestion')
+logger.setLevel('DEBUG')
+
+console_handler = logging.StreamHandler()
+console_handler.setLevel('DEBUG')
+
+log_file_path = os.path.join(log_dir, 'Data_Ingestion.log')
+file_handler = logging.FileHandler(log_file_path)
+file_handler.setLevel('DEBUG')
+
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+console_handler.setFormatter(formatter)
+file_handler.setFormatter(formatter)
+
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
+
+
+def load_data(data_url: str) -> pd.DataFrame:
+    """Load data from a CSV file."""
+    try:
+        df = pd.read_csv(data_url)
+        logger.debug('Data loaded from %s', data_url)
+        return df
+    except pd.errors.ParserError as e:
+        logger.error('Failed to parse the CSV file: %s', e)
+        raise
+    except Exception as e:
+        logger.error('Unexpected error while loading data: %s', e)
+        raise
+
+
+def preprocess_data(df: pd.DataFrame) -> pd.DataFrame:
+    """Preprocess the data."""
+    try:
+        df.drop(columns=['Unnamed: 2', 'Unnamed: 3', 'Unnamed: 4'], 
+                inplace=True)
+        df.rename(columns={'v1': 'target', 'v2': 'text'}, 
+                  inplace=True)
+        logger.debug('Data preprocessing completed')
+        return df
+    except KeyError as e:
+        logger.error('Missing column in dataframe: %s', e)
+        raise
+    except Exception as e:
+        logger.error('Unexpected error during preprocessing: %s', e)
+        raise
+
+
+def save_data(train_data: pd.DataFrame, 
+              test_data: pd.DataFrame, 
+              data_path: str) -> None:
+    """Save train and test datasets."""
+    try:
+        raw_data_path = os.path.join(data_path, 'raw')
+        os.makedirs(raw_data_path, exist_ok=True)
+        
+        train_data.to_csv(
+            os.path.join(raw_data_path, "train.csv"), 
+            index=False
+        )
+        test_data.to_csv(
+            os.path.join(raw_data_path, "test.csv"), 
+            index=False
+        )
+        logger.debug('Train and test data saved to %s', 
+                     raw_data_path)
+    except Exception as e:
+        logger.error('Error while saving data: %s', e)
+        raise
+
+
+def main():
+    try:
+        test_size = 0.2
+        data_url = 'https://raw.githubusercontent.com/...'
+        
+        df = load_data(data_url=data_url)
+        final_df = preprocess_data(df)
+        
+        train_data, test_data = train_test_split(
+            final_df, test_size=test_size, random_state=2
+        )
+        
+        save_data(train_data, test_data, data_path='./data')
+    except Exception as e:
+        logger.error('Failed to complete data ingestion: %s', e)
+        print(f"Error: {e}")
+
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Key Components Explained}
+
+\subsubsection{Logging Setup}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Logger Name}: \texttt{Data\_Ingestion}
+    \item \textbf{Level}: \texttt{DEBUG} (captures all messages)
+    \item \textbf{Handlers}: 
+    \begin{itemize}
+        \item Console handler: Outputs to terminal
+        \item File handler: Writes to \texttt{logs/Data\_Ingestion.log}
+    \end{itemize}
+    \item \textbf{Format}: Timestamp, logger name, level, message
+\end{itemize}
+
+\subsubsection{Function Breakdown}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{load\_data()}: 
+    \begin{itemize}
+        \item Loads CSV from URL or file path
+        \item Handles parsing errors
+        \item Logs successful load
+    \end{itemize}
+    
+    \item \textbf{preprocess\_data()}:
+    \begin{itemize}
+        \item Drops unnecessary columns
+        \item Renames columns to meaningful names
+        \item Handles missing column errors
+    \end{itemize}
+    
+    \item \textbf{save\_data()}:
+    \begin{itemize}
+        \item Creates directory structure
+        \item Saves train and test CSVs
+        \item Logs save location
+    \end{itemize}
+    
+    \item \textbf{main()}:
+    \begin{itemize}
+        \item Orchestrates the entire process
+        \item Handles top-level exceptions
+        \item Entry point for script execution
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Running the Module}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Navigate to project root
+cd MLOPS-DVC-Project
+
+# Run data ingestion
+python src/Data_Ingestion.py
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{Expected Output}:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{logs/Data\_Ingestion.log} created
+    \item \texttt{data/raw/train.csv} created
+    \item \texttt{data/raw/test.csv} created
+    \item Console displays debug messages
+\end{itemize}
+
+\begin{notebox}
+Always test each module individually before integrating into the DVC pipeline. This ensures each component works correctly in isolation.
+\end{notebox}
+
+\newpage
+
+% ========================
+% SECTION 5: DATA PREPROCESSING
+% ========================
+\section{Data Pre-Processing Module}
+
+\subsection{Overview}
+
+The Data Pre-Processing module handles:
+\begin{itemize}[leftmargin=*]
+    \item Label encoding (converting text labels to numeric)
+    \item Removing duplicate entries
+    \item Text transformation (lowercasing, tokenization, stemming)
+    \item Removing stopwords and punctuation
+\end{itemize}
+
+\subsection{Complete Implementation}
+
+\begin{examplebox}{src/Data\_Pre\_Processing.py - Part 1}
+\begin{lstlisting}[language=Python]
+import os
+import logging
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
+from nltk.stem.porter import PorterStemmer
+from nltk.corpus import stopwords
+import string
+import nltk
+
+nltk.download('stopwords')
+nltk.download('punkt')
+
+# Ensure the "logs" directory exists
+log_dir = 'logs'
+os.makedirs(log_dir, exist_ok=True)
+
+# Setting up logger
+logger = logging.getLogger('Data_Pre_Processing')
+logger.setLevel('DEBUG')
+
+console_handler = logging.StreamHandler()
+console_handler.setLevel('DEBUG')
+
+log_file_path = os.path.join(log_dir, 'Data_Pre_Processing.log')
+file_handler = logging.FileHandler(log_file_path)
+file_handler.setLevel('DEBUG')
+
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+console_handler.setFormatter(formatter)
+file_handler.setFormatter(formatter)
+
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
+
+
+def transform_text(text):
+    """
+    Transform text: lowercase, tokenize, remove stopwords, 
+    punctuation, and stem.
+    """
+    ps = PorterStemmer()
+    
+    # Convert to lowercase
+    text = text.lower()
+    
+    # Tokenize
+    text = nltk.word_tokenize(text)
+    
+    # Remove non-alphanumeric tokens
+    text = [word for word in text if word.isalnum()]
+    
+    # Remove stopwords and punctuation
+    text = [word for word in text 
+            if word not in stopwords.words('english') 
+            and word not in string.punctuation]
+    
+    # Stem the words
+    text = [ps.stem(word) for word in text]
+    
+    # Join back into string
+    return " ".join(text)
+\end{lstlisting}
+\end{examplebox}
+
+\begin{examplebox}{src/Data\_Pre\_Processing.py - Part 2}
+\begin{lstlisting}[language=Python]
+def preprocess_df(df, text_column='text', 
+                  target_column='target'):
+    """
+    Preprocess DataFrame: encode target, remove duplicates, 
+    transform text.
+    """
+    try:
+        logger.debug('Starting preprocessing for DataFrame')
+        
+        # Encode the target column
+        encoder = LabelEncoder()
+        df[target_column] = encoder.fit_transform(df[target_column])
+        logger.debug('Target column encoded')
+        
+        # Remove duplicate rows
+        df = df.drop_duplicates(keep='first')
+        logger.debug('Duplicates removed')
+        
+        # Apply text transformation
+        df.loc[:, text_column] = df[text_column].apply(
+            transform_text
+        )
+        logger.debug('Text column transformed')
+        
+        return df
+    except KeyError as e:
+        logger.error('Column not found: %s', e)
+        raise
+    except Exception as e:
+        logger.error('Error during text normalization: %s', e)
+        raise
+
+
+def main(text_column='text', target_column='target'):
+    """
+    Main function: load raw data, preprocess, save processed.
+    """
+    try:
+        # Load data from data/raw
+        train_data = pd.read_csv('./data/raw/train.csv')
+        test_data = pd.read_csv('./data/raw/test.csv')
+        logger.debug('Data loaded properly')
+        
+        # Transform the data
+        train_processed = preprocess_df(train_data, 
+                                        text_column, 
+                                        target_column)
+        test_processed = preprocess_df(test_data, 
+                                       text_column, 
+                                       target_column)
+        
+        # Store in data/interim
+        data_path = os.path.join("./data", "interim")
+        os.makedirs(data_path, exist_ok=True)
+        
+        train_processed.to_csv(
+            os.path.join(data_path, "train_processed.csv"), 
+            index=False
+        )
+        test_processed.to_csv(
+            os.path.join(data_path, "test_processed.csv"),
+            index=False
+        )
+        
+        logger.debug('Processed data saved to %s', data_path)
+    except FileNotFoundError as e:
+        logger.error('File not found: %s', e)
+    except pd.errors.EmptyDataError as e:
+        logger.error('No data: %s', e)
+    except Exception as e:
+        logger.error('Failed to complete data transformation: %s', e)
+        print(f"Error: {e}")
+
+
+if __name__ == '__main__':
+    main()
+
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Text Transformation Pipeline}
+
+The \texttt{transform\_text()} function implements a comprehensive NLP preprocessing pipeline:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Lowercasing}: Converts all text to lowercase
+    \begin{itemize}
+        \item "Hello World" → "hello world"
+    \end{itemize}
+    
+    \item \textbf{Tokenization}: Splits text into individual words
+    \begin{itemize}
+        \item "hello world" → ["hello", "world"]
+    \end{itemize}
+    
+    \item \textbf{Alphanumeric Filtering}: Removes special characters
+    \begin{itemize}
+        \item $[$"hello", "world", "!"$]$ → ["hello", "world"]
+    \end{itemize}
+    
+    \item \textbf{Stopword Removal}: Removes common words
+    \begin{itemize}
+        \item $[$"the", "quick", "fox"$]$ → ["quick", "fox"]
+    \end{itemize}
+    
+    \item \textbf{Stemming}: Reduces words to root form
+    \begin{itemize}
+        \item $[$"running", "runs", "ran"$]$ → ["run", "run", "run"]
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Running the Module}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Run data preprocessing
+python src/Data_Pre_Processing.py
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{Expected Output}:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{logs/Data\_Pre\_Processing.log} created
+    \item \texttt{data/interim/train\_processed.csv} created
+    \item \texttt{data/interim/test\_processed.csv} created
+\end{itemize}
+
+\begin{infobox}{Why Interim Directory?}
+The data flow follows this structure:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{data/raw/}: Original, untouched data
+    \item \texttt{data/interim/}: Partially processed data
+    \item \texttt{data/processed/}: Final features ready for modeling
+\end{itemize}
+This separation allows tracking transformations at each stage.
+\end{infobox}
+
+\newpage
+
+% ========================
+% SECTION 6: FEATURE ENGINEERING
+% ========================
+\section{Feature Engineering Module}
+
+\subsection{Overview}
+
+The Feature Engineering module:
+\begin{itemize}[leftmargin=*]
+    \item Applies TF-IDF (Term Frequency-Inverse Document Frequency)
+    \item Converts text data into numerical feature vectors
+    \item Creates fixed-size feature matrices for modeling
+    \item Saves processed features with labels
+\end{itemize}
+
+\subsection{Complete Implementation}
+
+\begin{examplebox}{src/Feature\_Engineering.py}
+\begin{lstlisting}[language=Python]
+import pandas as pd
+import os
+from sklearn.feature_extraction.text import TfidfVectorizer
+import logging
+
+# Ensure the "logs" directory exists
+log_dir = 'logs'
+os.makedirs(log_dir, exist_ok=True)
+
+# Logging configuration
+logger = logging.getLogger('Feature_Engineering')
+logger.setLevel('DEBUG')
+
+console_handler = logging.StreamHandler()
+console_handler.setLevel('DEBUG')
+
+log_file_path = os.path.join(log_dir, 'Feature_Engineering.log')
+file_handler = logging.FileHandler(log_file_path)
+file_handler.setLevel('DEBUG')
+
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+console_handler.setFormatter(formatter)
+file_handler.setFormatter(formatter)
+
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
+
+
+def load_data(file_path: str) -> pd.DataFrame:
+    """Load data from a CSV file."""
+    try:
+        df = pd.read_csv(file_path)
+        df.fillna('', inplace=True)
+        logger.debug('Data loaded and NaNs filled from %s', 
+                     file_path)
+        return df
+    except pd.errors.ParserError as e:
+        logger.error('Failed to parse the CSV file: %s', e)
+        raise
+    except Exception as e:
+        logger.error('Unexpected error while loading data: %s', e)
+        raise
+
+
+def apply_tfidf(train_data: pd.DataFrame, 
+                test_data: pd.DataFrame, 
+                max_features: int) -> tuple:
+    """Apply TF-IDF to the data."""
+    try:
+        vectorizer = TfidfVectorizer(max_features=max_features)
+        
+        X_train = train_data['text'].values
+        y_train = train_data['target'].values
+        X_test = test_data['text'].values
+        y_test = test_data['target'].values
+        
+        X_train_tfidf = vectorizer.fit_transform(X_train)
+        X_test_tfidf = vectorizer.transform(X_test)
+        
+        train_df = pd.DataFrame(X_train_tfidf.toarray())
+        train_df['label'] = y_train
+        
+        test_df = pd.DataFrame(X_test_tfidf.toarray())
+        test_df['label'] = y_test
+        
+        logger.debug('TF-IDF applied and data transformed')
+        return train_df, test_df
+    except Exception as e:
+        logger.error('Error during TF-IDF transformation: %s', e)
+        raise
+
+
+def save_data(df: pd.DataFrame, file_path: str) -> None:
+    """Save the dataframe to a CSV file."""
+    try:
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        df.to_csv(file_path, index=False)
+        logger.debug('Data saved to %s', file_path)
+    except Exception as e:
+        logger.error('Unexpected error while saving data: %s', e)
+        raise
+
+
+def main():
+    try:
+        max_features = 50
+        
+        train_data = load_data('./data/interim/train_processed.csv')
+        test_data = load_data('./data/interim/test_processed.csv')
+        
+        train_df, test_df = apply_tfidf(train_data, test_data, 
+                                        max_features)
+        
+        save_data(train_df, 
+                  os.path.join("./data", "processed", 
+                               "train_tfidf.csv"))
+        save_data(test_df, 
+                  os.path.join("./data", "processed", 
+                               "test_tfidf.csv"))
+    except Exception as e:
+        logger.error('Failed to complete feature engineering: %s', e)
+        print(f"Error: {e}")
+
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Understanding TF-IDF}
+
+\textbf{TF-IDF (Term Frequency-Inverse Document Frequency)} measures the importance of a word in a document relative to a collection of documents.
+
+\begin{infobox}{TF-IDF Formula}
+\textbf{TF (Term Frequency)}: How often a word appears in a document
+\[
+TF(t, d) = \frac{\text{Number of times term } t \text{ appears in document } d}{\text{Total number of terms in document } d}
+\]
+
+\textbf{IDF (Inverse Document Frequency)}: How rare/common a word is across all documents
+\[
+IDF(t) = \log\left(\frac{\text{Total number of documents}}{\text{Number of documents containing term } t}\right)
+\]
+
+\textbf{TF-IDF Score}:
+\[
+\text{TF-IDF}(t, d) = TF(t, d) \times IDF(t)
+\]
+\end{infobox}
+
+\subsubsection{Why TF-IDF?}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Reduces weight of common words}: Words like "the", "is" get lower scores
+    \item \textbf{Increases weight of distinctive words}: Rare words get higher scores
+    \item \textbf{Creates fixed-size vectors}: Essential for machine learning models
+    \item \textbf{Captures semantic importance}: Better than simple word counts
+\end{itemize}
+
+\subsection{max\_features Parameter}
+
+The \texttt{max\_features} parameter controls dimensionality:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{max\_features=50}: Creates 50 features (top 50 important words)
+    \item \textbf{Higher values}: More features, more information, higher complexity
+    \item \textbf{Lower values}: Fewer features, less information, faster training
+\end{itemize}
+
+\begin{notebox}
+The \texttt{max\_features} value is a hyperparameter that can be tuned. We'll later make this configurable via \texttt{params.yaml} for easy experimentation.
+\end{notebox}
+
+\subsection{Running the Module}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Run feature engineering
+python src/Feature_Engineering.py
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{Expected Output}:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{logs/Feature\_Engineering.log} created
+    \item \texttt{data/processed/train\_tfidf.csv} created (50 features + 1 label column)
+    \item \texttt{data/processed/test\_tfidf.csv} created (50 features + 1 label column)
+\end{itemize}
+
+\newpage
+
+% ========================
+% SECTION 7: MODEL BUILDING
+% ========================
+\section{Model Building Module}
+
+\subsection{Overview}
+
+The Model Building module:
+\begin{itemize}[leftmargin=*]
+    \item Loads processed feature data
+    \item Trains a RandomForest classifier
+    \item Saves the trained model as a pickle file
+    \item Logs the training process
+\end{itemize}
+
+\subsection{Complete Implementation}
+
+\begin{examplebox}{src/Model\_Building.py}
+\begin{lstlisting}[language=Python]
+import os
+import numpy as np
+import pandas as pd
+import pickle
+import logging
+from sklearn.ensemble import RandomForestClassifier
+
+# Ensure the "logs" directory exists
+log_dir = 'logs'
+os.makedirs(log_dir, exist_ok=True)
+
+# Logging configuration
+logger = logging.getLogger('Model_Building')
+logger.setLevel('DEBUG')
+
+console_handler = logging.StreamHandler()
+console_handler.setLevel('DEBUG')
+
+log_file_path = os.path.join(log_dir, 'Model_Building.log')
+file_handler = logging.FileHandler(log_file_path)
+file_handler.setLevel('DEBUG')
+
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+console_handler.setFormatter(formatter)
+file_handler.setFormatter(formatter)
+
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
+
+
+def load_data(file_path: str) -> pd.DataFrame:
+    """Load data from a CSV file."""
+    try:
+        df = pd.read_csv(file_path)
+        logger.debug('Data loaded from %s with shape %s', 
+                     file_path, df.shape)
+        return df
+    except pd.errors.ParserError as e:
+        logger.error('Failed to parse the CSV file: %s', e)
+        raise
+    except FileNotFoundError as e:
+        logger.error('File not found: %s', e)
+        raise
+    except Exception as e:
+        logger.error('Unexpected error while loading data: %s', e)
+        raise
+
+
+def train_model(X_train: np.ndarray, 
+                y_train: np.ndarray, 
+                params: dict) -> RandomForestClassifier:
+    """Train the RandomForest model."""
+    try:
+        if X_train.shape[0] != y_train.shape[0]:
+            raise ValueError(
+                "Number of samples in X_train and y_train must match"
+            )
+        
+        logger.debug('Initializing RandomForest with params: %s', 
+                     params)
+        clf = RandomForestClassifier(
+            n_estimators=params['n_estimators'],
+            random_state=params['random_state']
+        )
+        
+        logger.debug('Model training started with %d samples', 
+                     X_train.shape[0])
+        clf.fit(X_train, y_train)
+        logger.debug('Model training completed')
+        
+        return clf
+    except ValueError as e:
+        logger.error('ValueError during model training: %s', e)
+        raise
+    except Exception as e:
+        logger.error('Error during model training: %s', e)
+        raise
+
+
+def save_model(model, file_path: str) -> None:
+    """Save the trained model to a file."""
+    try:
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        
+        with open(file_path, 'wb') as file:
+            pickle.dump(model, file)
+        logger.debug('Model saved to %s', file_path)
+    except FileNotFoundError as e:
+        logger.error('File path not found: %s', e)
+        raise
+    except Exception as e:
+        logger.error('Error while saving model: %s', e)
+        raise
+
+
+def main():
+    try:
+        params = {'n_estimators': 25, 'random_state': 2}
+        
+        train_data = load_data('./data/processed/train_tfidf.csv')
+        X_train = train_data.iloc[:, :-1].values
+        y_train = train_data.iloc[:, -1].values
+        
+        clf = train_model(X_train, y_train, params)
+        
+        model_save_path = 'models/model.pkl'
+        save_model(clf, model_save_path)
+    except Exception as e:
+        logger.error('Failed to complete model building: %s', e)
+        print(f"Error: {e}")
+
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Model Selection: RandomForest}
+
+\textbf{Why RandomForest?}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Robust}: Handles overfitting well through ensemble learning
+    \item \textbf{Feature Importance}: Provides insights into which features matter
+    \item \textbf{No Feature Scaling}: Works well without normalization
+    \item \textbf{Handles Imbalanced Data}: Good for spam/ham classification
+    \item \textbf{Parallel Training}: Can utilize multiple CPU cores
+\end{itemize}
+
+\subsection{Hyperparameters Explained}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{n\_estimators}: Number of decision trees in the forest
+    \begin{itemize}
+        \item More trees = Better performance but slower training
+        \item Typical range: 50-200
+    \end{itemize}
+    
+    \item \textbf{random\_state}: Ensures reproducibility
+    \begin{itemize}
+        \item Same value = Same results across runs
+        \item Essential for experiment tracking
+    \end{itemize}
+\end{itemize}
+
+\subsection{Model Persistence with Pickle}
+
+\textbf{Pickle} serializes Python objects to disk:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Saves entire model}: Including learned parameters
+    \item \textbf{Quick loading}: No need to retrain
+    \item \textbf{Version control friendly}: When combined with DVC
+\end{itemize}
+
+\begin{warningbox}
+\textbf{Important .gitignore Rule}:
+
+\vspace{0.5em}
+
+Add \texttt{models/} to .gitignore! Git should NOT track model files (they're binary and large). DVC will handle model versioning.
+
+\begin{verbatim}
+# In .gitignore
+models/
+\end{verbatim}
+\end{warningbox}
+
+\subsection{Running the Module}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Run model building
+python src/Model_Building.py
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{Expected Output}:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{logs/Model\_Building.log} created
+    \item \texttt{models/model.pkl} created
+    \item Console displays training progress
+\end{itemize}
+
+\newpage
+
+% ========================
+% SECTION 8: MODEL EVALUATION
+% ========================
+\section{Model Evaluation Module}
+
+\subsection{Overview}
+
+The Model Evaluation module:
+\begin{itemize}[leftmargin=*]
+    \item Loads the trained model
+    \item Loads test data
+    \item Makes predictions
+    \item Calculates evaluation metrics
+    \item Saves metrics to JSON file
+\end{itemize}
+
+\subsection{Complete Implementation}
+
+\begin{examplebox}{src/Model\_Evaluation.py}
+\begin{lstlisting}[language=Python]
+import os
+import numpy as np
+import pandas as pd
+import pickle
+import json
+from sklearn.metrics import (accuracy_score, precision_score, 
+                             recall_score, roc_auc_score)
+import logging
+
+# Ensure the "logs" directory exists
+log_dir = 'logs'
+os.makedirs(log_dir, exist_ok=True)
+
+# Logging configuration
+logger = logging.getLogger('Model_Evaluation')
+logger.setLevel('DEBUG')
+
+console_handler = logging.StreamHandler()
+console_handler.setLevel('DEBUG')
+
+log_file_path = os.path.join(log_dir, 'Model_Evaluation.log')
+file_handler = logging.FileHandler(log_file_path)
+file_handler.setLevel('DEBUG')
+
+formatter = logging.Formatter(
+    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+console_handler.setFormatter(formatter)
+file_handler.setFormatter(formatter)
+
+logger.addHandler(console_handler)
+logger.addHandler(file_handler)
+
+
+def load_model(file_path: str):
+    """Load the trained model from a file."""
+    try:
+        with open(file_path, 'rb') as file:
+            model = pickle.load(file)
+        logger.debug('Model loaded from %s', file_path)
+        return model
+    except FileNotFoundError:
+        logger.error('File not found: %s', file_path)
+        raise
+    except Exception as e:
+        logger.error('Unexpected error while loading model: %s', e)
+        raise
+
+
+def load_data(file_path: str) -> pd.DataFrame:
+    """Load data from a CSV file."""
+    try:
+        df = pd.read_csv(file_path)
+        logger.debug('Data loaded from %s', file_path)
+        return df
+    except pd.errors.ParserError as e:
+        logger.error('Failed to parse the CSV file: %s', e)
+        raise
+    except Exception as e:
+        logger.error('Unexpected error while loading data: %s', e)
+        raise
+
+
+def evaluate_model(clf, X_test: np.ndarray, 
+                   y_test: np.ndarray) -> dict:
+    """Evaluate the model and return metrics."""
+    try:
+        y_pred = clf.predict(X_test)
+        y_pred_proba = clf.predict_proba(X_test)[:, 1]
+        
+        accuracy = accuracy_score(y_test, y_pred)
+        precision = precision_score(y_test, y_pred)
+        recall = recall_score(y_test, y_pred)
+        auc = roc_auc_score(y_test, y_pred_proba)
+        
+        metrics_dict = {
+            'accuracy': accuracy,
+            'precision': precision,
+            'recall': recall,
+            'auc': auc
+        }
+        logger.debug('Model evaluation metrics calculated')
+        return metrics_dict
+    except Exception as e:
+        logger.error('Error during model evaluation: %s', e)
+        raise
+
+
+def save_metrics(metrics: dict, file_path: str) -> None:
+    """Save the evaluation metrics to a JSON file."""
+    try:
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        
+        with open(file_path, 'w') as file:
+            json.dump(metrics, file, indent=4)
+        logger.debug('Metrics saved to %s', file_path)
+    except Exception as e:
+        logger.error('Error while saving metrics: %s', e)
+        raise
+
+
+def main():
+    try:
+        clf = load_model('./models/model.pkl')
+        test_data = load_data('./data/processed/test_tfidf.csv')
+        
+        X_test = test_data.iloc[:, :-1].values
+        y_test = test_data.iloc[:, -1].values
+        
+        metrics = evaluate_model(clf, X_test, y_test)
+        
+        save_metrics(metrics, 'reports/metrics.json')
+    except Exception as e:
+        logger.error('Failed to complete model evaluation: %s', e)
+        print(f"Error: {e}")
+
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Evaluation Metrics Explained}
+
+\subsubsection{Accuracy}
+Percentage of correct predictions:
+\[
+\text{Accuracy} = \frac{\text{Correct Predictions}}{\text{Total Predictions}}
+\]
+
+\subsubsection{Precision}
+Of all predicted spam, how many are actually spam:
+\[
+\text{Precision} = \frac{\text{True Positives}}{\text{True Positives + False Positives}}
+\]
+
+\subsubsection{Recall (Sensitivity)}
+Of all actual spam, how many did we catch:
+\[
+\text{Recall} = \frac{\text{True Positives}}{\text{True Positives + False Negatives}}
+\]
+
+\subsubsection{AUC (Area Under ROC Curve)}
+Measures model's ability to distinguish between classes:
+\begin{itemize}[leftmargin=*]
+    \item AUC = 1.0: Perfect classifier
+    \item AUC = 0.5: Random guessing
+    \item Higher is better
+\end{itemize}
+
+\subsection{Why These Metrics?}
+
+\begin{center}
+\begin{tabular}{|l|p{0.65\textwidth}|}
+\hline
+\textbf{Metric} & \textbf{When to Prioritize} \\
+\hline
+Accuracy & Balanced datasets, overall performance \\
+\hline
+Precision & When false positives are costly (e.g., marking legitimate emails as spam) \\
+\hline
+Recall & When false negatives are costly (e.g., missing actual spam) \\
+\hline
+AUC & Overall model discrimination ability, imbalanced datasets \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Metrics JSON Format}
+
+\begin{examplebox}{reports/metrics.json Example}
+\begin{verbatim}
+{
+    "accuracy": 0.9732,
+    "precision": 0.9821,
+    "recall": 0.9456,
+    "auc": 0.9887
+}
+\end{verbatim}
+\end{examplebox}
+
+\begin{warningbox}
+\textbf{Add reports/ to .gitignore}:
+
+\begin{verbatim}
+# In .gitignore
+reports/
+\end{verbatim}
+
+DVC will track metrics files, not Git.
+\end{warningbox}
+
+\subsection{Running the Module}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Run model evaluation
+python src/Model_Evaluation.py
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{Expected Output}:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{logs/Model\_Evaluation.log} created
+    \item \texttt{reports/metrics.json} created with all metrics
+    \item Console displays evaluation progress
+\end{itemize}
+
+\newpage
+
+% ========================
+% SECTION 9: MANUAL PIPELINE TEST
+% ========================
+\section{Testing the Complete Pipeline Manually}
+
+\subsection{Running All Components Sequentially}
+
+Before automating with DVC, verify each component works correctly:
+
+\begin{cmdbox}
+\begin{verbatim}
+# Step 1: Data Ingestion
+python src/Data_Ingestion.py
+
+# Step 2: Data Pre-Processing
+python src/Data_Pre_Processing.py
+
+# Step 3: Feature Engineering
+python src/Feature_Engineering.py
+
+# Step 4: Model Building
+python src/Model_Building.py
+
+# Step 5: Model Evaluation
+python src/Model_Evaluation.py
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Expected Directory Structure After Execution}
+
+\begin{cmdbox}
+\begin{verbatim}
+MLOPS-DVC-Project/
+  data/
+    raw/
+      train.csv
+      test.csv
+    interim/
+      train_processed.csv
+      test_processed.csv
+    processed/
+      train_tfidf.csv
+      test_tfidf.csv
+  models/
+    model.pkl
+  reports/
+    metrics.json
+  logs/
+    Data_Ingestion.log
+    Data_Pre_Processing.log
+    Feature_Engineering.log
+    Model_Building.log
+    Model_Evaluation.log
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Verification Checklist}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Data Files}: All CSV files created in correct directories
+    \item \textbf{Model File}: model.pkl exists in models/
+    \item \textbf{Metrics File}: metrics.json contains all 4 metrics
+    \item \textbf{Log Files}: Each component has its log file
+    \item \textbf{No Errors}: Check log files for any ERROR messages
+\end{enumerate}
+
+\subsection{Initial Git Commit}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Check .gitignore is properly configured
+cat .gitignore
+
+# Stage all source code
+git add .gitignore
+git add src/
+git add Experiments/
+git add README.md
+
+# Commit
+git commit -m "Initial commit: Add all pipeline components"
+
+# Push to remote
+git push origin main
+\end{verbatim}
+\end{cmdbox}
+
+\begin{notebox}
+At this point, Git tracks:
+\begin{itemize}[leftmargin=*]
+    \item Source code (\texttt{src/})
+    \item Experiments (\texttt{Experiments/})
+    \item Configuration files (\texttt{.gitignore})
+\end{itemize}
+
+Git does NOT track:
+\begin{itemize}[leftmargin=*]
+    \item Data files (\texttt{data/})
+    \item Models (\texttt{models/})
+    \item Reports (\texttt{reports/})
+    \item Logs (\texttt{logs/})
+\end{itemize}
+
+DVC will handle these large files in the next section.
+\end{notebox}
+
+\newpage
+
+% ========================
+% SECTION 10: DVC PIPELINE SETUP
+% ========================
+\section{Setting Up DVC Pipeline (Without Parameters)}
+
+\subsection{Understanding DVC Pipelines}
+
+\textbf{DVC Pipelines} automate ML workflows by:
+\begin{itemize}[leftmargin=*]
+    \item Defining stages and dependencies
+    \item Tracking inputs and outputs
+    \item Automatically detecting changes
+    \item Running only what's necessary
+    \item Creating reproducible workflows
+\end{itemize}
+
+\subsection{Initialize DVC}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Initialize DVC in the project
+dvc init
+\end{verbatim}
+\end{cmdbox}
+
+This creates:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{.dvc/} directory: DVC configuration and cache
+    \item \texttt{.dvcignore}: Similar to .gitignore for DVC
+    \item Updates \texttt{.gitignore} to exclude DVC cache
+\end{itemize}
+
+\subsection{Creating dvc.yaml File}
+
+The \texttt{dvc.yaml} file defines the entire pipeline:
+
+\begin{examplebox}{dvc.yaml (Basic Version)}
+\begin{lstlisting}[style=yamlstyle]
+stages:
+  data_ingestion:
+    cmd: python src/Data_Ingestion.py
+    deps:
+    - src/Data_Ingestion.py
+    outs:
+    - data/raw
+
+  data_preprocessing:
+    cmd: python src/Data_Pre_Processing.py
+    deps:
+    - data/raw
+    - src/Data_Pre_Processing.py
+    outs:
+    - data/interim
+
+  feature_engineering:
+    cmd: python src/Feature_Engineering.py
+    deps:
+    - data/interim
+    - src/Feature_Engineering.py
+    outs:
+    - data/processed
+
+  model_building:
+    cmd: python src/Model_Building.py
+    deps:
+    - data/processed
+    - src/Model_Building.py
+    outs:
+    - models/model.pkl
+
+  model_evaluation:
+    cmd: python src/Model_Evaluation.py
+    deps:
+    - models/model.pkl
+    - src/Model_Evaluation.py
+    metrics:
+    - reports/metrics.json
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Understanding dvc.yaml Structure}
+
+\subsubsection{Stage Components}
+
+Each stage has:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{cmd}: Command to execute
+    \begin{lstlisting}[style=yamlstyle]
+cmd: python src/Data_Ingestion.py
+    \end{lstlisting}
+    
+    \item \textbf{deps}: Dependencies (files that, if changed, trigger re-run)
+    \begin{lstlisting}[style=yamlstyle]
+deps:
+- src/Data_Ingestion.py
+- data/raw
+    \end{lstlisting}
+    
+    \item \textbf{outs}: Outputs (files/directories created by stage)
+    \begin{lstlisting}[style=yamlstyle]
+outs:
+- data/interim
+    \end{lstlisting}
+    
+    \item \textbf{metrics}: Metric files (special output for tracking)
+    \begin{lstlisting}[style=yamlstyle]
+metrics:
+- reports/metrics.json
+    \end{lstlisting}
+\end{enumerate}
+
+\subsection{Stage Dependency Chain}
+
+\begin{center}
+\begin{tikzpicture}[
+    node distance=2cm,
+    stage/.style={rectangle, rounded corners, draw=blue!70, fill=blue!10, thick, minimum width=3.5cm, minimum height=1cm, align=center},
+    arrow/.style={->, >=stealth, thick, blue}
+]
+
+\node[stage] (ingestion) {data\_ingestion};
+\node[stage, below=of ingestion] (preprocess) {data\_preprocessing};
+\node[stage, below=of preprocess] (feature) {feature\_engineering};
+\node[stage, below=of feature] (building) {model\_building};
+\node[stage, below=of building] (evaluation) {model\_evaluation};
+
+\draw[arrow] (ingestion) -- node[right, font=\tiny] {data/raw} (preprocess);
+\draw[arrow] (preprocess) -- node[right, font=\tiny] {data/interim} (feature);
+\draw[arrow] (feature) -- node[right, font=\tiny] {data/processed} (building);
+\draw[arrow] (building) -- node[right, font=\tiny] {models/model.pkl} (evaluation);
+
+\end{tikzpicture}
+\end{center}
+
+\subsection{Running the DVC Pipeline}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Run the entire pipeline
+dvc repro
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{What happens during \texttt{dvc repro}}:
+
+\begin{enumerate}[leftmargin=*]
+    \item DVC reads \texttt{dvc.yaml}
+    \item Checks if dependencies changed
+    \item Runs necessary stages in order
+    \item Tracks all outputs
+    \item Creates \texttt{dvc.lock} file
+\end{enumerate}
+
+\subsection{Understanding dvc.lock File}
+
+After running \texttt{dvc repro}, DVC creates \texttt{dvc.lock}:
+
+\begin{infobox}{What is dvc.lock?}
+\texttt{dvc.lock} is analogous to \texttt{package-lock.json} or \texttt{requirements.txt.lock}:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Locks exact versions}: Stores MD5 hashes of all files
+    \item \textbf{Ensures reproducibility}: Same lock = same results
+    \item \textbf{Tracked by Git}: Commit this file!
+    \item \textbf{Auto-generated}: Never edit manually
+\end{itemize}
+\end{infobox}
+
+\begin{examplebox}{Sample dvc.lock Entry}
+\begin{lstlisting}[style=yamlstyle]
+data_ingestion:
+  cmd: python src/Data_Ingestion.py
+  deps:
+  - path: src/Data_Ingestion.py
+    md5: a1b2c3d4e5f6g7h8i9j0
+  outs:
+  - path: data/raw
+    md5: x1y2z3a4b5c6d7e8f9g0
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Visualizing the Pipeline}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Visualize pipeline as a DAG (Directed Acyclic Graph)
+dvc dag
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{Example Output}:
+\begin{verbatim}
+          +--------------------+
+          | data_ingestion     |
+          +--------------------+
+                    *
+                    *
+                    *
+        +-----------------------+
+        | data_preprocessing    |
+        +-----------------------+
+                    *
+                    *
+                    *
+        +-----------------------+
+        | feature_engineering   |
+        +-----------------------+
+                    *
+                    *
+                    *
+          +-------------------+
+          | model_building    |
+          +-------------------+
+                    *
+                    *
+                    *
+          +-------------------+
+          | model_evaluation  |
+          +-------------------+
+\end{verbatim}
+
+\subsection{Key DVC Concepts}
+
+\subsubsection{The .dvc Directory}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{.dvc/cache/}: Stores all versions of tracked data
+    \item \textbf{.dvc/config}: DVC configuration (remotes, etc.)
+    \item \textbf{.dvc/.gitignore}: Prevents Git from tracking cache
+\end{itemize}
+
+\begin{infobox}{Cache Structure}
+The \texttt{.dvc/cache/} contains:
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Both tokens AND data}: Unlike remote storage
+    \item \textbf{All versions}: Every experiment's data
+    \item \textbf{Content-addressable}: Files named by MD5 hash
+    \item \textbf{Deduplicated}: Identical files stored once
+\end{itemize}
+\end{infobox}
+
+\subsubsection{dvc.yaml vs dvc.lock vs .dvc files}
+
+\begin{center}
+\begin{tabular}{|l|p{0.7\textwidth}|}
+\hline
+\textbf{File} & \textbf{Purpose} \\
+\hline
+dvc.yaml & Defines pipeline stages, dependencies, outputs \\
+\hline
+dvc.lock & Locks exact file versions (MD5 hashes) for reproducibility \\
+\hline
+$<$name$>$.dvc & Created by \texttt{dvc add}, tracks individual files/folders \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{warningbox}
+\textbf{Key Difference}:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{dvc add}: Manually track files, creates \texttt{<name>.dvc}
+    \item \textbf{dvc.yaml outputs}: Automatically tracked, uses \texttt{dvc.lock}
+\end{itemize}
+
+With pipelines, you DON'T need \texttt{dvc add} for outputs!
+\end{warningbox}
+
+\subsection{Intelligent Re-Running}
+
+DVC only re-runs changed stages:
+
+\begin{cmdbox}
+\begin{verbatim}
+# If you run dvc repro again without changes
+dvc repro
+
+# Output:
+Stage 'data_ingestion' didn't change, skipping
+Stage 'data_preprocessing' didn't change, skipping
+Stage 'feature_engineering' didn't change, skipping
+Stage 'model_building' didn't change, skipping
+Stage 'model_evaluation' didn't change, skipping
+Data and pipelines are up to date.
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{When does DVC re-run a stage?}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Code changes}: Modify \texttt{src/} files
+    \item \textbf{Dependency changes}: Input data changes
+    \item \textbf{Parameter changes}: (covered in next section)
+    \item \textbf{Manual force}: \texttt{dvc repro --force}
+\end{itemize}
+
+\subsection{Committing Pipeline to Git}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Stage DVC files
+git add dvc.yaml dvc.lock .dvc/.gitignore .dvc/config
+
+# Commit
+git commit -m "Add DVC pipeline automation"
+
+# Push
+git push origin main
+\end{verbatim}
+\end{cmdbox}
+
+\begin{notebox}
+\textbf{What's in Git vs DVC now?}
+
+\textbf{Git tracks}:
+\begin{itemize}[leftmargin=*]
+    \item Source code (\texttt{src/})
+    \item Pipeline definition (\texttt{dvc.yaml})
+    \item File version locks (\texttt{dvc.lock})
+    \item DVC configuration (\texttt{.dvc/config})
+\end{itemize}
+
+\textbf{DVC tracks} (in \texttt{.dvc/cache/}):
+\begin{itemize}[leftmargin=*]
+    \item Data (\texttt{data/})
+    \item Models (\texttt{models/})
+    \item Reports (\texttt{reports/})
+\end{itemize}
+\end{notebox}
+
+\newpage
+
+% ========================
+% SECTION 11: PARAMETERIZATION
+% ========================
+\section{Adding Configurable Parameters}
+
+\subsection{Why Parameterize?}
+
+Hardcoded values in code are problematic:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Not experiment-friendly}: Changing values requires code edits
+    \item \textbf{Not version-controlled}: Hard to track what values were used
+    \item \textbf{Not DVC-aware}: DVC can't detect parameter changes
+    \item \textbf{Not reproducible}: Unclear what parameters produced results
+\end{itemize}
+
+\textbf{Solution}: Centralize parameters in \texttt{params.yaml}
+
+\subsection{Creating params.yaml}
+
+\begin{examplebox}{params.yaml}
+\begin{lstlisting}[style=yamlstyle]
+data_ingestion:
+  test_size: 0.15
+
+feature_engineering:
+  max_features: 45
+
+model_building:
+  n_estimators: 20
+  random_state: 2
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Updating dvc.yaml with Parameters}
+
+\begin{examplebox}{dvc.yaml (With Parameters)}
+\begin{lstlisting}[style=yamlstyle]
+stages:
+  data_ingestion:
+    cmd: python src/Data_Ingestion.py
+    deps:
+    - src/Data_Ingestion.py
+    params:
+    - data_ingestion.test_size
+    outs:
+    - data/raw
+
+  data_preprocessing:
+    cmd: python src/Data_Pre_Processing.py
+    deps:
+    - data/raw
+    - src/Data_Pre_Processing.py
+    outs:
+    - data/interim
+
+  feature_engineering:
+    cmd: python src/Feature_Engineering.py
+    deps:
+    - data/interim
+    - src/Feature_Engineering.py
+    params:
+    - feature_engineering.max_features
+    outs:
+    - data/processed
+
+  model_building:
+    cmd: python src/Model_Building.py
+    deps:
+    - data/processed
+    - src/Model_Building.py
+    params:
+    - model_building.n_estimators
+    - model_building.random_state
+    outs:
+    - models/model.pkl
+
+  model_evaluation:
+    cmd: python src/Model_Evaluation.py
+    deps:
+    - models/model.pkl
+    - src/Model_Evaluation.py
+    metrics:
+    - reports/metrics.json
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Loading Parameters in Python Code}
+
+Add a \texttt{load\_params()} function to each module:
+
+\begin{examplebox}{Parameter Loading Function}
+\begin{lstlisting}[language=Python]
+import yaml
+
+def load_params(params_path: str) -> dict:
+    """Load parameters from a YAML file."""
+    try:
+        with open(params_path, 'r') as file:
+            params = yaml.safe_load(file)
+        logger.debug('Parameters retrieved from %s', params_path)
+        return params
+    except FileNotFoundError:
+        logger.error('File not found: %s', params_path)
+        raise
+    except yaml.YAMLError as e:
+        logger.error('YAML error: %s', e)
+        raise
+    except Exception as e:
+        logger.error('Unexpected error: %s', e)
+        raise
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Updated Module Implementations}
+
+\subsubsection{Data\_Ingestion.py Changes}
+
+\begin{lstlisting}[language=Python]
+# Add at top
+import yaml
+
+# Add load_params function (shown above)
+
+# Update main()
+def main():
+    try:
+        # Load parameters
+        params = load_params(params_path='params.yaml')
+        test_size = params['data_ingestion']['test_size']
+        
+        data_url = 'https://raw.githubusercontent.com/...'
+        df = load_data(data_url=data_url)
+        final_df = preprocess_data(df)
+        
+        # Use parameterized test_size
+        train_data, test_data = train_test_split(
+            final_df, test_size=test_size, random_state=2
+        )
+        
+        save_data(train_data, test_data, data_path='./data')
+    except Exception as e:
+        logger.error('Failed to complete data ingestion: %s', e)
+        print(f"Error: {e}")
+\end{lstlisting}
+
+\subsubsection{Feature\_Engineering.py Changes}
+
+\begin{lstlisting}[language=Python]
+# Add at top
+import yaml
+
+# Add load_params function
+
+# Update main()
+def main():
+    try:
+        # Load parameters
+        params = load_params(params_path='params.yaml')
+        max_features = params['feature_engineering']['max_features']
+        
+        train_data = load_data('./data/interim/train_processed.csv')
+        test_data = load_data('./data/interim/test_processed.csv')
+        
+        # Use parameterized max_features
+        train_df, test_df = apply_tfidf(train_data, test_data, 
+                                        max_features)
+        
+        save_data(train_df, './data/processed/train_tfidf.csv')
+        save_data(test_df, './data/processed/test_tfidf.csv')
+    except Exception as e:
+        logger.error('Failed to complete feature engineering: %s', e)
+        print(f"Error: {e}")
+\end{lstlisting}
+
+\subsubsection{Model\_Building.py Changes}
+
+\begin{lstlisting}[language=Python]
+# Add at top
+import yaml
+
+# Add load_params function
+
+# Update main()
+def main():
+    try:
+        # Load parameters
+        params = load_params('params.yaml')['model_building']
+        
+        train_data = load_data('./data/processed/train_tfidf.csv')
+        X_train = train_data.iloc[:, :-1].values
+        y_train = train_data.iloc[:, -1].values
+        
+        # Use parameterized model parameters
+        clf = train_model(X_train, y_train, params)
+        
+        model_save_path = 'models/model.pkl'
+        save_model(clf, model_save_path)
+    except Exception as e:
+        logger.error('Failed to complete model building: %s', e)
+        print(f"Error: {e}")
+\end{lstlisting}
+
+\subsection{Testing Parameterized Pipeline}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Run pipeline with new parameters
+dvc repro
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{DVC now detects parameter changes}:
+
+\begin{itemize}[leftmargin=*]
+    \item If you change \texttt{params.yaml}, DVC knows
+    \item Only affected stages re-run
+    \item Parameters tracked in \texttt{dvc.lock}
+\end{itemize}
+
+\subsection{Benefits of Parameterization}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Easy Experimentation}:
+    \begin{lstlisting}[style=yamlstyle]
+# Change this:
+model_building:
+  n_estimators: 20
+  
+# To this:
+model_building:
+  n_estimators: 50
+  
+# Then run: dvc repro
+    \end{lstlisting}
+    
+    \item \textbf{DVC Awareness}: DVC detects changes and re-runs appropriate stages
+    
+    \item \textbf{Version Control}: Parameters tracked with code in Git
+    
+    \item \textbf{Reproducibility}: \texttt{params.yaml + dvc.lock} = exact reproduction
+    
+    \item \textbf{Documentation}: Clear record of hyperparameters used
+\end{enumerate}
+
+\subsection{Commit Parameterized Pipeline}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Stage changes
+git add params.yaml dvc.yaml dvc.lock src/
+
+# Commit
+git commit -m "Add parameter configuration with params.yaml"
+
+# Push
+git push origin main
+\end{verbatim}
+\end{cmdbox}
+
+\begin{notebox}
+\textbf{Important Behavior}:
+
+If you run \texttt{dvc repro} without any changes:
+
+\begin{verbatim}
+Stage 'data_ingestion' didn't change, skipping
+Stage 'data_preprocessing' didn't change, skipping
+Stage 'feature_engineering' didn't change, skipping
+Stage 'model_building' didn't change, skipping
+Stage 'model_evaluation' didn't change, skipping
+Data and pipelines are up to date.
+\end{verbatim}
+
+DVC is smart enough to skip unnecessary work!
+\end{notebox}
+
+\newpage
+
+% ========================
+% SECTION 12: EXPERIMENT TRACKING
+% ========================
+\section{Experiment Tracking with DVCLive}
+
+\subsection{What is DVCLive?}
+
+\textbf{DVCLive} is DVC's experiment tracking library:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Logs metrics}: Accuracy, loss, custom metrics
+    \item \textbf{Logs parameters}: Hyperparameters used
+    \item \textbf{Creates plots}: Training curves, confusion matrices
+    \item \textbf{Integrates with DVC}: Automatic experiment versioning
+    \item \textbf{Lightweight}: No external services needed
+\end{itemize}
+
+\subsection{Installation}
+
+\begin{cmdbox}
+\begin{verbatim}
+pip install dvclive
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Updating Model\_Evaluation.py}
+
+Add DVCLive integration to track experiments:
+
+\begin{examplebox}{Model\_Evaluation.py with DVCLive}
+\begin{lstlisting}[language=Python]
+import os
+import numpy as np
+import pandas as pd
+import pickle
+import json
+from sklearn.metrics import (accuracy_score, precision_score, 
+                             recall_score, roc_auc_score)
+import logging
+from dvclive import Live  # Add DVCLive
+import yaml  # Add YAML
+
+# ... (previous logging setup remains same) ...
+
+# Add load_params function
+def load_params(params_path: str) -> dict:
+    """Load parameters from a YAML file."""
+    try:
+        with open(params_path, 'r') as file:
+            params = yaml.safe_load(file)
+        logger.debug('Parameters retrieved from %s', params_path)
+        return params
+    except FileNotFoundError:
+        logger.error('File not found: %s', params_path)
+        raise
+    except yaml.YAMLError as e:
+        logger.error('YAML error: %s', e)
+        raise
+    except Exception as e:
+        logger.error('Unexpected error: %s', e)
+        raise
+
+# ... (other functions remain same) ...
+
+def main():
+    try:
+        # Load parameters
+        params = load_params('params.yaml')
+        
+        clf = load_model('./models/model.pkl')
+        test_data = load_data('./data/processed/test_tfidf.csv')
+        
+        X_test = test_data.iloc[:, :-1].values
+        y_test = test_data.iloc[:, -1].values
+        
+        metrics = evaluate_model(clf, X_test, y_test)
+        save_metrics(metrics, 'reports/metrics.json')
+        
+        # DVCLive logging
+        with Live(save_dvc_exp=True) as live:
+            # Log metrics
+            live.log_metric('accuracy', metrics['accuracy'])
+            live.log_metric('precision', metrics['precision'])
+            live.log_metric('recall', metrics['recall'])
+            live.log_metric('auc', metrics['auc'])
+            
+            # Log parameters
+            live.log_params(params)
+            
+    except Exception as e:
+        logger.error('Failed to complete model evaluation: %s', e)
+        print(f"Error: {e}")
+
+
+if __name__ == '__main__':
+    main()
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Understanding DVCLive Code}
+
+\subsubsection{The Live Context Manager}
+
+\begin{lstlisting}[language=Python]
+with Live(save_dvc_exp=True) as live:
+    # Logging code here
+\end{lstlisting}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{save\_dvc\_exp=True}: Saves experiment in DVC
+    \item \textbf{Context manager}: Automatically handles setup/cleanup
+    \item \textbf{Creates dvclive/ directory}: Stores experiment data
+\end{itemize}
+
+\subsubsection{Logging Metrics}
+
+\begin{lstlisting}[language=Python]
+live.log_metric('accuracy', metrics['accuracy'])
+live.log_metric('precision', metrics['precision'])
+\end{lstlisting}
+
+Each metric is:
+\begin{itemize}[leftmargin=*]
+    \item Recorded in \texttt{dvclive/} folder
+    \item Tracked by DVC for comparison
+    \item Viewable in experiment tables
+\end{itemize}
+
+\subsubsection{Logging Parameters}
+
+\begin{lstlisting}[language=Python]
+live.log_params(params)
+\end{lstlisting}
+
+Logs all parameters from \texttt{params.yaml}:
+\begin{itemize}[leftmargin=*]
+    \item Test size
+    \item Max features
+    \item Model hyperparameters
+\end{itemize}
+
+\subsection{Running Experiments}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Run an experiment (instead of dvc repro)
+dvc exp run
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{What happens}:
+
+\begin{enumerate}[leftmargin=*]
+    \item Pipeline executes
+    \item DVCLive logs metrics and parameters
+    \item \texttt{dvclive/} directory created
+    \item Experiment saved in DVC's experiment database
+    \item Unique experiment ID generated
+\end{enumerate}
+
+\subsection{Viewing Experiments}
+
+\subsubsection{Command Line}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Show all experiments
+dvc exp show
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{Example Output}:
+
+\begin{verbatim}
+============================================================
+Experiment        accuracy  precision  recall    auc
+============================================================
+workspace         0.9732    0.9821     0.9456   0.9887
+  exp-a1b2c       0.9651    0.9745     0.9382   0.9801
+  exp-c3d4e       0.9689    0.9778     0.9421   0.9845
+  exp-e5f6g       0.9712    0.9802     0.9444   0.9869
+============================================================
+\end{verbatim}
+
+\subsubsection{VS Code Extension}
+
+Install DVC Extension in VS Code:
+
+\begin{enumerate}[leftmargin=*]
+    \item Open VS Code
+    \item Go to Extensions (Ctrl+Shift+X)
+    \item Search "DVC"
+    \item Install "DVC" by Iterative
+\end{enumerate}
+
+\textbf{Features}:
+\begin{itemize}[leftmargin=*]
+    \item Visual experiment comparison table
+    \item Click to view experiment details
+    \item Sort by metrics
+    \item Apply experiments to workspace
+\end{itemize}
+
+\subsection{The dvclive/ Directory}
+
+After running \texttt{dvc exp run}, a \texttt{dvclive/} directory is created:
+
+\begin{cmdbox}
+\begin{verbatim}
+dvclive/
+  metrics.json
+  params.yaml
+  plots/
+\end{verbatim}
+\end{cmdbox}
+
+\begin{infobox}{Important: dvclive/ is Temporary!}
+\textbf{Key Concept}: The \texttt{dvclive/} folder is like a whiteboard:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Current experiment only}: Contains latest run's data
+    \item \textbf{Gets overwritten}: Next run replaces contents
+    \item \textbf{DVC saves copies}: Each experiment snapshot saved internally
+    \item \textbf{Don't add to Git}: Let DVC handle it
+\end{itemize}
+
+Think of it as:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{dvclive/} = temporary workspace
+    \item DVC's internal storage = permanent photo album
+    \item \texttt{dvc exp show} = views the photo album, not the workspace
+\end{itemize}
+\end{infobox}
+
+\subsection{Running Multiple Experiments}
+
+\subsubsection{Experiment 1: Baseline}
+
+\begin{lstlisting}[style=yamlstyle]
+# params.yaml
+model_building:
+  n_estimators: 20
+  random_state: 2
+\end{lstlisting}
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc exp run
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Experiment 2: More Trees}
+
+\begin{lstlisting}[style=yamlstyle]
+# params.yaml
+model_building:
+  n_estimators: 50
+  random_state: 2
+\end{lstlisting}
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc exp run
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Experiment 3: Different Features}
+
+\begin{lstlisting}[style=yamlstyle]
+# params.yaml
+feature_engineering:
+  max_features: 100
+
+model_building:
+  n_estimators: 50
+  random_state: 2
+\end{lstlisting}
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc exp run
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Comparing Experiments}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Show all experiments with metrics
+dvc exp show
+
+# Show differences between experiments
+dvc exp diff exp-a1b2c exp-c3d4e
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Applying an Experiment}
+
+If Experiment 2 has the best metrics:
+
+\begin{cmdbox}
+\begin{verbatim}
+# Apply experiment to workspace
+dvc exp apply exp-c3d4e
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{What happens}:
+\begin{itemize}[leftmargin=*]
+    \item Workspace updated with that experiment's code and parameters
+    \item Files restored to that experiment's state
+    \item \textbf{Note}: Experiment ID no longer exists after applying
+\end{itemize}
+
+\begin{warningbox}
+\textbf{Critical Understanding}:
+
+\vspace{0.5em}
+\texttt{dvc exp apply} does NOT create a Git commit!
+
+It's temporary—like copying experiment → workspace.
+
+To make it permanent:
+\begin{enumerate}
+    \item Apply experiment: \texttt{dvc exp apply <exp-id>}
+    \item Commit to Git: \texttt{git add . \&\& git commit}
+\end{enumerate}
+
+Experiments are NOT Git commits—they're separate DVC entities.
+\end{warningbox}
+
+\subsection{Removing Experiments}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Remove specific experiment
+dvc exp remove exp-a1b2c
+
+# Remove all experiments except workspace
+dvc exp gc
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Best Practices for Experimentation}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Run experiments frequently}: After each significant change
+    \item \textbf{Use descriptive parameters}: Clear naming in \texttt{params.yaml}
+    \item \textbf{Compare before committing}: Use \texttt{dvc exp show} to choose best
+    \item \textbf{Apply + Commit best experiment}: Make it permanent in Git
+    \item \textbf{Clean up}: Remove failed/uninteresting experiments
+\end{enumerate}
+
+\newpage
+
+% ========================
+% SECTION 13: AWS S3 INTEGRATION
+% ========================
+\section{AWS S3 Integration for Remote Storage}
+
+\subsection{Why Remote Storage?}
+
+\textbf{Local DVC cache (.dvc/cache/) limitations}:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Machine-specific}: Lost if machine crashes
+    \item \textbf{Not shareable}: Team members can't access
+    \item \textbf{Storage constraints}: Limited by local disk space
+    \item \textbf{No backup}: Single point of failure
+\end{itemize}
+
+\textbf{Remote storage (S3) benefits}:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Cloud backup}: Data safe in AWS
+    \item \textbf{Team collaboration}: Everyone accesses same data
+    \item \textbf{Scalable}: Unlimited storage
+    \item \textbf{Reproducible}: Pull exact data versions anywhere
+\end{itemize}
+
+\subsection{AWS Setup Prerequisites}
+
+\begin{enumerate}[leftmargin=*]
+    \item AWS Account
+    \item IAM User with S3 permissions
+    \item Access Key ID
+    \item Secret Access Key
+\end{enumerate}
+
+\subsection{Step-by-Step AWS Configuration}
+
+\subsubsection{Step 1: Create IAM User}
+
+\begin{enumerate}[leftmargin=*]
+    \item Log into AWS Console
+    \item Navigate to IAM → Users
+    \item Click "Create User"
+    \item Set username (e.g., \texttt{dvc-user})
+    \item Enable "Programmatic access"
+    \item Attach policy: \texttt{AmazonS3FullAccess}
+    \item Save Access Key ID and Secret Access Key
+\end{enumerate}
+
+\begin{warningbox}
+\textbf{Security Warning}:
+
+\begin{itemize}[leftmargin=*]
+    \item NEVER commit AWS credentials to Git
+    \item Store securely in environment variables
+    \item Use IAM roles in production
+    \item Consider using AWS CLI profiles
+\end{itemize}
+\end{warningbox}
+
+\subsubsection{Step 2: Create S3 Bucket}
+
+\begin{enumerate}[leftmargin=*]
+    \item Navigate to S3 in AWS Console
+    \item Click "Create bucket"
+    \item Enter unique bucket name (e.g., \texttt{my-dvc-storage-bucket})
+    \item Select region (e.g., \texttt{us-east-1})
+    \item Keep default settings (or configure as needed)
+    \item Click "Create bucket"
+\end{enumerate}
+
+\begin{notebox}
+\textbf{Bucket Naming Rules}:
+\begin{itemize}[leftmargin=*]
+    \item Must be globally unique across all AWS
+    \item 3-63 characters long
+    \item Lowercase letters, numbers, hyphens only
+    \item Cannot start/end with hyphen
+\end{itemize}
+\end{notebox}
+
+\subsubsection{Step 3: Install AWS CLI and DVC S3 Support}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Install AWS CLI tools
+pip install awscli
+
+# Install DVC with S3 support
+pip install dvc[s3]
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Step 4: Configure AWS Credentials}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Configure AWS CLI
+aws configure
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{You'll be prompted for}:
+
+\begin{verbatim}
+AWS Access Key ID [None]: <your-access-key-id>
+AWS Secret Access Key [None]: <your-secret-access-key>
+Default region name [None]: us-east-1
+Default output format [None]: json
+\end{verbatim}
+
+\textbf{This creates}:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{\~{}/.aws/credentials}: Stores access keys
+    \item \texttt{\~{}/.aws/config}: Stores configuration
+\end{itemize}
+
+\subsubsection{Step 5: Add S3 Remote to DVC}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Add S3 bucket as DVC remote
+dvc remote add -d dvcstore s3://my-dvc-storage-bucket
+
+# Verify remote configuration
+dvc remote list
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{Expected Output}:
+\begin{verbatim}
+dvcstore    s3://my-dvc-storage-bucket
+\end{verbatim}
+
+\textbf{Command Breakdown}:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{dvc remote add}: Adds a remote storage location
+    \item \texttt{-d}: Sets as default remote
+    \item \texttt{dvcstore}: Name for this remote (can be anything)
+    \item \texttt{s3://...}: S3 bucket URL
+\end{itemize}
+
+\subsection{Pushing Data to S3}
+
+\subsubsection{Initial Push}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Push all tracked data to S3
+dvc push
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{What happens}:
+\begin{enumerate}[leftmargin=*]
+    \item DVC reads \texttt{dvc.lock} to identify tracked files
+    \item Compares local cache with S3
+    \item Uploads missing/changed files
+    \item Stores files using content-addressable hashes
+\end{enumerate}
+
+\textbf{Expected Output}:
+\begin{verbatim}
+Collecting                                    |8.00 [00:00, 2.50entry/s]
+Pushing                                       |8.00 [00:05, 1.60file/s]
+8 files pushed
+\end{verbatim}
+
+\subsection{Understanding S3 Storage Structure}
+
+In your S3 bucket, files are stored like:
+
+\begin{verbatim}
+my-dvc-storage-bucket/
+  files/
+    md5/
+      a1/
+        b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6
+      x1/
+        y2z3a4b5c6d7e8f9g0h1i2j3k4l5m6
+      ...
+\end{verbatim}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Content-addressable}: Files named by MD5 hash
+    \item \textbf{Deduplicated}: Same content = same hash = stored once
+    \item \textbf{Efficient}: Only changed files uploaded
+\end{itemize}
+
+\subsection{Pulling Data from S3}
+
+\subsubsection{Cloning Project on New Machine}
+
+\begin{cmdbox}
+\begin{verbatim}
+# Clone Git repository
+git clone https://github.com/username/MLOPS-DVC-Project.git
+cd MLOPS-DVC-Project
+
+# Pull data from S3
+dvc pull
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{What happens}:
+\begin{enumerate}[leftmargin=*]
+    \item DVC reads \texttt{dvc.lock}
+    \item Downloads required files from S3
+    \item Populates local cache
+    \item Restores files to workspace
+\end{enumerate}
+
+\subsection{Complete Experiment Workflow with S3}
+
+\begin{examplebox}{Full Workflow: Local → Git + DVC → S3}
+\begin{verbatim}
+# 1. Run experiment
+dvc exp run
+
+# 2. If satisfied, push data to S3
+dvc push
+
+# 3. Commit code to Git
+git add .
+git commit -m "Experiment: increased n_estimators to 50"
+
+# 4. Push code to GitHub
+git push origin main
+\end{verbatim}
+\end{examplebox}
+
+\subsection{Key Concepts: Git vs DVC vs S3}
+
+\begin{center}
+\begin{tabular}{|l|p{0.3\textwidth}|p{0.35\textwidth}|}
+\hline
+\textbf{System} & \textbf{Stores} & \textbf{Purpose} \\
+\hline
+\textbf{Git} & Code, \texttt{dvc.yaml}, \texttt{dvc.lock}, \texttt{params.yaml} & Version control for code and metadata \\
+\hline
+\textbf{Local DVC Cache} & All data versions locally & Fast access, temporary \\
+\hline
+\textbf{S3 Remote} & All data versions in cloud & Backup, sharing, collaboration \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{infobox}{Data Flow Visualization}
+\textbf{Workspace} $\rightarrow$ \textbf{DVC Cache} $\rightarrow$ \textbf{S3 Remote}
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{dvc add} / \texttt{dvc exp run}: Workspace $\rightarrow$ DVC Cache
+    \item \texttt{dvc commit}: Finalizes tracked outputs (no new cache unless manually modified)
+    \item \texttt{dvc push}: DVC Cache $\rightarrow$ Remote Storage (S3/GCS/etc.)
+    \item \texttt{dvc pull}: Remote Storage $\rightarrow$ DVC Cache
+    \item \texttt{dvc checkout}: DVC Cache $\rightarrow$ Workspace
+\end{itemize}
+\end{infobox}
+
+\subsection{Configuring Remote in .dvc/config}
+
+After running \texttt{dvc remote add}, check \texttt{.dvc/config}:
+
+\begin{examplebox}{.dvc/config}
+\begin{verbatim}
+[core]
+    remote = dvcstore
+
+['remote "dvcstore"']
+    url = s3://my-dvc-storage-bucket
+\end{verbatim}
+\end{examplebox}
+
+\textbf{This file is tracked by Git}, so team members automatically use the same remote!
+
+\subsection{Verifying S3 Upload}
+
+\begin{enumerate}[leftmargin=*]
+    \item Go to AWS S3 Console
+    \item Navigate to your bucket
+    \item Check \texttt{files/md5/} directory
+    \item Verify files exist (they'll be named by hash)
+\end{enumerate}
+
+\subsection{Alternative: Using DVC with Other Storage}
+
+DVC supports multiple storage backends:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Google Cloud Storage}: \texttt{dvc remote add -d myremote gs://bucket}
+    \item \textbf{Azure Blob}: \texttt{dvc remote add -d myremote azure://container}
+    \item \textbf{Google Drive}: \texttt{dvc remote add -d myremote gdrive://folder-id}
+    \item \textbf{SSH/SFTP}: \texttt{dvc remote add -d myremote ssh://server/path}
+    \item \textbf{Local/Network}: \texttt{dvc remote add -d myremote /mnt/storage}
+\end{itemize}
+
+\newpage
+
+% ========================
+% Section 14 : WHAT DOES DVC PUSH ACTUALLY PUSH?
+% ========================
+
+\section{What does dvc push actually push?}
+
+\subsection{What Exactly Does \texttt{dvc push} Upload?}
+
+\begin{infobox}{Key Rule}
+\texttt{dvc push} uploads \textbf{only the data objects referenced by the current workspace state}.
+It does \textbf{not} automatically upload all past experiments or all cached data.
+\end{infobox}
+
+\subsubsection{How DVC Decides What to Push}
+
+When you run \texttt{dvc push}, DVC answers one question:
+
+\begin{quote}
+\emph{Which data objects are required to reproduce the current workspace?}
+\end{quote}
+
+To determine this, DVC inspects:
+
+\begin{itemize}[leftmargin=*]
+    \item \texttt{dvc.lock} (if using \texttt{dvc.yaml} pipelines)
+    \item \texttt{.dvc} files (if using \texttt{dvc add})
+\end{itemize}
+
+Each of these files contains \textbf{hashes} that point to objects in \texttt{.dvc/cache/}.
+Only those cache objects are considered “needed”.
+
+\subsubsection{What Gets Pushed}
+
+\begin{itemize}[leftmargin=*]
+    \item Data files, models, or artifacts stored in \texttt{.dvc/cache/}
+    \item Only the cache objects whose hashes appear in:
+    \begin{itemize}
+        \item the current \texttt{dvc.lock}, and/or
+        \item the current \texttt{.dvc} files
+    \end{itemize}
+\end{itemize}
+
+\textbf{Important}: DVC does \emph{not} push hash files or tokens themselves—  
+it pushes the actual data objects referenced by those hashes.
+
+\subsubsection{What Does NOT Get Pushed}
+
+\begin{itemize}[leftmargin=*]
+    \item Data from previous experiments that are not applied
+    \item Data referenced only by discarded or local experiments
+    \item Experiment history stored in \texttt{.git/refs/exps/}
+    \item All cache contents by default
+\end{itemize}
+
+\subsubsection{Example: Multiple Experiments}
+
+Assume you ran three experiments:
+
+\begin{itemize}[leftmargin=*]
+    \item Experiment 1 produced data version A
+    \item Experiment 2 produced data version B
+    \item Experiment 3 produced data version C
+\end{itemize}
+
+After applying Experiment 3, the current \texttt{dvc.lock} contains hashes
+pointing only to version C.
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc push
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{Result}:
+\begin{itemize}[leftmargin=*]
+    \item Only data version C is uploaded to remote storage
+    \item Versions A and B remain local
+\end{itemize}
+
+\subsubsection{Pushing Data for All Commits}
+
+If you want to upload data referenced by \textbf{all Git commits} (not just the current one), use:
+
+\begin{cmdbox}
+\begin{verbatim}
+dvc push --all-commits
+\end{verbatim}
+\end{cmdbox}
+
+This scans Git history and uploads cache objects referenced by every committed state.
+
+\textbf{Note}: This still does not push local experiment history—only committed states.
+
+\subsection{Summary}
+
+\begin{warningbox}
+\textbf{Key Takeaways}:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{dvc push} uploads data referenced by the current workspace only
+    \item It relies on \texttt{dvc.lock} and/or \texttt{.dvc} files
+    \item Unapplied experiments are not pushed
+    \item To push all committed data, use \texttt{dvc push --all-commits}
+\end{itemize}
+\end{warningbox}
+
+\newpage
+
+% ========================
+% SECTION 15: COMPLETE WORKFLOW
+% ========================
+\section{Complete MLOps Workflow Summary}
+
+\subsection{Running Multiple Experiments with DVCLive}
+
+\begin{infobox}{How DVC Experiments Work}
+When you run multiple experiments with \texttt{dvc exp run}:
+
+\vspace{0.5 em}
+
+\textbf{What Happens}:
+\begin{enumerate}[leftmargin=*]
+    \item Run Experiment 1 → DVC stores it locally in \texttt{.git/refs/exps/}
+    \item Run Experiment 2 → DVC stores it separately, Exp 1 remains
+    \item Run Experiment 3 → DVC stores it separately, Exp 1 \& 2 remain
+    \item Use \texttt{dvc exp show} → See all experiments with metrics
+    \item Use \texttt{dvc exp diff} → Compare experiments
+\end{enumerate}
+
+\textbf{Result}: All experiments are tracked locally and can be compared!
+
+\vspace{0.5 em}
+\textbf{DVC + DVCLive Benefits}:
+\begin{itemize}[leftmargin=*]
+    \item DVCLive automatically logs metrics, parameters, and plots
+    \item DVC assigns each experiment a unique identifier
+    \item Compare multiple experiments side-by-side
+    \item Local experiment history preserved
+\end{itemize}
+\end{infobox}
+
+\begin{warningbox}
+\textbf{Important Limitation}: Experiment History is Local Only
+
+\vspace{0.5 em}
+
+\textbf{The Constraint}:
+\begin{itemize}[leftmargin=*]
+    \item DVC experiments live in \texttt{.git/refs/exps/} (local Git refs)
+    \item \texttt{dvc push} does NOT upload experiment history to remote
+    \item Only the \textbf{applied/promoted} experiment is committed to Git
+    \item Team members cannot see your experiment history
+\end{itemize}
+
+\textbf{For centralized experiment tracking across teams}, use MLflow or similar tools. (We'll cover this in advanced sections.)
+\end{warningbox}
+
+\subsection{Correct Workflow: Compare and Apply Best Experiment}
+
+\begin{examplebox}{Proper Workflow for Multiple Experiments}
+\begin{verbatim}
+# ==== RUN MULTIPLE EXPERIMENTS ====
+# Experiment 1
+vim params.yaml  # e.g., n_estimators: 20
+dvc exp run -n "baseline-20"
+
+# Experiment 2
+vim params.yaml  # e.g., n_estimators: 50
+dvc exp run -n "test-50"
+
+# Experiment 3
+vim params.yaml  # e.g., n_estimators: 100
+dvc exp run -n "test-100"
+
+# ==== COMPARE EXPERIMENTS ====
+dvc exp show
+# See all experiments with metrics side-by-side
+
+dvc exp diff baseline-20 test-50
+# Compare specific experiments
+
+# ==== APPLY BEST EXPERIMENT ====
+# Choose best performing experiment (e.g., test-50)
+dvc exp apply test-50
+
+# ==== COMMIT THE BEST VERSION ====
+# 1. Push data to S3 (uploads cached outputs)
+dvc push
+
+# 2. Commit to Git (saves code + metadata)
+git add dvc.lock params.yaml
+git commit -m "Apply best experiment: n_estimators=50, accuracy=0.92"
+git push origin main
+\end{verbatim}
+\end{examplebox}
+
+\begin{infobox}{What Gets Committed}
+\textbf{One Git Commit = One Promoted Experiment}:
+\begin{itemize}[leftmargin=*]
+    \item Only the \textbf{applied} experiment becomes permanent
+    \item Other experiments remain local (not pushed to remote)
+    \item Git history shows only promoted experiments
+    \item Each team member's local experiments stay private
+\end{itemize}
+\end{infobox}
+
+\subsection{Why This Matters for Rollback}
+
+\begin{center}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{What You CAN Rollback} & \textbf{What You CANNOT Rollback} \\
+\hline
+Promoted experiments (via Git commits) & Unpromoted local experiments \\
+\hline
+Code, data, models of committed state & Alternative experiments (not preserved) \\
+\hline
+\texttt{git checkout + dvc pull} works & Unpromoted experiments (may be discarded) \\
+\hline
+Parameters and metrics in Git history & Local experiment refs (not preserved, may be discarded) \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{warningbox}
+\textbf{Key Understanding}: Git Commits Are Singular
+
+\vspace{0.5 em}
+
+When you \texttt{dvc exp apply} and commit:
+\begin{itemize}[leftmargin=*]
+    \item One Git commit = one experiment outcome
+    \item Unpromoted experiments are not preserved and may be discarded
+    \item Rolling back restores only committed experiments
+    \item To preserve all experiments, you need external tracking (e.g., MLflow)
+\end{itemize}
+\end{warningbox}
+
+\subsection{Rollback Procedure}
+
+To reproduce a previously committed experiment:
+
+\begin{cmdbox}
+\begin{verbatim}
+# 1. View commit history
+git log --oneline
+
+# Example output:
+# a1b2c3d Apply best: n_estimators=100, accuracy=0.94
+# d4e5f6g Apply best: n_estimators=50, accuracy=0.92
+# h7i8j9k Baseline: n_estimators=20, accuracy=0.88
+
+# 2. Checkout desired experiment
+git checkout d4e5f6g
+
+# 3. Pull corresponding data from S3
+dvc pull
+
+# 4. Verify
+python src/Model_Evaluation.py
+\end{verbatim}
+\end{cmdbox}
+
+\textbf{What happens}:
+\begin{enumerate}[leftmargin=*]
+    \item \texttt{git checkout}: Restores code + \texttt{dvc.lock} for that commit
+    \item \texttt{dvc pull}: Uses \texttt{dvc.lock} to fetch exact data from S3
+    \item Everything restored: code, data, model, parameters
+\end{enumerate}
+
+\begin{infobox}{Rollback is Only Possible For...}
+\begin{itemize}[leftmargin=*]
+    \item Experiments that were \textbf{applied} with \texttt{dvc exp apply}
+    \item Experiments that were committed to Git
+    \item Experiments whose data was pushed with \texttt{dvc push}
+\end{itemize}
+
+Unpromoted local experiments are not preserved and may be discarded!
+\end{infobox}
+
+\subsection{Complete Command Reference}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Experiment Workflow]
+\begin{verbatim}
+# 1. Run multiple experiments
+dvc exp run -n "exp-name"  # Repeat with different params
+
+# 2. Compare experiments
+dvc exp show               # View all experiments
+dvc exp diff exp1 exp2     # Compare two experiments
+
+# 3. Apply best experiment
+dvc exp apply exp-name     # Promote to workspace
+
+# 4. Commit the promoted experiment
+dvc push                   # Upload cached data to S3
+git add dvc.lock params.yaml
+git commit -m "message"
+git push                   # Upload to GitHub
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title=To Rollback]
+\begin{verbatim}
+1. git checkout <hash>  # Restore code
+2. dvc pull             # Restore data
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=orange!5!white,colframe=orange!75!black,title=Advanced: Push All Commits' Data]
+\begin{verbatim}
+# Upload data for all Git commits (not just current)
+dvc push --all-commits
+\end{verbatim}
+\end{tcolorbox}
+
+\subsection{Understanding DVCLive and Local Experiments}
+
+\begin{infobox}{The Experiment Lab Analogy}
+Think of DVC experiments like a lab notebook:
+
+\vspace{0.5em}
+
+\textbf{Current Workspace (dvclive/)}:
+\begin{itemize}[leftmargin=*]
+    \item Shows the active experiment's metrics and plots
+    \item Gets overwritten when you run a new experiment
+    \item Temporary workspace (don't add to Git)
+\end{itemize}
+
+\textbf{Experiment History (Local Git Refs)}:
+\begin{itemize}[leftmargin=*]
+    \item DVC stores all experiments in \texttt{.git/refs/exps/}
+    \item Each experiment keeps its own metrics and parameters
+    \item \texttt{dvc exp show} displays all experiments
+    \item \textbf{Local only} - not pushed to GitHub/S3
+\end{itemize}
+
+\textbf{Committed Experiments (Git History)}:
+\begin{itemize}[leftmargin=*]
+    \item Only applied experiments enter Git history
+    \item Permanent and shareable across team
+    \item Can be rolled back anytime
+\end{itemize}
+
+\end{infobox}
+
+\begin{warningbox}
+\textbf{Key Points}:
+\begin{itemize}[leftmargin=*]
+    \item \texttt{dvclive/} folder shows current state only
+    \item DVC remembers all experiments locally
+    \item Only promoted experiments survive in remote/Git
+    \item For centralized experiment tracking, use MLflow
+\end{itemize}
+\end{warningbox}
+
+\subsection{Workflow Visualization}
+
+\begin{center}
+\begin{tikzpicture}[
+    node distance=1.5cm,
+    box/.style={rectangle, rounded corners, draw=blue!70, fill=blue!10, thick, minimum width=2.5cm, minimum height=0.8cm, align=center, font=\small},
+    storage/.style={cylinder, shape border rotate=90, draw=green!70, fill=green!10, thick, minimum width=2cm, minimum height=1.2cm, align=center, font=\small},
+    arrow/.style={->, >=stealth, thick}
+]
+
+\node[box] (exp) {dvc exp run\\(multiple times)};
+\node[box, below=of exp] (compare) {dvc exp show\\dvc exp diff};
+\node[box, below=of compare] (apply) {dvc exp apply};
+\node[box, below=of apply] (push) {dvc push};
+\node[storage, right=3cm of push] (s3) {S3\\Remote};
+\node[box, below=of push] (gitadd) {git commit};
+\node[box, below=of gitadd] (gitpush) {git push};
+\node[storage, right=3cm of gitpush] (github) {GitHub};
+
+\draw[arrow] (exp) -- (compare) node[midway, right, font=\tiny] {local experiments};
+\draw[arrow] (compare) -- (apply) node[midway, right, font=\tiny] {choose best};
+\draw[arrow] (apply) -- (push) node[midway, right, font=\tiny] {promote};
+\draw[arrow, red, very thick] (push) -- node[above, font=\tiny] {data} (s3);
+\draw[arrow] (push) -- (gitadd);
+\draw[arrow] (gitadd) -- (gitpush);
+\draw[arrow, red, very thick] (gitpush) -- node[above, font=\tiny] {code} (github);
+
+\end{tikzpicture}
+\end{center}
+
+\subsection{When to Use MLflow}
+
+\begin{infobox}{Limitations of DVC Experiments}
+DVC experiments are excellent for local iteration, but have limitations:
+
+\vspace{0.5em}
+
+\textbf{What DVC Provides}:
+\begin{itemize}[leftmargin=*]
+    \item Local experiment tracking and comparison
+    \item Data and model versioning
+    \item Reproducibility of promoted experiments
+\end{itemize}
+
+\textbf{What DVC Does NOT Provide}:
+\begin{itemize}[leftmargin=*]
+    \item Centralized experiment history across team
+    \item Remote storage of all experiment runs
+    \item Web UI for comparing experiments
+    \item Experiment history persistence beyond local refs
+\end{itemize}
+
+\textbf{Solution}: For centralized experiment tracking, use MLflow alongside DVC. (This will be covered in advanced sections.)
+\end{infobox}
+
+\newpage
+
+% ========================
+% SECTION 16: TROUBLESHOOTING
+% ========================
+\section{Common Issues and Troubleshooting}
+
+\subsection{DVC Issues}
+
+\subsubsection{Issue: "Stage didn't change, skipping"}
+
+\textbf{Problem}: DVC won't re-run stages even after changes.
+
+\vspace{0.5em}
+
+\textbf{Solutions}:
+\begin{cmdbox}
+\begin{verbatim}
+# Force re-run entire pipeline
+dvc repro --force
+
+# Force re-run specific stage
+dvc repro --force model_building
+
+# Clear cache and re-run
+dvc remove <stage>
+dvc repro
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Issue: "Failed to push data"}
+
+\textbf{Problem}: \texttt{dvc push} fails with S3 errors.
+
+\vspace{0.5em}
+
+\textbf{Solutions}:
+\begin{enumerate}[leftmargin=*]
+    \item Check AWS credentials:
+    \begin{cmdbox}
+\begin{verbatim}
+aws s3 ls s3://your-bucket-name
+\end{verbatim}
+    \end{cmdbox}
+    
+    \item Verify remote configuration:
+    \begin{cmdbox}
+\begin{verbatim}
+dvc remote list
+cat .dvc/config
+\end{verbatim}
+    \end{cmdbox}
+    
+    \item Check bucket permissions in AWS Console
+    
+    \item Reconfigure AWS:
+    \begin{cmdbox}
+\begin{verbatim}
+aws configure
+\end{verbatim}
+    \end{cmdbox}
+\end{enumerate}
+
+\subsubsection{Issue: "File not found" during dvc pull}
+
+\textbf{Problem}: \texttt{dvc pull} can't find files in S3.
+
+\vspace{0.5em}
+
+\textbf{Cause}: You never ran \texttt{dvc push} for that version.
+
+\vspace{0.5em}
+
+\textbf{Solution}:
+\begin{itemize}[leftmargin=*]
+    \item Cannot recover if data never pushed
+    \item Re-run the experiment
+    \item Follow complete workflow (commit → push)
+\end{itemize}
+
+\subsection{Git Issues}
+
+\subsubsection{Issue: Large files in Git}
+
+\textbf{Problem}: Accidentally committed data/models to Git.
+
+\vspace{0.5em}
+
+\textbf{Solution}:
+\begin{cmdbox}
+\begin{verbatim}
+# Remove from Git tracking
+git rm -r --cached data/
+git rm -r --cached models/
+
+# Update .gitignore
+echo "data/" >> .gitignore
+echo "models/" >> .gitignore
+
+# Commit removal
+git commit -m "Remove large files from Git tracking"
+git push origin main
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Issue: Merge conflicts in dvc.lock}
+
+\textbf{Problem}: Multiple team members modified pipeline.
+
+\vspace{0.5em}
+
+\textbf{Solution}:
+\begin{cmdbox}
+\begin{verbatim}
+# Accept their version
+git checkout --theirs dvc.lock
+
+# Or accept your version
+git checkout --ours dvc.lock
+
+# Then re-run pipeline
+dvc repro
+
+# Commit resolved lock
+git add dvc.lock
+git commit -m "Resolve dvc.lock conflict"
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Python Issues}
+
+\subsubsection{Issue: Import errors}
+
+\textbf{Problem}: Cannot import modules.
+
+\vspace{0.5em}
+
+\textbf{Solution}:
+\begin{cmdbox}
+\begin{verbatim}
+# Install requirements
+pip install -r requirements.txt
+
+# Or install individually
+pip install pandas scikit-learn nltk pyyaml dvclive
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{Issue: NLTK data not found}
+
+\textbf{Problem}: \texttt{stopwords} or \texttt{punkt} not found.
+
+\vspace{0.5em}
+
+\textbf{Solution}:
+\begin{lstlisting}[language=Python]
+import nltk
+nltk.download('stopwords')
+nltk.download('punkt')
+\end{lstlisting}
+
+\subsection{AWS Issues}
+
+\subsubsection{Issue: "Access Denied" on S3}
+
+\textbf{Problem}: IAM user lacks permissions.
+
+\vspace{0.5em}
+
+\textbf{Solution}:
+\begin{enumerate}[leftmargin=*]
+    \item Go to IAM in AWS Console
+    \item Find your user
+    \item Attach policy: \texttt{AmazonS3FullAccess}
+    \item Or create custom policy with s3:GetObject, s3:PutObject, s3:ListBucket
+\end{enumerate}
+
+\subsubsection{Issue: Wrong region}
+
+\textbf{Problem}: Bucket in different region than configured.
+
+\vspace{0.5em}
+
+\textbf{Solution}:
+\begin{cmdbox}
+\begin{verbatim}
+# Check bucket region in S3 console
+# Update AWS config
+aws configure set region <correct-region>
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Experiment Tracking Issues}
+
+\subsubsection{Issue: Experiments not showing}
+
+\textbf{Problem}: \texttt{dvc exp show} displays no experiments.
+
+\vspace{0.5em}
+
+\textbf{Cause}: Used \texttt{dvc repro} instead of \texttt{dvc exp run}.
+
+\vspace{0.5em}
+
+\textbf{Solution}:
+\begin{itemize}[leftmargin=*]
+    \item Use \texttt{dvc exp run} for experiments
+    \item \texttt{dvc repro} is for production pipeline execution
+\end{itemize}
+
+\subsubsection{Issue: DVCLive not logging}
+
+\textbf{Problem}: No metrics in \texttt{dvclive/}.
+
+\vspace{0.5em}
+
+\textbf{Solution}:
+\begin{enumerate}[leftmargin=*]
+    \item Verify DVCLive installed: \texttt{pip install dvclive}
+    \item Check code has \texttt{with Live(save\_dvc\_exp=True):}
+    \item Ensure metrics logged: \texttt{live.log\_metric(...)}
+    \item Check for exceptions in logs
+\end{enumerate}
+
+\newpage
+
+% ========================
+% SECTION 17: BEST PRACTICES
+% ========================
+
+\section{MLOps Best Practices}
+
+\subsection{Code Organization Best Practices}
+
+\subsubsection{Modular Design Principles}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Single Responsibility Principle}:
+    \begin{itemize}
+        \item One component per file
+        \item Each module does one thing well
+        \item Clear separation of concerns
+    \end{itemize}
+    
+    \begin{examplebox}{Good vs Bad Structure}
+    \textbf{No Bad - Everything in one file}:
+    \begin{verbatim}
+pipeline.py (2000 lines)
+    - Data loading
+    - Preprocessing
+    - Feature engineering
+    - Model training
+    - Evaluation
+    \end{verbatim}
+    
+    \textbf{Yes Good - Modular structure}:
+    \begin{verbatim}
+src/
+├── Data_Ingestion.py       (200 lines)
+├── Data_Pre_Processing.py  (250 lines)
+├── Feature_Engineering.py  (180 lines)
+├── Model_Building.py       (150 lines)
+└── Model_Evaluation.py     (200 lines)
+    \end{verbatim}
+    \end{examplebox}
+    
+    \item \textbf{Reusable Functions}:
+    \begin{lstlisting}[language=Python]
+# Good: Reusable utility functions
+def load_params(params_path: str) -> dict:
+    """Load parameters from YAML file."""
+    with open(params_path, 'r') as f:
+        return yaml.safe_load(f)
+
+def setup_logger(name: str, log_file: str) -> logging.Logger:
+    """Configure and return a logger."""
+    logger = logging.getLogger(name)
+    # ... setup code
+    return logger
+    \end{lstlisting}
+    
+    \item \textbf{Type Hints and Docstrings}:
+    \begin{lstlisting}[language=Python]
+def train_model(
+    X_train: np.ndarray, 
+    y_train: np.ndarray, 
+    params: dict
+) -> RandomForestClassifier:
+    """
+    Train a RandomForest classifier.
+    
+    Args:
+        X_train: Training features of shape (n_samples, n_features)
+        y_train: Training labels of shape (n_samples,)
+        params: Dictionary containing model hyperparameters
+        
+    Returns:
+        Trained RandomForestClassifier instance
+        
+    Raises:
+        ValueError: If X_train and y_train shapes don't match
+    """
+    # Implementation
+    pass
+    \end{lstlisting}
+\end{enumerate}
+
+\subsubsection{Logging Best Practices}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Appropriate Log Levels}:
+    \begin{lstlisting}[language=Python]
+logger.debug('Detailed information for debugging')
+logger.info('General informational messages')
+logger.warning('Warning messages for potential issues')
+logger.error('Error messages for failures')
+logger.critical('Critical errors requiring immediate attention')
+    \end{lstlisting}
+    
+    \item \textbf{Structured Logging}:
+    \begin{lstlisting}[language=Python]
+# Good: Structured, informative logging
+logger.info(f'Training started with {X_train.shape[0]} samples')
+logger.info(f'Parameters: {params}')
+logger.debug(f'Feature shape: {X_train.shape}')
+logger.info(f'Training completed in {elapsed_time:.2f}s')
+
+# Bad: Vague logging
+logger.info('Training done')
+    \end{lstlisting}
+    
+    \item \textbf{Log File Organization}:
+    \begin{verbatim}
+logs/
+├── Data_Ingestion_2024-12-20.log
+├── Data_Pre_Processing_2024-12-20.log
+├── Feature_Engineering_2024-12-20.log
+├── Model_Building_2024-12-20.log
+└── Model_Evaluation_2024-12-20.log
+    \end{verbatim}
+\end{enumerate}
+
+\subsubsection{Error Handling Patterns}
+
+\begin{lstlisting}[language=Python]
+def load_data(file_path: str) -> pd.DataFrame:
+    """Load data with comprehensive error handling."""
+    try:
+        # Attempt operation
+        df = pd.read_csv(file_path)
+        logger.info(f'Successfully loaded data from {file_path}')
+        return df
+        
+    except FileNotFoundError:
+        # Specific exception handling
+        logger.error(f'File not found: {file_path}')
+        raise
+        
+    except pd.errors.ParserError as e:
+        # Another specific exception
+        logger.error(f'Failed to parse CSV: {e}')
+        raise
+        
+    except Exception as e:
+        # Catch-all for unexpected errors
+        logger.error(f'Unexpected error loading data: {e}')
+        raise
+        
+    finally:
+        # Cleanup code (if needed)
+        logger.debug('Load data operation completed')
+\end{lstlisting}
+
+\subsection{Data Management Best Practices}
+
+\subsubsection{Directory Structure Philosophy}
+
+\begin{infobox}{Three-Tier Data Structure}
+\textbf{data/raw/}: Original, immutable data
+\begin{itemize}[leftmargin=*]
+    \item Never modify these files
+    \item Treat as read-only
+    \item Can always reproduce from source
+\end{itemize}
+
+\textbf{data/interim/}: Intermediate processing
+\begin{itemize}[leftmargin=*]
+    \item Partially processed data
+    \item Reusable across experiments
+    \item Checkpoint for long pipelines
+\end{itemize}
+
+\textbf{data/processed/}: Final features
+\begin{itemize}[leftmargin=*]
+    \item Ready for model training
+    \item Feature matrices
+    \item Final transformations applied
+\end{itemize}
+\end{infobox}
+
+\subsubsection{Data Versioning Strategy}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Always Use DVC for Data}:
+	\begin{verbatim}
+	# Either track data directly:
+	dvc add data/processed
+	
+	# OR track data via pipelines:
+	dvc.yaml:
+	  outs:
+	    - data/processed
+	\end{verbatim}
+    
+    \item \textbf{Never Commit Large Files to Git}:
+    \begin{warningbox}
+    Files larger than 100MB should NEVER go into Git:
+    \begin{itemize}[leftmargin=*]
+        \item Git repositories become slow
+        \item Clone times increase dramatically
+        \item GitHub blocks files >100MB
+        \item Use DVC instead!
+    \end{itemize}
+    \end{warningbox}
+    
+    \item \textbf{Avoid Manual Data Version Directories}:
+	\begin{itemize}
+	    \item Prefer DVC hashes over folder-based versioning
+	    \item Use Git commits and DVC cache for true version history
+	    \item Manual version folders are optional and discouraged at scale
+	\end{itemize}
+\end{enumerate}
+
+\subsubsection{Data Validation}
+
+\begin{lstlisting}[language=Python]
+def validate_data(
+    df: pd.DataFrame,
+    expected_columns: list,
+    min_rows: int = 100
+) -> bool:
+    """
+    Validate data meets expectations.
+    
+    Checks:
+        - Required columns exist
+        - Minimum row count met
+        - No completely empty columns
+        - Correct data types
+    """
+    logger.info('Starting data validation')
+    
+    # Check columns
+    missing_cols = set(expected_columns) - set(df.columns)
+    if missing_cols:
+        logger.error(f'Missing columns: {missing_cols}')
+        raise ValueError(f"Missing required columns: {missing_cols}")
+    
+    # Check row count
+    if len(df) < min_rows:
+        logger.error(f'Only {len(df)} rows, expected {min_rows}')
+        raise ValueError(f"Insufficient rows: {len(df)} < {min_rows}")
+    
+    # Check for empty columns
+    empty_cols = df.columns[df.isnull().all()].tolist()
+    if empty_cols:
+        logger.warning(f'Empty columns found: {empty_cols}')
+    
+    # Check data types
+    type_issues = []
+    expected_types = {'text': 'object', 'target': ('int64', 'float64')}
+    for col, expected_dtype in expected_types.items():
+        if df[col].dtype not in expected_dtype:
+            type_issues.append(f'{col}: {df[col].dtype}')
+    
+    if type_issues:
+        logger.error(f'Type mismatches: {type_issues}')
+        raise TypeError(f"Data type issues: {type_issues}")
+    
+    logger.info('Data validation passed')
+    return True
+\end{lstlisting}
+
+\subsection{Experiment Management Best Practices}
+
+\subsubsection{Naming Conventions}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Descriptive Commit Messages}:
+    \begin{examplebox}{Good Commit Messages}
+    \begin{verbatim}
+Yes "Promote: n_estimators=100, accuracy=0.97"
+Yes "Feature: Add TF-IDF with bigrams, precision +0.03"
+Yes "Fix: Correct data leakage in preprocessing pipeline"
+Yes "Baseline: RandomForest with default params, acc=0.95"
+    \end{verbatim}
+    \end{examplebox}
+    
+    \begin{warningbox}
+    \textbf{Bad Commit Messages}:
+    \begin{verbatim}
+No "Update model"
+No "Fix bug"
+No "Changes"
+No "WIP"
+No "asdfasdf"
+    \end{verbatim}
+    \end{warningbox}
+    
+    \item \textbf{Experiment Naming Pattern}:
+    \begin{verbatim}
+exp-<date>-<feature>-<value>
+
+Examples:
+exp-2024-12-20-n_estimators-100
+exp-2024-12-20-max_features-200
+exp-2024-12-20-baseline
+    \end{verbatim}
+\end{enumerate}
+
+\subsubsection{Parameter Management}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{All Hyperparameters in params.yaml}:
+    \begin{lstlisting}[language=Python]
+# No Bad: Hardcoded in code
+clf = RandomForestClassifier(n_estimators=50, max_depth=10)
+
+# Yes Good: From params.yaml
+params = load_params('params.yaml')['model_building']
+clf = RandomForestClassifier(**params)
+    \end{lstlisting}
+    
+    \item \textbf{Document Parameter Choices}:
+    \begin{lstlisting}[style=yamlstyle]
+# params.yaml with comments
+model_building:
+  n_estimators: 50      # Increased from 20, improved accuracy
+  max_depth: 10         # Prevent overfitting on small dataset
+  min_samples_split: 5  # Baseline value
+  random_state: 2       # For reproducibility
+    \end{lstlisting}
+    
+    \item \textbf{Track Parameter Changes}:
+    \begin{verbatim}
+# In commit messages
+git commit -m "Exp: n_estimators 20→50, max_depth 5→10"
+    \end{verbatim}
+\end{enumerate}
+
+\subsubsection{Metric Tracking}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Track Multiple Metrics}:
+    \begin{lstlisting}[language=Python]
+with Live(save_dvc_exp=True) as live:
+    # Primary metrics
+    live.log_metric('accuracy', accuracy)
+    live.log_metric('precision', precision)
+    live.log_metric('recall', recall)
+    live.log_metric('f1_score', f1)
+    live.log_metric('auc', auc)
+    
+    # Secondary metrics
+    live.log_metric('training_time', elapsed_time)
+    live.log_metric('num_features', X_train.shape[1])
+    live.log_metric('num_samples', X_train.shape[0])
+    
+    # Log all parameters
+    live.log_params(params)
+    \end{lstlisting}
+    
+    \item \textbf{Business-Relevant Metrics}:
+    \begin{lstlisting}[language=Python]
+# Don't just track ML metrics
+# Track business impact
+business_metrics = {
+    'false_positive_rate': fp_rate,
+    'false_negative_rate': fn_rate,
+    'cost_per_error': calculate_cost(fp, fn),
+    'expected_savings': calculate_savings(tp, tn)
+}
+    \end{lstlisting}
+\end{enumerate}
+
+\subsection{Collaboration Best Practices}
+
+\subsubsection{Documentation Standards}
+
+\begin{examplebox}{Essential README.md Sections}
+\begin{verbatim}
+# Project Name
+
+## Overview
+Brief description of the ML problem and solution.
+
+## Setup Instructions
+1. Clone repository
+2. Create virtual environment
+3. Install dependencies
+4. Configure AWS credentials
+5. Run pipeline
+
+## Project Structure
+Explain directory organization.
+
+## Data Description
+- Source of data
+- Features and target
+- Data collection process
+
+## Pipeline Stages
+Describe each stage of the pipeline.
+
+## Experiments
+Table of experiments with results.
+
+## How to Run
+- Training: `dvc repro`
+- Experiments: `dvc exp run`
+- Rollback: Instructions
+
+## Troubleshooting
+Common issues and solutions.
+
+## Team Members
+Contact information.
+
+## License
+Project license.
+\end{verbatim}
+\end{examplebox}
+
+\subsubsection{Code Review Process}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Pull Request Template}:
+    \begin{verbatim}
+## Changes
+- What was changed
+- Why it was changed
+
+## Experiment Results
+- Metric improvements
+- Parameter changes
+
+## Testing
+- What was tested
+- Test results
+
+## Checklist
+- [ ] Code follows style guide
+- [ ] Tests pass
+- [ ] Documentation updated
+- [ ] dvc repro runs successfully (only for projects with dvc.yaml)
+    \end{verbatim}
+    
+    \item \textbf{Review Checklist}:
+    \begin{itemize}
+        \item Code is modular and readable
+        \item Proper error handling
+        \item Logging is comprehensive
+        \item Parameters in params.yaml
+        \item No hardcoded values
+        \item Data not committed to Git
+        \item Tests exist and pass
+        \item Documentation updated
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Team Communication}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Experiment Log}:
+    \begin{center}
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+    \textbf{Date} & \textbf{Experimenter} & \textbf{Changes} & \textbf{Result} \\
+    \hline
+    2024-12-20 & Alice & n\_estimators=100 & acc=0.97 \\
+    2024-12-19 & Bob & Add bigrams & acc=0.96 \\
+    2024-12-18 & Alice & Baseline & acc=0.95 \\
+    \hline
+    \end{tabular}
+    \end{center}
+    
+    \item \textbf{Weekly Sync Meetings}:
+    \begin{itemize}
+        \item Review experiment results
+        \item Discuss blockers
+        \item Plan next experiments
+        \item Share learnings
+    \end{itemize}
+    
+    \item \textbf{Slack/Communication Channels}:
+    \begin{verbatim}
+#ml-experiments: Share experiment results
+#ml-questions: Ask technical questions
+#ml-alerts: Pipeline failures, important updates
+    \end{verbatim}
+\end{enumerate}
+
+\subsection{Security and Compliance}
+
+\subsubsection{Credential Management}
+
+\begin{warningbox}
+\textbf{NEVER Commit These to Git}:
+\begin{itemize}[leftmargin=*]
+    \item AWS Access Keys / Secret Keys
+    \item API tokens
+    \item Database passwords
+    \item Private keys
+    \item OAuth tokens
+    \item Any secrets or credentials
+\end{itemize}
+\end{warningbox}
+
+\begin{examplebox}{Secure Credential Management}
+\begin{lstlisting}[language=Python]
+# Yes Good: Use environment variables
+import os
+
+AWS_ACCESS_KEY = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+API_KEY = os.getenv('API_KEY')
+
+# Load from .env file (never commit .env!)
+from dotenv import load_dotenv
+load_dotenv()
+
+# No Bad: Hardcoded credentials
+AWS_ACCESS_KEY = "AKIAIOSFODNN7EXAMPLE"  # DON'T DO THIS!
+\end{lstlisting}
+
+\textbf{.env file (add to .gitignore)}:
+\begin{verbatim}
+AWS_ACCESS_KEY_ID=your_access_key
+AWS_SECRET_ACCESS_KEY=your_secret_key
+API_KEY=your_api_key
+\end{verbatim}
+\end{examplebox}
+
+\subsubsection{Data Privacy}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Sensitive Data Handling}:
+    \begin{lstlisting}[language=Python]
+def anonymize_data(df: pd.DataFrame) -> pd.DataFrame:
+    """Remove PII (Personally Identifiable Information)."""
+    # Remove or hash sensitive columns
+    df = df.drop(columns=['email', 'phone', 'ssn'])
+    
+    # Hash user IDs
+    df['user_id'] = df['user_id'].apply(
+        lambda x: hashlib.sha256(str(x).encode()).hexdigest()
+    )
+    
+    return df
+    \end{lstlisting}
+    
+    \item \textbf{Data Access Controls}:
+    \begin{itemize}
+        \item Use IAM roles with minimal permissions
+        \item Separate dev/staging/prod environments
+        \item Audit data access logs
+        \item Implement data retention policies
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Performance Optimization}
+
+\subsubsection{Caching Strategies}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{DVC Cache Optimization}:
+    \begin{lstlisting}[style=bashstyle]
+# Use hardlinks for faster cache
+dvc config cache.type hardlink,symlink
+
+# Set cache directory on faster disk
+dvc cache dir /path/to/ssd/cache
+
+# Shared cache for team
+dvc config cache.dir /shared/dvc/cache
+dvc config cache.shared group
+    \end{lstlisting}
+    
+    \item \textbf{Partial Pipeline Execution}:
+    \begin{lstlisting}[style=bashstyle]
+# Run only specific stage
+dvc repro model_building
+
+# Run from specific stage onwards
+dvc repro --downstream model_building
+    \end{lstlisting}
+    
+    \item \textbf{Parallel Processing}:
+    \begin{lstlisting}[language=Python]
+# Use all CPU cores
+from sklearn.ensemble import RandomForestClassifier
+
+clf = RandomForestClassifier(
+    n_estimators=100,
+    n_jobs=-1  # Use all cores
+)
+
+# Parallel data loading
+import multiprocessing as mp
+
+with mp.Pool(processes=4) as pool:
+    results = pool.map(process_file, file_list)
+    \end{lstlisting}
+\end{enumerate}
+
+\subsubsection{Memory Management}
+
+\begin{lstlisting}[language=Python]
+def load_data_chunked(file_path: str, chunksize: int = 10000):
+    """Load large CSV in chunks to manage memory."""
+    chunks = []
+    for chunk in pd.read_csv(file_path, chunksize=chunksize):
+        # Process chunk
+        processed = preprocess_chunk(chunk)
+        chunks.append(processed)
+    
+    return pd.concat(chunks, ignore_index=True)
+
+# Clear memory after use
+import gc
+del large_dataframe
+gc.collect()
+\end{lstlisting}
+
+\subsection{Common Pitfalls to Avoid}
+
+\begin{warningbox}
+\textbf{Top 10 Common Mistakes in MLOps}:
+
+\begin{enumerate}[leftmargin=*]
+    \item Committing large data or models to Git instead of using DVC
+    \item Promoting or committing experiments prematurely instead of comparing them first
+    \item Hardcoding parameters instead of using \texttt{params.yaml}
+    \item Not pushing data to remote storage, making commits unreproducible
+    \item Editing \texttt{dvc.lock} manually
+    \item Committing AWS credentials, API keys, or secrets to version control
+    \item Using \texttt{dvc repro} when experiment tracking with \texttt{dvc exp run} is intended
+    \item Ignoring logs and metrics, which are critical for debugging and evaluation
+    \item Skipping data validation at pipeline stages
+    \item Failing to document experiment assumptions and results
+\end{enumerate}
+\end{warningbox}
+
+\begin{infobox}{Best Practice Checklist}
+Before committing code, verify:
+
+\begin{itemize}[leftmargin=*]
+    \item All parameters are defined in \texttt{params.yaml}
+    \item No hardcoded configuration values in code
+    \item Logging is configured in all critical modules
+    \item Error handling is implemented
+    \item Type hints and docstrings are added where appropriate
+    \item Data files are excluded via \texttt{.gitignore}
+    \item No credentials or secrets are present in the codebase
+    \item Pipelines run successfully (\texttt{dvc repro}, if applicable)
+    \item Best experiment is applied and committed (not all experiments)
+    \item Documentation and experiment notes are updated
+\end{itemize}
+\end{infobox}
+
+\newpage
+
+% ========================
+% SECTION 18: QUICK REFERENCE
+% ========================
+\section{Quick Reference Guide}
+
+\subsection{Essential DVC Commands}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Pipeline Management]
+\begin{verbatim}
+dvc init                # Initialize DVC in repository
+dvc repro               # Run entire pipeline
+dvc repro --force       # Force re-run all stages
+dvc repro <stage>       # Run specific stage
+dvc dag                 # Visualize pipeline as DAG
+dvc status              # Check pipeline status
+dvc status -c           # Check status with cloud comparison
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!75!black,title=Data Management]
+\begin{verbatim}
+dvc add <file>          # Track file/directory with DVC
+dvc commit              # Save workspace changes to cache
+dvc push                # Upload data to remote storage
+dvc pull                # Download data from remote storage
+dvc checkout            # Restore files from cache
+dvc fetch               # Download without checkout
+dvc gc                  # Garbage collect unused cache
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=orange!5!white,colframe=orange!75!black,title=Remote Storage]
+\begin{verbatim}
+dvc remote add -d <name> <url>     # Add default remote
+dvc remote list                     # List all remotes
+dvc remote modify <name> <key> <v>  # Modify remote config
+dvc remote remove <name>            # Remove remote
+dvc remote rename <old> <new>       # Rename remote
+
+# Examples:
+dvc remote add -d s3store s3://bucket
+dvc remote add -d gdrive gdrive://folder-id
+dvc remote add -d local /mnt/storage
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=purple!5!white,colframe=purple!75!black,title=Experiment Tracking]
+\begin{verbatim}
+dvc exp run             # Run experiment (saves automatically)
+dvc exp show            # Show all experiments in table
+dvc exp show --no-pager # Show without pagination
+dvc exp diff            # Compare experiments
+dvc exp diff <exp1> <exp2>  # Compare specific experiments
+dvc exp apply <id>      # Apply experiment to workspace
+dvc exp remove <id>     # Remove specific experiment
+dvc exp gc              # Clean up all experiments
+dvc exp list            # List all experiments
+\end{verbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Git Integration]
+\begin{verbatim}
+git add dvc.yaml dvc.lock params.yaml  # Stage DVC files
+git commit -m "message"                 # Commit to Git
+git push origin main                    # Push to GitHub
+
+# Typical workflow
+git add .
+git commit -m "Experiment: description"
+git push
+\end{verbatim}
+\end{tcolorbox}
+
+\subsection{Complete Workflow Cheat Sheet}
+
+\subsubsection{Initial Project Setup}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!75!black,title=Step 1: Project Initialization,breakable]
+\begin{verbatim}
+# 1. Create and clone Git repository
+git clone https://github.com/username/project.git
+cd project
+
+# 2. Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Linux/Mac
+venv\Scripts\activate     # Windows
+
+# 3. Install dependencies
+pip install pandas scikit-learn nltk pyyaml
+pip install dvc dvclive
+pip install dvc[s3]       # For AWS S3
+pip install awscli        # AWS CLI
+
+# 4. Initialize DVC
+dvc init
+
+# 5. Create directory structure
+mkdir -p src data/raw data/interim data/processed models reports logs
+
+# 6. Configure .gitignore
+cat >> .gitignore << EOF
+data/
+models/
+reports/
+logs/
+venv/
+__pycache__/
+*.pyc
+dvclive/
+EOF
+
+# 7. Initial commit
+git add .
+git commit -m "Initial project setup"
+git push origin main
+\end{verbatim}
+\end{tcolorbox}
+
+\subsubsection{Full Experiment Workflow}
+
+\begin{tcolorbox}[colback=gray!5!white,colframe=gray!75!black,title=Step 2: Running Experiments,breakable]
+\begin{verbatim}
+# === RUN MULTIPLE EXPERIMENTS ===
+
+# 1. Modify parameters
+vim params.yaml
+
+# 2. Run experiment
+dvc exp run
+
+# 3. View and compare results
+dvc exp show
+
+# === REPEAT STEPS 1–3 FOR MULTIPLE EXPERIMENTS ===
+
+# 4. Choose the best experiment
+
+# 5. Apply (promote) the best experiment
+dvc exp apply <exp-id>
+
+# 6. Commit promoted state to Git
+git add dvc.lock params.yaml
+git commit -m "Promote best experiment: n_estimators=50, acc=0.97"
+
+# 7. Push data to remote storage
+dvc push
+
+# 8. Push code to GitHub
+git push origin main
+\end{verbatim}
+\end{tcolorbox}
+
+\subsubsection{Rollback to a Promoted (Committed) Experiment}
+
+\begin{tcolorbox}[colback=red!5!white,colframe=red!75!black,title=Step 3: Rollback Procedure,breakable]
+\begin{verbatim}
+# 1. View commit history
+git log --oneline
+
+# Example output:
+# a1b2c3d Promote best: n_estimators=100, acc=0.98
+# d4e5f6g Promote best: n_estimators=50, acc=0.97
+# h7i8j9k Promote best: n_estimators=20, acc=0.95
+
+# 2. Checkout desired promoted experiment (Git commit)
+git checkout d4e5f6g
+
+# 3. Pull corresponding data from remote storage
+dvc pull
+
+# 4. Verify the restored experiment
+python src/Model_Evaluation.py
+cat reports/metrics.json
+
+# 5. Return to the latest version (optional)
+git checkout main
+dvc pull
+\end{verbatim}
+\end{tcolorbox}
+
+\subsubsection{AWS S3 Setup Workflow}
+
+\begin{tcolorbox}[colback=orange!5!white,colframe=orange!75!black,title=Step 4: AWS Integration, breakable]
+\begin{verbatim}
+# 1. Install AWS tools
+pip install dvc[s3]
+pip install awscli
+
+# 2. Configure AWS credentials
+aws configure
+# Enter: Access Key ID
+# Enter: Secret Access Key
+# Enter: Region (e.g., us-east-1)
+# Enter: Output format (json)
+
+# 3. Add S3 remote to DVC
+dvc remote add -d dvcstore s3://your-bucket-name
+
+# 4. Verify configuration
+dvc remote list
+# Output: dvcstore    s3://your-bucket-name
+
+# 5. Test connection
+dvc push
+
+# 6. Commit DVC config to Git
+git add .dvc/config
+git commit -m "Add S3 remote storage"
+git push origin main
+\end{verbatim}
+\end{tcolorbox}
+
+\newpage
+
+\subsection{Project Structure Template}
+
+\begin{cmdbox}
+\begin{verbatim}
+MLOPS-DVC-Project/
+│
+├── Experiments/              # Exploration phase
+│   ├── spam.csv
+│   └── mynotebook.ipynb
+│
+├── src/                      # Production code
+│   ├── Data_Ingestion.py
+│   ├── Data_Pre_Processing.py
+│   ├── Feature_Engineering.py
+│   ├── Model_Building.py
+│   └── Model_Evaluation.py
+│
+├── data/                     # Data files (DVC tracked)
+│   ├── raw/                  # Original data
+│   ├── interim/              # Intermediate processing
+│   └── processed/            # Final features
+│
+├── models/                   # Trained models (DVC tracked)
+│   └── model.pkl
+│
+├── reports/                  # Metrics and reports (DVC tracked)
+│   └── metrics.json
+│
+├── logs/                     # Application logs
+│   ├── Data_Ingestion.log
+│   ├── Data_Pre_Processing.log
+│   ├── Feature_Engineering.log
+│   ├── Model_Building.log
+│   └── Model_Evaluation.log
+│
+├── dvclive/                  # DVCLive temporary files
+│   ├── metrics.json
+│   ├── params.yaml
+│   └── plots/
+│
+├── .dvc/                     # DVC configuration
+│   ├── cache/                # Local data cache
+│   ├── config                # Remote storage config
+│   └── .gitignore
+│
+├── dvc.yaml                  # Pipeline definition
+├── dvc.lock                  # Pipeline lock file
+├── params.yaml               # Hyperparameters
+├── .gitignore                # Git ignore rules
+├── .dvcignore                # DVC ignore rules
+├── requirements.txt          # Python dependencies
+└── README.md                 # Project documentation
+\end{verbatim}
+\end{cmdbox}
+
+\subsection{Key File Purposes}
+
+\begin{center}
+\begin{tabular}{|l|p{0.65\textwidth}|}
+\hline
+\textbf{File} & \textbf{Purpose} \\
+\hline
+\textbf{dvc.yaml} & Defines pipeline stages, dependencies, outputs, parameters \\
+\hline
+\textbf{dvc.lock} & Locks exact file versions using MD5 hashes \\
+\hline
+\textbf{params.yaml} & Centralized hyperparameter configuration \\
+\hline
+\textbf{.gitignore} & Tells Git what NOT to track (data, models, logs) \\
+\hline
+\textbf{.dvcignore} & Tells DVC what NOT to track \\
+\hline
+\textbf{.dvc/config} & DVC remote storage configuration \\
+\hline
+\textbf{.dvc/cache/} & Local cache storing all data versions \\
+\hline
+\textbf{dvclive/} & Temporary experiment metrics (current run only) \\
+\hline
+\textbf{requirements.txt} & Python package dependencies \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Git vs DVC Tracking}
+
+\begin{center}
+\begin{tabular}{|p{0.45\textwidth}|p{0.45\textwidth}|}
+\hline
+\textbf{Git Tracks} & \textbf{DVC Tracks} \\
+\hline
+Source code (\texttt{src/*.py}) & Data files (\texttt{data/**}) \\
+\hline
+\texttt{dvc.yaml} (pipeline definition) & Model files (\texttt{models/*.pkl}) \\
+\hline
+\texttt{dvc.lock} (version locks) & Reports (\texttt{reports/*.json}) \\
+\hline
+\texttt{params.yaml} (hyperparameters) & Large binary files \\
+\hline
+\texttt{.gitignore}, \texttt{.dvcignore} & Outputs defined in \texttt{dvc.yaml} \\
+\hline
+\texttt{.dvc/config} (DVC settings) & Intermediate data artifacts \\
+\hline
+Documentation (\texttt{README.md}) & Feature matrices \\
+\hline
+\texttt{requirements.txt} & Preprocessed datasets \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{params.yaml Template}
+
+\begin{examplebox}{Complete params.yaml Example}
+\begin{lstlisting}[style=yamlstyle]
+# Data Ingestion Parameters
+data_ingestion:
+  test_size: 0.15
+  random_state: 2
+  data_url: "https://raw.githubusercontent.com/.../spam.csv"
+
+# Data Preprocessing Parameters
+data_preprocessing:
+  remove_stopwords: true
+  apply_stemming: true
+  lowercase: true
+
+# Feature Engineering Parameters
+feature_engineering:
+  max_features: 45
+  ngram_range: [1, 2]
+  min_df: 2
+  max_df: 0.95
+
+# Model Building Parameters
+model_building:
+  model_type: "RandomForest"
+  n_estimators: 20
+  max_depth: null
+  min_samples_split: 2
+  min_samples_leaf: 1
+  random_state: 2
+  n_jobs: -1
+
+# Model Evaluation Parameters
+model_evaluation:
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1_score
+    - auc
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{dvc.yaml Template}
+
+\begin{examplebox}{Complete dvc.yaml with All Features}
+\begin{lstlisting}[style=yamlstyle]
+stages:
+  data_ingestion:
+    cmd: python src/Data_Ingestion.py
+    deps:
+      - src/Data_Ingestion.py
+    params:
+      - data_ingestion.test_size
+      - data_ingestion.random_state
+    outs:
+      - data/raw
+
+  data_preprocessing:
+    cmd: python src/Data_Pre_Processing.py
+    deps:
+      - data/raw
+      - src/Data_Pre_Processing.py
+    params:
+      - data_preprocessing
+    outs:
+      - data/interim
+
+  feature_engineering:
+    cmd: python src/Feature_Engineering.py
+    deps:
+      - data/interim
+      - src/Feature_Engineering.py
+    params:
+      - feature_engineering.max_features
+      - feature_engineering.ngram_range
+    outs:
+      - data/processed
+
+  model_building:
+    cmd: python src/Model_Building.py
+    deps:
+      - data/processed
+      - src/Model_Building.py
+    params:
+      - model_building
+    outs:
+      - models/model.pkl
+
+  model_evaluation:
+    cmd: python src/Model_Evaluation.py
+    deps:
+      - models/model.pkl
+      - data/processed
+      - src/Model_Evaluation.py
+    params:
+      - model_evaluation.metrics
+    metrics:
+      - reports/metrics.json:
+          cache: false
+    plots:
+      - reports/plots/confusion_matrix.png
+\end{lstlisting}
+\end{examplebox}
+
+\subsection{Common Command Combinations}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Frequently Used Command Sequences]
+\begin{verbatim}
+# Complete experiment cycle
+dvc exp run && dvc commit && dvc push && git add . && \
+git commit -m "Experiment" && git push
+
+# Quick status check
+dvc status && git status
+
+# Full pipeline re-run
+dvc repro --force && dvc push && git add dvc.lock && \
+git commit -m "Pipeline re-run" && git push
+
+# Sync with team
+git pull && dvc pull
+
+# Clean up experiments
+dvc exp gc && dvc gc
+
+# View pipeline and experiments
+dvc dag && dvc exp show
+\end{verbatim}
+\end{tcolorbox}
+
+\newpage
+
+% ========================
+% SECTION 19: CONCLUSION
+% ========================
+\section{Conclusion and Key Takeaways}
+
+\subsection{What You've Accomplished}
+
+Throughout this comprehensive guide, you've built a complete, production-ready MLOps pipeline. Let's review the major achievements:
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{End-to-End ML Pipeline}:
+    \begin{itemize}
+        \item Data Ingestion with error handling
+        \item Data Pre-Processing with text transformation
+        \item Feature Engineering using TF-IDF
+        \item Model Building with RandomForest
+        \item Model Evaluation with comprehensive metrics
+    \end{itemize}
+    
+    \item \textbf{Pipeline Automation}:
+    \begin{itemize}
+        \item Automated workflow using DVC
+        \item Intelligent dependency tracking
+        \item Reproducible experiments
+        \item Parameter-driven configuration
+    \end{itemize}
+    
+    \item \textbf{Version Control Mastery}:
+    \begin{itemize}
+        \item Git for code versioning
+        \item DVC for data versioning
+        \item AWS S3 for cloud backup
+        \item Complete rollback capability
+    \end{itemize}
+    
+    \item \textbf{Experiment Tracking}:
+    \begin{itemize}
+        \item DVCLive integration
+        \item Metric comparison across experiments
+        \item Parameter tracking
+        \item Visual experiment comparison
+    \end{itemize}
+    
+    \item \textbf{Production Readiness}:
+    \begin{itemize}
+        \item Comprehensive logging
+        \item Error handling
+        \item Modular architecture
+        \item Team collaboration setup
+    \end{itemize}
+\end{enumerate}
+
+\subsection{The MLOps Journey: From Notebook to Production}
+
+\begin{infobox}{The Transformation}
+\textbf{Where You Started}:
+\begin{itemize}[leftmargin=*]
+    \item Jupyter notebooks
+    \item Local experiments
+    \item Manual tracking
+    \item Irreproducible results
+    \item Solo development
+\end{itemize}
+
+\textbf{Where You Are Now}:
+\begin{itemize}[leftmargin=*]
+    \item Production-ready code
+    \item Automated pipelines
+    \item Systematic tracking
+    \item Fully reproducible
+    \item Collaboration-ready
+\end{itemize}
+\end{infobox}
+
+\subsection{Core Principles You've Learned}
+
+\subsubsection{1. Version Everything}
+
+\begin{center}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Component} & \textbf{Tool} & \textbf{What's Tracked} \\
+\hline
+Code & Git & Python scripts, configs \\
+Data & DVC & Raw, interim, processed \\
+Models & DVC & Trained model files \\
+Parameters & Git & params.yaml \\
+Metrics & DVC & Evaluation results \\
+Dependencies & Git & requirements.txt \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{2. Automate Repetitive Tasks}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Before}: Manually run 5 Python scripts in sequence
+    \item \textbf{After}: \texttt{dvc repro} runs entire pipeline
+\end{itemize}
+
+\subsubsection{3. Make Everything Reproducible}
+
+\textbf{The Golden Rule}:
+\begin{cmdbox}
+\begin{verbatim}
+git checkout <commit-hash>
+dvc pull
+# => Exact same code, data, and results
+\end{verbatim}
+\end{cmdbox}
+
+\subsubsection{4. Track Experiments Systematically}
+
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Experiment} & \textbf{Parameters} & \textbf{Accuracy} & \textbf{Decision} \\
+\hline
+Exp 1 & n\_estimators=20 & 0.950 & Baseline \\
+Exp 2 & n\_estimators=50 & 0.970 & Improved \\
+Exp 3 & n\_estimators=100 & 0.972 & Selected \\
+Exp 4 & n\_estimators=200 & 0.971 & Overfitting \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{The Complete Workflow Visualization}
+
+\begin{center}
+\begin{tikzpicture}[
+    node distance=1.3cm,
+    box/.style={rectangle, rounded corners, draw=blue!70, fill=blue!10, thick, minimum width=2.7cm, minimum height=0.8cm, align=center, font=\small},
+    storage/.style={cylinder, shape border rotate=90, draw=green!70, fill=green!10, thick, minimum width=2.2cm, minimum height=1.2cm, align=center, font=\small},
+    arrow/.style={->, >=stealth, thick, blue},
+    redarrow/.style={->, >=stealth, very thick, red}
+]
+
+% =====================
+% Left column: Experimentation
+% =====================
+\node[box] (params) {Edit\\params.yaml};
+\node[box, below=of params] (exprun) {dvc exp run};
+\node[box, below=of exprun] (eval) {Evaluate\\Results};
+\node[box, below=of eval] (decide) {Satisfied?};
+
+% =====================
+% Middle column: Promotion + Storage
+% =====================
+\node[box, below right=0.5cm and 2cm of decide] (apply) {dvc exp apply};
+\node[box, below=of apply] (push) {dvc push};
+\node[storage, right=1.5cm of push] (s3) {S3\\Remote};
+
+% =====================
+% Right column: Git
+% =====================
+\node[box, below=of push] (gitadd) {git add};
+\node[box, below=of gitadd] (gitcommit) {git commit};
+\node[box, below=of gitcommit] (gitpush) {git push};
+\node[storage, right=1.5cm of gitpush] (github) {GitHub\\Repo};
+
+% =====================
+% Arrows
+% =====================
+\draw[arrow] (params) -- (exprun);
+\draw[arrow] (exprun) -- (eval);
+\draw[arrow] (eval) -- (decide);
+
+\draw[arrow] (decide) -- node[right, font=\tiny] {Yes} (apply);
+\draw[arrow, dashed] (decide) to[out=180, in=180] node[left, font=\tiny] {No} (params);
+
+\draw[arrow] (apply) -- (push);
+\draw[redarrow] (push) -- node[above, font=\tiny] {data} (s3);
+
+\draw[arrow] (push) -- (gitadd);
+\draw[arrow] (gitadd) -- (gitcommit);
+\draw[arrow] (gitcommit) -- (gitpush);
+\draw[redarrow] (gitpush) -- node[above, font=\tiny] {code} (github);
+
+\end{tikzpicture}
+\end{center}
+
+\subsection{Key Lessons Learned}
+
+\begin{enumerate}[leftmargin=*]
+    \item \textbf{Data is as Important as Code}:
+    \begin{itemize}
+        \item Models depend on data
+        \item Data changes over time
+        \item Version control applies to both
+    \end{itemize}
+    
+    \item \textbf{Automation Saves Time}:
+    \begin{itemize}
+        \item Initial setup takes time
+        \item Long-term benefits are huge
+        \item Consistency across team
+    \end{itemize}
+    
+    \item \textbf{Logging is Essential}:
+    \begin{itemize}
+        \item Debug issues faster
+        \item Understand what happened
+        \item Track pipeline progress
+    \end{itemize}
+    
+    \item \textbf{Parameters in Config Files}:
+    \begin{itemize}
+        \item Easy experimentation
+        \item Clear documentation
+        \item Version controlled
+    \end{itemize}
+    
+    \item \textbf{Rollback Capability is Powerful}:
+	\begin{itemize}
+	    \item Revert to any \textbf{promoted and committed} experiment
+	    \item Compare past and current results reliably
+	    \item Enables safe and reproducible experimentation
+	\end{itemize}
+\end{enumerate}
+
+\end{document}
